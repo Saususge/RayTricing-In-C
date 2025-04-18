@@ -6,12 +6,17 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:02:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/17 12:05:21 by chakim           ###   ########.fr       */
+/*   Updated: 2025/04/18 12:26:01 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_H
 # define TEST_H
+
+# define WIDTH 1280;
+# define HEIGHT 720;
+
+# include <math.h>
 
 typedef struct s_vec3
 {
@@ -45,5 +50,14 @@ typedef struct s_scene
 	t_camera	cam;
 	t_sphere	sp;
 }	t_scene;
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
 
 #endif
