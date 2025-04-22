@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:06:43 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/18 12:06:10 by chakim           ###   ########.fr       */
+/*   Created: 2025/04/22 14:56:33 by chakim            #+#    #+#             */
+/*   Updated: 2025/04/22 17:06:24 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,22 @@ void	init_test(t_scene *scene)
 	scene->sp.color = (t_vec3){255, 0, 0};
 }
 
-void	generate_camera_ray(int x, int y, t_camera cam)
+t_ray	generate_camera_ray(int x, int y, t_camera cam)
 {
+	t_ray	ray;
+
+	ray.origin = cam.pos;
 	
 }
 
-void render_test(t_scene *scene)
+void	render_test(t_scene *scene)
 {
     for (int y = 0; y < HEIGHT; ++y)
 	{
         for (int x = 0; x < WIDTH; ++x) 
 		{
-            t_ray ray = generate_camera_ray(x, y, scene->cam);
-            if (ray_hits_sphere(ray, scene->sp))
+			t_ray ray = generate_camera_ray(x, y, scene->cam);
+			if (ray_hits_sphere(ray, scene->sp))
 				draw_pixel(x, y, scene->sp.color);
 			else
                 draw_pixel(x, y, (t_vec3){0, 0, 0});
