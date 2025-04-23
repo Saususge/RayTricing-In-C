@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:02:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/22 17:06:24 by chakim           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:39:55 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }	t_data;
+
+void	init_test(t_scene *scene);
 
 #endif
