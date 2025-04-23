@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/23 17:39:57 by chakim           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:00:59 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_object
 	t_type			type;
 	t_object_ops	*ops;
 	void			*data;
-	
 }	t_object;
 
 #endif

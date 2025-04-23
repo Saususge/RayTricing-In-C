@@ -5,20 +5,20 @@ OBJ_DIR := obj
 LIBFT_DIR := libft
 BONUS_SRC_DIR := bonus_src
 MLX_DIR := mlx
-MLX := $(MLX_DIR)/mlx_linux.a
+MLX := $(MLX_DIR)/libmlx_Linux.a
 LIBFT := $(LIB_DIR)/libft.a
 MINIRT := minirt
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -lm
-LDFLAGS := -L$(LIB_DIR) -lft
+CFLAGS := -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+LDFLAGS := -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 ifdef DEBUG
 	CFLAGS += -g -fsanitize=address
 	LDFLAGS += -fsanitize=address
 endif
 
-SRC := test.c main.c
+SRC := test.c main.c draw_pixels.c
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
@@ -45,7 +45,7 @@ $(LIBFT): | $(LIBFT_DIR) $(LIB_DIR)
 
 $(MLX): | $(MLX_DIR) $(LIB_DIR)
 	$(MAKE) -C $(MLX_DIR) all
-	cp $(MLX_DIR)/libmlx_linux.a $(MLX)
+	cp $(MLX_DIR)/mlx_Linux.a $(MLX)
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -56,7 +56,6 @@ fclean: clean
 	rm -f $(MINIRT)
 	rm -f .bonus
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(MLX_DIR) fclean
 
 re:
 	$(MAKE) fclean
