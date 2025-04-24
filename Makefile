@@ -55,6 +55,7 @@ clean:
 fclean: clean
 	rm -f $(MINIRT)
 	rm -f .bonus
+	rm -rf lib/
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re:

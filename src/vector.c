@@ -1,23 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.c                                           :+:      :+:    :+:   */
+/*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/24 14:33:48 by chakim           ###   ########.fr       */
+/*   Created: 2025/04/24 13:25:53 by chakim            #+#    #+#             */
+/*   Updated: 2025/04/24 13:25:57 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sphere.h"
-
-t_object	*create_sphere(t_point center)
-{
-	
-}
-
-int	sphere_intersect(t_object *this, t_ray *ray, t_hit *hit)
-{
-
-}
