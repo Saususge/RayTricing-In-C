@@ -6,13 +6,14 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:56:33 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/24 13:28:07 by chakim           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:24:21 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 #include "mlx.h"
 #include "object.h"
+#include "vector.h"
 
 void	init_test(t_scene *scene)
 {
