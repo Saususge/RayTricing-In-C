@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/25 17:25:53 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/02 17:45:24 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ typedef struct s_vec3
 	float	z;
 }	t_vec3;
 
-t_vec3 vec3_create(float x, float y, float z)
+t_vec3	vec3_create(float x, float y, float z);
 
 #endif

@@ -6,12 +6,14 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/24 13:48:03 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/02 17:45:26 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECT_H
 # define OBJECT_H
+
+# include "vector.h"
 
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
@@ -21,20 +23,6 @@ typedef enum e_type
 	SPHERE = 0
 	
 }	t_type;
-
-typedef struct s_point
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_point;
-
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3;
 
 typedef struct s_color
 {
