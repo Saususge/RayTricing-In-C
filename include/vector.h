@@ -6,12 +6,13 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/05 13:40:46 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:51:43 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_H
 # define VECTOR_H
+# define EPSILON 0.000001f
 
 typedef struct s_point
 {
