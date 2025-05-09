@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:52:06 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 16:55:46 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/09 17:02:26 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,5 @@ float	point_distance(t_point p1, t_point p2)
 
 t_point	point_add_vec(t_point p, t_vec3 v)
 {
-	t_point	result;
-
-	result.x = p.x + v.x;
-	result.y = p.y + v.y;
-	result.z = p.z + v.z;
-	return (result);
+	return (point_create(p.x + v.x, p.y + v.y, p.z + v.z));
 }

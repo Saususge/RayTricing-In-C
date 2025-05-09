@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:06:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 16:05:56 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:59:30 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,11 @@
 
 t_vec3	vec3_reflect(t_vec3 v, t_vec3 normal)
 {
-	t_vec3	vec;
-	float	dot;
-
-	dot = vec3_dot(v, normal);
-	vec = vec3_sub(v, vec3_mul(normal, 2.0f * dot));
-	return (vec);
+	return (vec3_sub(v, vec3_mul(normal, 2.0f * vec3_dot(v, normal))));
 }
 
 t_vec3	vec3_refract(t_vec3 v, t_vec3 normal, float refraction_ratio)
 {
-	t_vec3	result;
 	t_vec3	l_term;
 	t_vec3	n_term;
 	float	cos_incident;
@@ -42,7 +36,6 @@ refraction_ratio * (1.0f - cos_incident * cos_incident);
 cos_incident - sqrtf(1 - refraction_ratio * refraction_ratio *\
 (1 - cos_incident * cos_incident)));
 		n_term = vec3_mul(v, refraction_ratio);
-		result = vec3_add(n_term, l_term);
-		return (result);
+		return (vec3_add(n_term, l_term));
 	}
 }
