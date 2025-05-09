@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:55:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/08 16:48:09 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:06:06 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_vec3	vec3_lerp(t_vec3 v1, t_vec3 v2, float t)
 	vec.x = v1.x + (v2.x - v1.x) * t;
 	vec.y = v1.y + (v2.y - v1.y) * t;
 	vec.z = v1.z + (v2.z - v1.z) * t;
-
 	return (vec);
 }
 
@@ -52,7 +51,6 @@ t_vec3	vec3_min(t_vec3 v1, t_vec3 v2)
 	vec.x = fminf(v1.x, v2.x);
 	vec.y = fminf(v1.y, v2.y);
 	vec.z = fminf(v1.z, v2.z);
-
 	return (vec);
 }
 
@@ -63,6 +61,5 @@ t_vec3	vec3_max(t_vec3 v1, t_vec3 v2)
 	vec.x = fmaxf(v1.x, v2.x);
 	vec.y = fmaxf(v1.y, v2.y);
 	vec.z = fmaxf(v1.z, v2.z);
-
 	return (vec);
 }

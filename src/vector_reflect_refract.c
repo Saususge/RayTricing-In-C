@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:06:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/05 18:19:55 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:05:56 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ t_vec3	vec3_refract(t_vec3 v, t_vec3 normal, float refraction_ratio)
 	float	cos_refracted_sq;
 
 	cos_incident = -vec3_dot(v, normal);
-	cos_refracted_sq = 1.0f - refraction_ratio * refraction_ratio * \
-	(1.0f - cos_incident * cos_incident);
+	cos_refracted_sq = 1.0f - refraction_ratio * \
+refraction_ratio * (1.0f - cos_incident * cos_incident);
 	if (cos_refracted_sq < 0.0f)
 		return (vec3_reflect(v, normal));
 	else
 	{
-		l_term = vec3_mul(normal, refraction_ratio * cos_incident - \
-			sqrtf(1 - refraction_ratio * refraction_ratio * \
-				(1 - cos_incident * cos_incident)));
+		l_term = vec3_mul(normal, refraction_ratio * \
+cos_incident - sqrtf(1 - refraction_ratio * refraction_ratio *\
+(1 - cos_incident * cos_incident)));
 		n_term = vec3_mul(v, refraction_ratio);
 		result = vec3_add(n_term, l_term);
 		return (result);
