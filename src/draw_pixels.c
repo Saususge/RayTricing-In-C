@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:09:36 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/23 17:39:51 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/17 14:01:22 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_pixels(void *mlx, void *mlx_win, t_data *img)
 {
 	img->img = mlx_new_image(mlx, 1920, 1080);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
-		&img->line_length, &img->endian);
+&img->line_length, &img->endian);
 	pixel_put(img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
 }
