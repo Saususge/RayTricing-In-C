@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 16:42:43 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:01:36 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,7 @@ typedef struct s_point
 	float	z;
 }	t_point;
 
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3;
+typedef t_point	t_vec3;
 
 // creating vector
 t_vec3	vec3_create(float x, float y, float z);

@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:06:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/17 14:01:06 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/19 11:52:47 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ refraction_ratio * (1.0f - cos_incident * cos_incident);
 	{
 		l_term = vec3_mul(normal, refraction_ratio * \
 cos_incident - sqrtf(1 - refraction_ratio * refraction_ratio * \
-(1 - cos_incident * cos_incident)));
+	(1 - cos_incident * cos_incident)));
 		n_term = vec3_mul(v, refraction_ratio);
 		return (vec3_add(n_term, l_term));
 	}
