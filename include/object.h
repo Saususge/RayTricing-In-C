@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/02 17:45:26 by chakim           ###   ########.fr       */
+/*   Updated: 2025/05/26 14:12:14 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ typedef struct s_object_ops	t_object_ops;
 
 typedef enum e_type
 {
-	SPHERE = 0
-	
+	SPHERE = 0,
+	PLANE = 1
 }	t_type;
 
 typedef struct s_color

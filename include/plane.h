@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.h                                           :+:      :+:    :+:   */
+/*   plane.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/26 13:32:14 by chakim           ###   ########.fr       */
+/*   Created: 2025/05/26 14:08:13 by chakim            #+#    #+#             */
+/*   Updated: 2025/05/26 14:12:27 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPHERE_H
-# define SPHERE_H
+#ifndef PLANE_H
+# define PLANE_H
 
 # include "object.h"
+# include "vector.h"
 # include "test.h"
 
-typedef struct s_quad_eq
+typedef struct s_plane
 {
-	float	a;
-	float	b;
-	float	c;
-	float	disc;
-}	t_quad_eq;
+	t_point	point;
+	t_vec3	normal;
+	t_vec3	color;
+}	t_plane;
 
-t_object	*create_sphere(t_point center, float radius, t_vec3 color);
-int			sphere_intersect(t_object *this, t_ray *ray, t_hit *hit);
+t_object	*create_plane(t_point point, t_vec3 normal, t_vec3 color);
+int			plane_intersect(t_object *this, t_ray *ray, t_hit *hit);
 
 #endif
