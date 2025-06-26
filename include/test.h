@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:02:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/04/24 13:33:24 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/24 14:41:36 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,12 @@ typedef struct s_camera
 	float	fov;
 }	t_camera;
 
-typedef struct s_sphere
-{
-	t_vec3	center;
-	float	radius;
-	t_vec3	color;
-}	t_sphere;
-
 typedef struct s_scene
 {
+	int			width;
+	int			height;
 	t_camera	cam;
-	t_sphere	sp;
+	t_object	*object;
 }	t_scene;
 
 typedef struct s_data
