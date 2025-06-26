@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 16:08:05 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 22:57:53 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,18 @@ typedef struct t_camera
 	float		fov;
 }	t_camera;
 
+// intensity: 0.0 to 1.0
+typedef struct t_light
+{
+	t_point		position;
+	t_color		color;
+	float		intensity;
+}	t_light;
+
 typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	direction;
-	t_color	color;
 }	t_ray;
 
 typedef struct s_object
@@ -87,4 +94,12 @@ typedef struct s_object_ops
 	void		(*free)(struct s_object *this);
 }	t_object_ops;
 
+extern t_ambient_light	g_ambient_light;
+extern t_camera			g_camera;
+extern t_light			*g_lights;
+extern int				g_light_count;
+extern int				g_light_capacity;
+extern t_object			*g_objects;
+extern int				g_object_count;
+extern int				g_object_capacity;
 #endif
