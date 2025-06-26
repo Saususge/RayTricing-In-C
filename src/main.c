@@ -13,7 +13,7 @@
 #include "mlx.h"
 #include "test.h"
 #include "draw_pixels.h"
-
+	
 int	main(void)
 {
 	t_data	img;

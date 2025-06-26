@@ -48,7 +48,7 @@ t_object	*create_plane(t_point point, t_vec3 normal, t_vec3 color)
 
 int	plane_intersect(t_object *this, t_ray *ray, t_hit *hit)
 {
-	t_plane	*pl;
+	t_plane	*pl;	
 	float	denominator;
 	float	t;
 	t_vec3	p0_to_l0;
