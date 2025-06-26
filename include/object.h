@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/26 14:12:14 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:08:05 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,32 @@ typedef enum e_type
 
 typedef struct s_color
 {
-	float	r;
-	float	g;
-	float	b;
-	float	a;
+	int	r;
+	int	g;
+	int	b;
 }	t_color;
+
+// intensity: 0.0 to 1.0
+typedef struct s_ambient_light
+{
+	t_color	color;
+	float	intensity;
+}	t_ambient_light;
+
+// orientation: normalized vector
+// fov: 0 to 180
+typedef struct t_camera
+{
+	t_point		position;
+	t_vec3		orientation;
+	float		fov;
+}	t_camera;
 
 typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	direction;
+	t_color	color;
 }	t_ray;
 
 typedef struct s_object
