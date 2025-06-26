@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:35:19 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 22:41:23 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:47:52 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	parse_float(const char *float_str, float *out)
 int parse_vec3(char *vec_str, t_vec3 *out)
 {
 	char	*str[3];
-	char	*end;
 	t_vec3	v;
 
 	if (!vec_str)

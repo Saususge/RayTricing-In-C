@@ -6,13 +6,14 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:23:57 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:49:00 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sphere.h"
 #include "vector.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 static t_object_ops	g_sphere_ops = {
 	.intersect = &sphere_intersect,

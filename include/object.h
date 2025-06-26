@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:18:40 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:47:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,12 @@ typedef struct s_object_ops
 
 extern t_ambient_light	g_ambient_light;
 extern t_camera			g_camera;
-extern t_light			g_lights[];
+extern t_light			*g_lights;
 extern int				g_light_count;
 extern int				g_light_capacity;
-extern t_object			*g_objects[];
+extern t_object			**g_objects;
 extern int				g_object_count;
 extern int				g_object_capacity;
+
+int	process_object_arr_size(void);
 #endif

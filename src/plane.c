@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/24 13:28:31 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 23:48:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "plane.h"
 #include "unistd.h"
 #include "vector.h"
+#include <stdlib.h>
 
 static t_object_ops	g_plane_ops = {
 	.intersect = &plane_intersect,
@@ -23,7 +24,7 @@ static t_object_ops	g_plane_ops = {
 	.free = NULL
 };
 
-t_object	*create_plane(t_point point, t_vec3 normal, t_vec3 color)
+t_object	*create_plane(t_point point, t_vec3 normal, t_color color)
 {
 	t_object	*obj;
 	t_plane		*pl;
@@ -69,7 +70,7 @@ int	plane_intersect(t_object *this, t_ray *ray, t_hit *hit)
 		hit->normal = pl->normal;
 	else
 		hit->normal = vec3_neg(pl->normal);
-	hit->color = (t_color){pl->color.x, pl->color.y, pl->color.z, 1.0f};
+	hit->color = pl->color;
 	hit->object = this;
 	return (1);
 }

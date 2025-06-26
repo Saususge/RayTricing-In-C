@@ -6,14 +6,14 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:25:42 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:47:37 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "object.h"
 #include "libft.h"
 #include "parse.h"
-#include "sphere.h"
+#include "plane.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdlib.h>

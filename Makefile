@@ -18,7 +18,29 @@ ifdef DEBUG
 	LDFLAGS += -fsanitize=address
 endif
 
-SRC := test.c main.c draw_pixels.c
+SRC := \
+	draw_pixels.c\
+	environment.c\
+	main.c\
+	object_util.c\
+	parse_ambient.c\
+	parse.c\
+	parse_camera.c\
+	parse_light.c\
+	parse_plane.c\
+	parse_sphere.c\
+	parse_util.c\
+	plane.c\
+	rotate.c\
+	sphere.c\
+	vector_arithmetic.c\
+	vector_calc.c\
+	vector_conversion.c\
+	vector_init.c\
+	vector_length.c\
+	vector_product.c\
+	vector_reflect_refract.c\
+	vector_utility.c
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 

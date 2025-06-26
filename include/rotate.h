@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:31:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 21:14:59 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 23:48:44 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ typedef struct s_rot_res
 	float	z3;
 }	t_rot_res;
 
-void	init_rotation(t_rotation *rot, t_vec3 *angle);
 t_vec3	rotate_vector(t_vec3 target, t_vec3 angle);
 #endif

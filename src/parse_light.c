@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 22:50:56 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:43:58 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int process_light_arr_size(void)
+int process_light_arr(void)
 {
 	t_light	*new_lights;
 
@@ -52,7 +52,7 @@ int parse_light(void)
 	char	*ratio_str;
 	char	*rgb_str;
 
-	if (process_light_arr_size())
+	if (process_light_arr())
 		return (1);
 	pos_str = ft_strtok(NULL, " \t\n");
 	ratio_str = ft_strtok(NULL, " \t\n");

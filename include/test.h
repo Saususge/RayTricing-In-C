@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:02:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/24 14:41:36 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 23:40:25 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
 
-typedef struct s_camera
-{
-	t_vec3	pos;
-	t_vec3	dir;
-	float	fov;
-}	t_camera;
+// typedef struct s_camera
+// {
+// 	t_vec3	pos;
+// 	t_vec3	dir;
+// 	float	fov;
+// }	t_camera;
 
 typedef struct s_scene
 {
