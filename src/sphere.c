@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 17:24:48 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 23:23:57 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_object_ops	g_sphere_ops = {
 	.free = NULL
 };
 
-t_object	*create_sphere(t_point center, float radius, t_vec3 color)
+t_object	*create_sphere(t_point center, float radius, t_color color)
 {
 	t_object	*obj;
 	t_sphere	*sph;
@@ -78,7 +78,7 @@ static void	populate_hit_record(t_hit *hit, float t, t_ray *ray, t_sphere *sph)
 		vec3_mul(ray->direction, t)));
 	hit->normal = vec3_normalize(vec3_sub(point_to_vec3(hit->point), \
 		sph->center));
-	hit->color = (t_color){sph->color.x, sph->color.y, sph->color.z, 1.0f};
+	hit->color = sph->color;
 	hit->is_front_face = vec3_dot(ray->direction, hit->normal) < 0;
 	if (!hit->is_front_face)
 		hit->normal = vec3_neg(hit->normal);
