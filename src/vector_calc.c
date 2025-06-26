@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_calc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:52:06 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 17:02:26 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/26 19:01:53 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 float	point_distance_squared(t_point p1, t_point p2)
 {
-	return (powf(p2.x - p1.x, 2) + \
-powf(p2.y - p1.y, 2) + powf(p2.z - p1.z, 2));
+	return ((p2.x - p1.x) * (p2.x - p1.x) + \
+			(p2.y - p1.y) * (p2.y - p1.y) + \
+			(p2.z - p1.z) * (p2.z - p1.z));
 }
 
 float	point_distance(t_point p1, t_point p2)
