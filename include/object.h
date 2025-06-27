@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:47:22 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 13:59:04 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,30 @@ typedef struct s_ray
 	t_vec3	direction;
 }	t_ray;
 
+typedef struct s_sphere
+{
+	t_point	center;
+	float	radius;
+	t_color	color;
+}	t_sphere;
+
+typedef struct s_plane
+{
+	t_point	point;
+	t_vec3	normal;
+	t_color	color;
+}	t_plane;
+typedef union u_obj_data
+{
+	struct s_sphere	sphere;
+	struct s_plane	plane;
+}	t_obj_data;
+
 typedef struct s_object
 {
 	t_type			type;
 	t_object_ops	*ops;
-	void			*data;
+	t_obj_data		data;
 }	t_object;
 
 typedef struct s_hit
@@ -99,7 +118,7 @@ extern t_camera			g_camera;
 extern t_light			*g_lights;
 extern int				g_light_count;
 extern int				g_light_capacity;
-extern t_object			**g_objects;
+extern t_object			*g_objects;
 extern int				g_object_count;
 extern int				g_object_capacity;
 

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:54:00 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 13:15:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 
 static int	dispatch_parse(const char *id)
 {
-	if (!ft_memcmp(id, "A", 2))
+	if (!ft_strcmp(id, "A"))
 		return (parse_ambient());
-	if (!ft_memcmp(id, "C", 2))
+	if (!ft_strcmp(id, "C"))
 		return (parse_camera());
-	if (!ft_memcmp(id, "L", 2))
+	if (!ft_strcmp(id, "L"))
 		return (parse_light());
-	if (!ft_memcmp(id, "sp", 3))
+	if (!ft_strcmp(id, "sp"))
 		return (parse_sphere());
-	if (!ft_memcmp(id, "pl", 3))
+	if (!ft_strcmp(id, "pl"))
 		return (parse_plane());
-	// if (!ft_memcmp(id, "cy", 3))
+	// if (!ft_strcmp(id, "cy"))
 	// 	return (parse_cylinder());
 	return (1);
 }
@@ -52,8 +52,6 @@ int	parse(int fd)
 				free(line);
 				return (1);
 			}
-			free(line);
-			break;
 		}
 		free(line);
 		line = get_next_line(fd);

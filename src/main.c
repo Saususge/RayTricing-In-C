@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:45:30 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 15:52:10 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "object.h"
 #include "libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 	
 // int	main(void)
 // {
@@ -69,25 +70,27 @@ int	main(int argc, char **argv)
 	}
 	for (int i = 0; i < g_object_count; ++i)
 	{
-		t_object *obj = g_objects[i];
-		if (obj->type == SPHERE)
+		t_object obj = g_objects[i];
+		if (obj.type == SPHERE)
 		{
-			t_sphere *sph = (t_sphere *)obj->data;
+			t_sphere sph = obj.data.sphere;
 			printf("Sphere %d: center=(%.2f, %.2f, %.2f), radius=%.2f, color=(%d, %d, %d)\n",
 				i + 1,
-				sph->center.x, sph->center.y, sph->center.z,
-				sph->radius,
-				sph->color.r, sph->color.g, sph->color.b);
+				sph.center.x, sph.center.y, sph.center.z,
+				sph.radius,
+				sph.color.r, sph.color.g, sph.color.b);
 		}
-		else if (obj->type == PLANE)
+		else if (obj.type == PLANE)
 		{
-			t_plane *pl = (t_plane *)obj->data;
+			t_plane pl = obj.data.plane;
 			printf("Plane %d: point=(%.2f, %.2f, %.2f), normal=(%.2f, %.2f, %.2f), color=(%d, %d, %d)\n",
 				i + 1,
-				pl->point.x, pl->point.y, pl->point.z,
-				pl->normal.x, pl->normal.y, pl->normal.z,
-				pl->color.r, pl->color.g, pl->color.b);
+				pl.point.x, pl.point.y, pl.point.z,
+				pl.normal.x, pl.normal.y, pl.normal.z,
+				pl.color.r, pl.color.g, pl.color.b);
 		}
 	}
+	free(g_lights);
+	free(g_objects);
 	return (0);
 }

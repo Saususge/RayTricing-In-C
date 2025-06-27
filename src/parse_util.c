@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:35:19 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:47:52 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 13:22:37 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int parse_vec3(char *vec_str, t_vec3 *out)
 	str[0] = ft_strtok(vec_str, ",");
 	str[1] = ft_strtok(NULL, ",");
 	str[2] = ft_strtok(NULL, ",");
-	if (!parse_float(str[0], &v.x)
-		|| !parse_float(str[1], &v.x)
-		|| !parse_float(str[2], &v.x))
+	if (parse_float(str[0], &v.x)
+		|| parse_float(str[1], &v.y)
+		|| parse_float(str[2], &v.z))
 		return (1);
 	*out = v;
 	return (0);

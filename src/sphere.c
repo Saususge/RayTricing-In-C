@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:49:00 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 13:45:28 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,17 @@ static t_object_ops	g_sphere_ops = {
 	.free = NULL
 };
 
-t_object	*create_sphere(t_point center, float radius, t_color color)
+t_object	create_sphere(t_point center, float radius, t_color color)
 {
-	t_object	*obj;
-	t_sphere	*sph;
-
-	obj = malloc(sizeof(t_object));
-	if (!obj)
-		return (NULL);
-	sph = malloc(sizeof(t_sphere));
-	if (!sph)
-	{
-		free(obj);
-		return (NULL);
-	}
-	sph->center = center;
-	sph->radius = radius;
-	sph->color = color;
-	obj->type = SPHERE;
-	obj->data = sph;
-	obj->ops = &g_sphere_ops;
-	return (obj);
+	return ((t_object){
+		.type = SPHERE,
+		.ops = &g_sphere_ops,
+		.data.sphere = (t_sphere){
+			.center = center,
+			.radius = radius,
+			.color = color
+		}
+	});
 }
 
 static void	calculate_sphere_equation(t_quad_eq *eq, t_sphere *sph, t_ray *ray)
@@ -87,18 +77,18 @@ static void	populate_hit_record(t_hit *hit, float t, t_ray *ray, t_sphere *sph)
 
 int	sphere_intersect(t_object *this, t_ray *ray, t_hit *hit)
 {
-	t_sphere	*sph;
+	t_sphere	sph;
 	t_quad_eq	eq;
 	float		t;
 
-	sph = (t_sphere *)this->data;
-	calculate_sphere_equation(&eq, sph, ray);
+	sph = this->data.sphere;
+	calculate_sphere_equation(&eq, &sph, ray);
 	if (eq.disc < 0)
 		return (0);
 	t = choose_valid_root(&eq);
 	if (t < 0)
 		return (0);
-	populate_hit_record(hit, t, ray, sph);
+	populate_hit_record(hit, t, ray, &sph);
 	hit->object = this;
 	return (1);
 }

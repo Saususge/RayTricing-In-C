@@ -14,8 +14,9 @@ CFLAGS := -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LDFLAGS := -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 ifdef DEBUG
-	CFLAGS += -g -fsanitize=address
-	LDFLAGS += -fsanitize=address
+	CFLAGS += -g
+	# CFLAGS += -fsanitize=address
+	# LDFLAGS += -fsanitize=address
 endif
 
 SRC := \

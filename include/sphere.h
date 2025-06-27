@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:23:19 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 13:58:25 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@ typedef struct s_quad_eq
 	float	disc;
 }	t_quad_eq;
 
-typedef struct s_sphere
-{
-	t_point	center;
-	float	radius;
-	t_color	color;
-}	t_sphere;
-
-t_object	*create_sphere(t_point center, float radius, t_color color);
+t_object	create_sphere(t_point center, float radius, t_color color);
 int			sphere_intersect(t_object *this, t_ray *ray, t_hit *hit);
 t_vec3		sphere_get_normal(t_object *this, t_point *hit_point, t_ray *ray);
 void		sphere_rotate(t_object *this, t_vec3 angle);
