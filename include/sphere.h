@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 13:58:25 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 18:01:09 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ typedef struct s_quad_eq
 }	t_quad_eq;
 
 t_object	create_sphere(t_point center, float radius, t_color color);
-int			sphere_intersect(t_object *this, t_ray *ray, t_hit *hit);
-t_vec3		sphere_get_normal(t_object *this, t_point *hit_point, t_ray *ray);
+int			sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound);
+// In my opinion, we don't need to provide getter for normal vector because hit record already has normal vector.
+// If we need to get normal vector, we can use hit record's normal vector directly.
+// t_vec3		sphere_get_normal(t_object *this, t_point *hit_point);
 void		sphere_rotate(t_object *this, t_vec3 angle);
 void		sphere_translate(t_object *this, t_vec3 offset);
 t_color		sphere_get_color(t_object *this, t_point *hit_point);

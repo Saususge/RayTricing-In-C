@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 13:59:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 18:03:59 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,22 @@ typedef struct s_hit
 	t_point		point;
 	t_vec3		normal;
 	t_color		color;
-	t_object	*object;
+	// t_object	*object;
 	int			is_front_face;
 }	t_hit;
 
+typedef struct s_t_bound
+{
+	float	min;
+	float	max;
+}	t_t_bound;
+
 typedef struct s_object_ops
 {
-	int			((*intersect)(struct s_object *this, t_ray *ray,
-				t_hit *hit));
+	int			((*intersect)(const struct s_object *this, const t_ray *ray,
+				t_hit *hit, t_t_bound bound));
 	t_vec3		((*get_normal)(struct s_object * this,
-			t_point * hit_point,
-			t_ray * ray));
+			t_point * hit_point));
 	void		(*rotate)(struct s_object *this,
 			t_vec3 angle);
 	void		((*translate)(struct s_object *this,

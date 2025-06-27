@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 16:32:06 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 18:09:50 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,24 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
+{
+	t_hit	current_hit;
+	int		hit_anything = 0;
+	float	closest_so_far = t_max;
+
+	for (int i = 0; i < g_object_count; ++i)
+	{
+		if (g_objects[i].ops->intersect(g_objects + i, ray, &current_hit, (t_t_bound){t_min, closest_so_far}))
+		{
+			hit_anything = 1;
+			closest_so_far = current_hit.t;
+			*hit = current_hit;
+		}
+	}
+	return (hit_anything);
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -114,7 +132,7 @@ int	main(int argc, char **argv)
 	float	view_height = 2.0;
 	float	view_width = view_height * aspect_ratio;
 	t_vec3	view_u = vec3_create(view_width, 0.0f, 0.0f);
-	t_vec3	view_v = vec3_create(0.0f, view_height, 0.0f);
+	t_vec3	view_v = vec3_create(0.0f, -view_height, 0.0f);
 	t_vec3	view_u_per_pixel = vec3_mul(view_u, 1.0f / (float)width);
 	t_vec3	view_v_per_pixel = vec3_mul(view_v, 1.0f / (float)height);
 	t_vec3	view_upper_left = vec3_sub(g_camera.position, vec3_add(vec3_create(0.0f, 0.0f, focal_length), vec3_add(vec3_mul(view_u, 0.5f), vec3_mul(view_v, 0.5f))));
@@ -132,8 +150,9 @@ int	main(int argc, char **argv)
 			t_vec3	ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_camera.position));
 			t_ray	ray = {point_to_vec3(g_camera.position), ray_direction};
 			t_hit	hit;
-			if (sphere_intersect(g_objects, &ray, &hit))
-				my_mlx_pixel_put(&img, x, y, hit.color.r << 16 | hit.color.g << 8 | hit.color.b);
+			hit.color = (t_color){0, 0, 0};
+			hit_objects(&ray, 0.0f, INFINITY, &hit);
+			my_mlx_pixel_put(&img, x, y, hit.color.r << 16 | hit.color.g << 8 | hit.color.b);
 		}
 	}
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
