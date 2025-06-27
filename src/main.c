@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 15:52:10 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:32:06 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,8 @@
 // 	mlx_loop(mlx);
 // }
 
-int	main(int argc, char **argv)
+void	print_parsed_elems(void)
 {
-	if (argc != 2)
-	{
-		ft_putstr_fd("Usage: ./miniRT <scene_file>\n", STDERR_FILENO);
-		return (1);
-	}
-	int	fd = open(argv[1], O_RDONLY);
-	if (parse(fd))
-	{
-		ft_putstr_fd("Error: Failed to parse scene file.\n", 2);
-		return (1);
-	}
-	close(fd);
 	printf("Ambient Light: intensity=%.2f, color=(%d, %d, %d)\n",
 		g_ambient_light.intensity,
 		g_ambient_light.color.r,
@@ -90,6 +78,67 @@ int	main(int argc, char **argv)
 				pl.color.r, pl.color.g, pl.color.b);
 		}
 	}
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		ft_putstr_fd("Usage: ./miniRT <scene_file>\n", STDERR_FILENO);
+		return (1);
+	}
+	int	fd = open(argv[1], O_RDONLY);
+	if (parse(fd))
+	{
+		ft_putstr_fd("Error: Failed to parse scene file.\n", 2);
+		return (1);
+	}
+	close(fd);
+
+	print_parsed_elems();
+
+	float	aspect_ratio = 1280.0f / 720.0f;
+	int		width = 1280;
+	int		height = (int)(width / aspect_ratio);
+	// float	focal_length = (float)(width / (2.0f * tan(g_camera.fov * M_PI / 360.0f)));
+	// float	view_height = 2.0f * focal_length * tan(g_camera.fov * M_PI / 360.0f);
+	float	focal_length = 1.0;
+	float	view_height = 2.0;
+	float	view_width = view_height * aspect_ratio;
+	t_vec3	view_u = vec3_create(view_width, 0.0f, 0.0f);
+	t_vec3	view_v = vec3_create(0.0f, view_height, 0.0f);
+	t_vec3	view_u_per_pixel = vec3_mul(view_u, 1.0f / (float)width);
+	t_vec3	view_v_per_pixel = vec3_mul(view_v, 1.0f / (float)height);
+	t_vec3	view_upper_left = vec3_sub(g_camera.position, vec3_add(vec3_create(0.0f, 0.0f, focal_length), vec3_add(vec3_mul(view_u, 0.5f), vec3_mul(view_v, 0.5f))));
+	t_vec3	pixel_origin = vec3_add(view_upper_left, vec3_mul(vec3_add(view_v_per_pixel, view_u_per_pixel), 0.5f));
+	t_data	img;
+	void	*mlx = mlx_init();
+	void	*mlx_win = mlx_new_window(mlx, width, height, "miniRT");
+	img.img = mlx_new_image(mlx, width, height);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	for (int y = 0; y < height; ++y)
+	{
+		for (int x = 0; x < width; ++x)
+		{
+			t_vec3	pixel_pos = vec3_add(pixel_origin, vec3_add(vec3_mul(view_u_per_pixel, (float)x), vec3_mul(view_v_per_pixel, (float)y)));
+			t_vec3	ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_camera.position));
+			t_ray	ray = {point_to_vec3(g_camera.position), ray_direction};
+			t_hit	hit;
+			if (sphere_intersect(g_objects, &ray, &hit))
+				my_mlx_pixel_put(&img, x, y, hit.color.r << 16 | hit.color.g << 8 | hit.color.b);
+		}
+	}
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
+
 	free(g_lights);
 	free(g_objects);
 	return (0);
