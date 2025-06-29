@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:59:46 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/27 15:51:01 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 04:18:08 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int process_object_arr_size(void)
 		if (!g_objects)
 			return (1);
 	}
-	if (g_light_count >= g_object_capacity)
+	if (g_object_count >= g_object_capacity)
 	{
 		new_objects = ft_realloc(g_objects,
 						sizeof(t_object) * g_object_capacity,
