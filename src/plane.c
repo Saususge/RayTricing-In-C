@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:39:40 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 02:09:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 static t_object_ops	g_plane_ops = {
 	.intersect = plane_intersect,
 	.shadow_intersect = plane_shadow_intersect, // Plane does not cast shadows in this implementation
-	.get_normal = plane_get_normal,
-	.rotate = plane_rotate,
-	.translate = plane_translate,
-	.get_color = plane_get_color,
+	.get_normal = NULL,
+	// .rotate = rotate_vector,
+	.translate = NULL,
+	.get_color = NULL,
 };
 
 t_object	create_plane(t_point point, t_vec3 normal, t_color color)

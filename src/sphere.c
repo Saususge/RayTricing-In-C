@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:56:57 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 02:10:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
 	.shadow_intersect = shpere_shadow_intersect,
-	.get_normal = sphere_get_normal,
+	// .get_normal = NULL,
 	.rotate = NULL,
-	.translate = sphere_translate,
-	.get_color = sphere_get_color,
+	.translate = NULL,
+	.get_color = NULL,
+	// .free = NULL
 };
 
 t_object	create_sphere(t_point center, float radius, t_color color)
@@ -83,7 +84,7 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 // 	return value;
 // }
 
-void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
+static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
 {
 	hit->t = t;
 	hit->point = vec3_lerp(ray->origin, ray->direction, t);
@@ -118,7 +119,8 @@ void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *
 			float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
 			float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation;
 			t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
-			spec = vec3_add(spec, vec3_mul(spec_color, spec_factor));
+			t_vec3 spec_light_intensity = vec3_mul(light->intensity, spec_factor);
+			spec = vec3_add(spec, vec3_hadamard(spec_color, spec_light_intensity));
 		}
 	}
 	t_vec3 result = vec3_add(vec3_add(amb, diff), spec);
