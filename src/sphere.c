@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:37:14 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:51:28 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *
 	if (!hit->is_front_face)
 		hit->normal = vec3_neg(hit->normal);
 
-	// Lambertian shading with multiple lights + Blinn-Phong specular
+	// Lambertian shading with multiple lights + Phong specular
 	t_vec3 color = this->color;
 	t_vec3 amb = vec3_hadamard(vec3_mul(g_ambient_light.intensity, g_k_a), color);
 	t_vec3 diff = {0, 0, 0};
@@ -118,9 +118,9 @@ void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *
 			float	attenuation = 1.0f / (distance_sq + 1.0f);
 			t_vec3	light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation);
 			diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
-			// Blinn-Phong specular
-			t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
-			float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
+			// Phong specular (replace Blinn-Phong)
+			t_vec3 reflect_dir = vec3_reflect(vec3_neg(light_dir), hit->normal);
+			float spec_dot = fmaxf(vec3_dot(view_dir, reflect_dir), 0.0f);
 			float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation;
 			t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
 			t_vec3 spec_light_intensity = vec3_mul(light->intensity, spec_factor);
