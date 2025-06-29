@@ -6,7 +6,11 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/06/30 00:59:18 by chakim           ###   ########.fr       */
+=======
+/*   Updated: 2025/06/30 01:27:33 by wchoe            ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +87,7 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 // 	return value;
 // }
 
-static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
+void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
 {
 	hit->t = t;
 	hit->point = vec3_lerp(ray->origin, ray->direction, t);
@@ -106,17 +110,20 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 		t_vec3	light_dir = vec3_normalize(vec3_sub(light->position, hit->point));
 		t_ray	shadow_ray = { hit->point, light_dir };
 		int		hit_shadow_flag = !hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point)));
-		float	diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
-		float	distance_sq = point_distance_squared(hit->point, light->position);
-		float	attenuation = 1.0f / (distance_sq + 1.0f);
-		t_vec3	light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation * hit_shadow_flag);
-		diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
-		// Blinn-Phong specular
-		t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
-		float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
-		float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation * hit_shadow_flag;
-		t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
-		spec = vec3_add(spec, vec3_mul(spec_color, spec_factor));
+		if (hit_shadow_flag)
+		{
+			float	diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
+			float	distance_sq = point_distance_squared(hit->point, light->position);
+			float	attenuation = 1.0f / (distance_sq + 1.0f);
+			t_vec3	light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation);
+			diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
+			// Blinn-Phong specular
+			t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
+			float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
+			float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation;
+			t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
+			spec = vec3_add(spec, vec3_mul(spec_color, spec_factor));
+		}
 	}
 	t_vec3 result = vec3_add(vec3_add(amb, diff), spec);
 	result = vec3_min(result, (t_vec3){255, 255, 255});
@@ -146,8 +153,7 @@ int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bou
 		if (t < bound.min || t > bound.max)
 			return (0);
 	}
-	if (hit)
-		populate_hit_record(hit, t, ray, &sph);
+	populate_hit_record(hit, t, ray, &sph);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 19:22:31 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 01:05:33 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 	
 // int	main(void)
 // {
@@ -121,6 +122,8 @@ int	main(int argc, char **argv)
 
 	print_parsed_elems();
 
+	clock_t start_time = clock();
+
 	float	aspect_ratio = 1280.0f / 720.0f;
 	int		width = 1280;
 	int		height = (int)(width / aspect_ratio);
@@ -153,6 +156,11 @@ int	main(int argc, char **argv)
 			my_mlx_pixel_put(&img, x, y, hit.color.r << 16 | hit.color.g << 8 | hit.color.b);
 		}
 	}
+
+	clock_t end_time = clock();
+	double elapsed_sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+	printf("Rendering time: %.3f seconds\n", elapsed_sec);
+
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 
