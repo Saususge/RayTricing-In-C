@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:12:05 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:39:42 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,21 @@ void	print_parsed_elems(void)
 		if (obj.type == SPHERE)
 		{
 			t_sphere sph = obj.data.sphere;
-			printf("Sphere %d: center=(%.2f, %.2f, %.2f), radius=%.2f, color=(%d, %d, %d)\n",
+			printf("Sphere %d: center=(%.2f, %.2f, %.2f), radius=%.2f,",
 				i + 1,
 				sph.center.x, sph.center.y, sph.center.z,
-				sph.radius,
-				sph.color.r, sph.color.g, sph.color.b);
+				sph.radius);
 		}
 		else if (obj.type == PLANE)
 		{
 			t_plane pl = obj.data.plane;
-			printf("Plane %d: point=(%.2f, %.2f, %.2f), normal=(%.2f, %.2f, %.2f), color=(%d, %d, %d)\n",
+			printf("Plane %d: point=(%.2f, %.2f, %.2f), normal=(%.2f, %.2f, %.2f),",
 				i + 1,
 				pl.point.x, pl.point.y, pl.point.z,
-				pl.normal.x, pl.normal.y, pl.normal.z,
-				pl.color.r, pl.color.g, pl.color.b);
+				pl.normal.x, pl.normal.y, pl.normal.z);
 		}
+		printf(" color=(%d, %d, %d)\n",
+			(int)obj.color.x, (int)obj.color.y,  (int)obj.color.z);
 	}
 }
 
@@ -150,9 +150,9 @@ int	main(int argc, char **argv)
 			t_vec3	ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_camera.position));
 			t_ray	ray = {point_to_vec3(g_camera.position), ray_direction};
 			t_hit	hit;
-			hit.color = (t_color){0, 0, 0};
+			hit.color = (t_vec3){0.0f, 0.0f, 0.0f};
 			hit_objects(&ray, 0.0f, INFINITY, &hit);
-			my_mlx_pixel_put(&img, x, y, hit.color.r << 16 | hit.color.g << 8 | hit.color.b);
+			my_mlx_pixel_put(&img, x, y, (int)hit.color.x << 16 | (int)hit.color.y << 8 | (int)hit.color.z);
 		}
 	}
 

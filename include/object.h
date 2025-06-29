@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:54:47 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 02:35:30 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ typedef enum e_type
 	PLANE = 1
 }	t_type;
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
+// typedef struct s_color
+// {
+// 	int	r;
+// 	int	g;
+// 	int	b;
+// }	t_color;
 
 // intensity: 0.0 to 1.0
 typedef struct s_ambient_light
@@ -63,14 +63,12 @@ typedef struct s_sphere
 {
 	t_point	center;
 	float	radius;
-	t_color	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	t_point	point;
 	t_vec3	normal;
-	t_color	color;
 }	t_plane;
 
 typedef union u_obj_data
@@ -84,6 +82,7 @@ typedef struct s_object
 	t_type			type;
 	t_object_ops	*ops;
 	t_obj_data		data;
+	t_vec3			color;
 }	t_object;
 
 typedef struct s_hit
@@ -91,7 +90,7 @@ typedef struct s_hit
 	float		t;
 	t_point		point;
 	t_vec3		normal;
-	t_color		color;
+	t_vec3		color;
 	t_object	*object;
 	int			is_front_face;
 }	t_hit;
@@ -106,10 +105,9 @@ typedef struct s_object_ops
 {
 	int			((*intersect)(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound));
 	int			((*shadow_intersect)(const t_object *this, const t_ray *ray, t_t_bound bound));
-	t_vec3		((*get_normal)(t_object * this, t_point * hit_point));
+	t_vec3		((*get_normal)(const t_object *this, t_point *hit_point));
 	void		(*rotate)(t_object *this, t_vec3 angle);
 	void		((*translate)(t_object *this, t_vec3 offset));
-	t_color		((*get_color)(t_object *this));
 }	t_object_ops;
 
 extern t_ambient_light	g_ambient_light;
@@ -125,4 +123,5 @@ extern float			g_k_d;
 extern float			g_k_s;
 
 int	process_object_arr_size(void);
+void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *obj);
 #endif

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:18:42 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:25:57 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_sphere(void)
 {
 	t_point		center;
 	float		diameter;
-	t_color		color;
+	t_vec3		color;
 	char		*center_str;
 	char		*diameter_str;
 	char		*color_str;
@@ -35,7 +35,7 @@ int	parse_sphere(void)
 		return (1);
 	if (parse_float(diameter_str, &diameter) || diameter <= 0.0f)
 		return (1);
-	if (parse_color(color_str, &color))
+	if (parse_vec3(color_str, &color))
 		return (1);
 	if (process_object_arr_size())
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:47:37 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:25:48 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_plane(void)
 {
 	t_point		center;
 	t_vec3		normal;
-	t_color		color;
+	t_vec3		color;
 	char		*center_str;
 	char		*normal_str;
 	char		*color_str;
@@ -39,7 +39,7 @@ int	parse_plane(void)
 	mag = vec3_length(normal);
 	if (mag < 1.0f - EPSILON || mag > 1.0f + EPSILON)
 		return (1);
-	if (parse_color(color_str, &color))
+	if (parse_vec3(color_str, &color))
 		return (1);
 	if (process_object_arr_size())
 		return (1);

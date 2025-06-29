@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/29 19:20:38 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:25:28 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int parse_light(void)
 	char *intensity_str;
 	char *rgb_str;
 	float intensity;
-	t_color color;
+	t_vec3 color;
 
 	if (process_light_arr())
 		return (1);
@@ -65,15 +65,15 @@ int parse_light(void)
 		return (1);
 	if (rgb_str)
 	{
-		if (parse_color(rgb_str, &color))
+		if (parse_vec3(rgb_str, &color))
 			return (1);
 	}
 	else
-		color = (t_color){255, 255, 255};
+		color = (t_vec3){255, 255, 255};
 	// Convert color and intensity to t_vec3 intensity (range 0.0-1.0)
-	light.intensity.x = (color.r / 255.0f) * intensity;
-	light.intensity.y = (color.g / 255.0f) * intensity;
-	light.intensity.z = (color.b / 255.0f) * intensity;
+	light.intensity.x = (color.x / 255.0f) * intensity;
+	light.intensity.y = (color.y / 255.0f) * intensity;
+	light.intensity.z = (color.z / 255.0f) * intensity;
 	g_lights[g_light_count++] = light;
 	return (0);
 }

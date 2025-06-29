@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:10:22 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:37:14 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,29 @@
 #include <stdlib.h>
 #include <math.h>
 
+t_vec3	sphere_get_normal(const t_object *this, t_point *hit_point)
+{
+	return (vec3_mul(vec3_sub(*hit_point, this->data.sphere.center), 1.0f / this->data.sphere.radius));
+}
+
 static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
 	.shadow_intersect = shpere_shadow_intersect,
-	// .get_normal = NULL,
+	.get_normal = sphere_get_normal,
 	.rotate = NULL,
 	.translate = NULL,
-	.get_color = NULL,
 	// .free = NULL
 };
 
-t_object	create_sphere(t_point center, float radius, t_color color)
+t_object	create_sphere(t_point center, float radius, t_vec3 color)
 {
 	return ((t_object){
 		.type = SPHERE,
 		.ops = &g_sphere_ops,
+		.color = color,
 		.data.sphere = (t_sphere){
 			.center = center,
 			.radius = radius,
-			.color = color
 		}
 	});
 }
@@ -84,17 +88,17 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 // 	return value;
 // }
 
-static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
+void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *this)
 {
 	hit->t = t;
 	hit->point = vec3_lerp(ray->origin, ray->direction, t);
-	hit->normal = vec3_mul(vec3_sub(hit->point, sph->center), 1.0f / sph->radius);
+	hit->normal = this->ops->get_normal(this, &hit->point);
 	hit->is_front_face = vec3_dot(ray->direction, hit->normal) < 0;
 	if (!hit->is_front_face)
 		hit->normal = vec3_neg(hit->normal);
 
 	// Lambertian shading with multiple lights + Blinn-Phong specular
-	t_vec3 color = { sph->color.r, sph->color.g, sph->color.b };
+	t_vec3 color = this->color;
 	t_vec3 amb = vec3_hadamard(vec3_mul(g_ambient_light.intensity, g_k_a), color);
 	t_vec3 diff = {0, 0, 0};
 	t_vec3 spec = {0, 0, 0};
@@ -125,11 +129,7 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 	}
 	t_vec3 result = vec3_add(vec3_add(amb, diff), spec);
 	result = vec3_min(result, (t_vec3){255, 255, 255});
-	hit->color = (t_color){
-		.r = (int)result.x,
-		.g = (int)result.y,
-		.b = (int)result.z
-	};
+	hit->color = result;
 }
 
 int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
@@ -151,7 +151,7 @@ int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bou
 		if (t < bound.min || t > bound.max)
 			return (0);
 	}
-	populate_hit_record(hit, t, ray, &sph);
+	populate_hit_record(hit, t, ray, this);
 	return (1);
 }
 
