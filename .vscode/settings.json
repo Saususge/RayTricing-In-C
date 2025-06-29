@@ -2,6 +2,7 @@
 	"files.associations": {
 		"sphere.h": "c",
 		"plane.h": "c",
-		"rotate.h": "c"
+		"rotate.h": "c",
+		"object.h": "c"
 	}
 }
