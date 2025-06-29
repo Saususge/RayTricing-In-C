@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 18:03:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 19:33:16 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ typedef struct s_color
 // intensity: 0.0 to 1.0
 typedef struct s_ambient_light
 {
-	t_color	color;
-	float	intensity;
+	t_vec3	intensity;
 }	t_ambient_light;
 
 // orientation: normalized vector
@@ -51,8 +50,7 @@ typedef struct t_camera
 typedef struct t_light
 {
 	t_point		position;
-	t_color		color;
-	float		intensity;
+	t_vec3	intensity;
 }	t_light;
 
 typedef struct s_ray
@@ -93,7 +91,7 @@ typedef struct s_hit
 	t_point		point;
 	t_vec3		normal;
 	t_color		color;
-	// t_object	*object;
+	t_object	*object;
 	int			is_front_face;
 }	t_hit;
 
@@ -126,6 +124,9 @@ extern int				g_light_capacity;
 extern t_object			*g_objects;
 extern int				g_object_count;
 extern int				g_object_capacity;
+extern float			g_k_a;
+extern float			g_k_d;
+extern float			g_k_s;
 
 int	process_object_arr_size(void);
 #endif

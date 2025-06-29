@@ -5,7 +5,7 @@ OBJ_DIR := obj
 LIBFT_DIR := libft
 BONUS_SRC_DIR := bonus_src
 MLX_DIR := mlx
-MLX := $(MLX_DIR)/libmlx_Linux.a
+MLX := $(LIB_DIR)/libmlx_Linux.a
 LIBFT := $(LIB_DIR)/libft.a
 MINIRT := minirt
 
@@ -68,7 +68,7 @@ $(LIBFT): | $(LIBFT_DIR) $(LIB_DIR)
 
 $(MLX): | $(MLX_DIR) $(LIB_DIR)
 	$(MAKE) -C $(MLX_DIR) all
-	cp $(MLX_DIR)/mlx_Linux.a $(MLX)
+	cp $(MLX_DIR)/libmlx_Linux.a $(MLX)
 
 clean:
 	rm -rf $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 13:46:18 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 14:28:07 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 static t_object_ops	g_plane_ops = {
-	.intersect = &plane_intersect,
+	.intersect = NULL,
 	.get_normal = NULL,
 	.rotate = NULL,
 	.translate = NULL,

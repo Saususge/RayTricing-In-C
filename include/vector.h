@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/19 12:01:36 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/29 19:40:43 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_mul(t_vec3 v, float s);
 t_vec3	vec3_div(t_vec3 v, float s);
 t_vec3	vec3_neg(t_vec3 v);
+t_vec3	vec3_hadamard(t_vec3 v1, t_vec3 v2);
 
 // dot product, cross product
 float	vec3_dot(t_vec3 v1, t_vec3 v2);

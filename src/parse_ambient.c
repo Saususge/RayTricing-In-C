@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 22:52:58 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 19:18:33 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,24 @@
 
 int	parse_ambient(void)
 {
-	t_ambient_light amb;
+	t_color			temp_color;
+	float			temp_float;
 	char *intensity_str;
 	char *rgb_str;
 
 	intensity_str = ft_strtok(NULL, " \t\n");
 	rgb_str = ft_strtok(NULL, " \t\n");
-	if (parse_float(intensity_str, &amb.intensity)
-		|| amb.intensity < 0.0f || amb.intensity > 1.0f)
+	if (parse_float(intensity_str, &temp_float)
+		|| temp_float < 0.0f || temp_float > 1.0f)
 		return (1);
-	if (parse_color(rgb_str, &amb.color))
+	if (parse_color(rgb_str, &temp_color))
 		return (1);
-	g_ambient_light = amb;
+	g_ambient_light = (t_ambient_light){
+		.intensity = (t_vec3){
+			.x = temp_color.r / 255.0f * temp_float,
+			.y = temp_color.g / 255.0f * temp_float,
+			.z = temp_color.b / 255.0f * temp_float
+		}
+	};
 	return (0);
 }

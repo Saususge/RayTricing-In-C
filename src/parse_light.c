@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 23:43:58 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 19:20:38 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,33 @@ int process_light_arr(void)
 
 int parse_light(void)
 {
-	t_light	light;
-	char	*pos_str;
-	char	*ratio_str;
-	char	*rgb_str;
+	t_light light;
+	char *pos_str;
+	char *intensity_str;
+	char *rgb_str;
+	float intensity;
+	t_color color;
 
 	if (process_light_arr())
 		return (1);
 	pos_str = ft_strtok(NULL, " \t\n");
-	ratio_str = ft_strtok(NULL, " \t\n");
+	intensity_str = ft_strtok(NULL, " \t\n");
 	rgb_str = ft_strtok(NULL, " \t\n");
 	if (parse_vec3(pos_str, &light.position))
 		return (1);
-	if (parse_float(ratio_str, &light.intensity)
-		|| light.intensity < 0.0f || light.intensity > 1.0f)
+	if (parse_float(intensity_str, &intensity) || intensity < 0.0f || intensity > 1.0f)
 		return (1);
 	if (rgb_str)
 	{
-		if (parse_color(rgb_str, &light.color))
+		if (parse_color(rgb_str, &color))
 			return (1);
 	}
 	else
-		light.color = (t_color){255, 255, 255};
+		color = (t_color){255, 255, 255};
+	// Convert color and intensity to t_vec3 intensity (range 0.0-1.0)
+	light.intensity.x = (color.r / 255.0f) * intensity;
+	light.intensity.y = (color.g / 255.0f) * intensity;
+	light.intensity.z = (color.b / 255.0f) * intensity;
 	g_lights[g_light_count++] = light;
 	return (0);
 }

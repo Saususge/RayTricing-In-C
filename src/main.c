@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/27 18:09:50 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 19:22:31 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,20 @@
 
 void	print_parsed_elems(void)
 {
-	printf("Ambient Light: intensity=%.2f, color=(%d, %d, %d)\n",
-		g_ambient_light.intensity,
-		g_ambient_light.color.r,
-		g_ambient_light.color.g,
-		g_ambient_light.color.b);
+	printf("Ambient Light: intensity=(%.2f, %.2f, %.2f)\n",
+		g_ambient_light.intensity.x,
+		g_ambient_light.intensity.y,
+		g_ambient_light.intensity.z);
 	printf("Camera: position=(%.2f, %.2f, %.2f), orientation=(%.2f, %.2f, %.2f), fov=%.2f\n",
 		g_camera.position.x, g_camera.position.y, g_camera.position.z,
 		g_camera.orientation.x, g_camera.orientation.y, g_camera.orientation.z,
 		g_camera.fov);
 	for (int i = 0; i < g_light_count; ++i)
 	{
-		printf("Light %d: position=(%.2f, %.2f, %.2f), intensity=%.2f, color=(%d, %d, %d)\n",
+		printf("Light %d: position=(%.2f, %.2f, %.2f), intensity=(%.2f, %.2f, %.2f)\n",
 			i + 1,
 			g_lights[i].position.x, g_lights[i].position.y, g_lights[i].position.z,
-			g_lights[i].intensity,
-			g_lights[i].color.r, g_lights[i].color.g, g_lights[i].color.b);
+			g_lights[i].intensity.x, g_lights[i].intensity.y, g_lights[i].intensity.z);
 	}
 	for (int i = 0; i < g_object_count; ++i)
 	{
