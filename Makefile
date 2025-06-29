@@ -17,6 +17,8 @@ ifdef DEBUG
 	CFLAGS += -g
 	# CFLAGS += -fsanitize=address
 	# LDFLAGS += -fsanitize=address
+else
+	CFLAGS += -O2
 endif
 
 SRC := \
