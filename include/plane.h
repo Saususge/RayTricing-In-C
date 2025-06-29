@@ -6,11 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:08:13 by chakim            #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/06/30 01:01:17 by chakim           ###   ########.fr       */
-=======
-/*   Updated: 2025/06/30 01:08:45 by wchoe            ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/06/30 01:54:55 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +16,11 @@
 # include "object.h"
 # include "vector.h"
 
-<<<<<<< Updated upstream
-t_object	create_plane(t_point point, t_vec3 normal, t_color color);
-int			plane_intersect(t_object *this, t_ray *ray, t_hit *hit);
-t_vec3		plane_get_normal(t_object *this, t_point *hit_point, t_ray *ray);
-void		plane_translate(t_object *this, t_vec3 offset);
-void		plane_rotate(t_object *this, t_vec3 angle);
-t_color		plane_get_color(t_object *this, t_point *hit_point);
-=======
 t_object	 create_plane(t_point point, t_vec3 normal, t_color color);
 int	plane_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound);
 int	plane_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound bound);
->>>>>>> Stashed changes
-
+t_vec3	plane_get_normal(t_object *this, t_point *hit_point);
+void	plane_translate(t_object *this, t_vec3 offset);
+void	plane_rotate(t_object *this, t_vec3 angle);
+t_color	plane_get_color(t_object *this);
 #endif

@@ -6,12 +6,11 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:25:13 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 17:00:28 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:57:04 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
-#include "test.h"
 
 float	vec3_length_squared(t_vec3 v)
 {

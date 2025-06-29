@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_camera.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/26 22:52:27 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 01:38:05 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int parse_camera(void)
+int	parse_camera(void)
 {
 	t_camera	camera;
 	char		*pos_str;

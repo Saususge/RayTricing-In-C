@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 00:54:10 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:54:47 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_object_ops
 	t_vec3		((*get_normal)(t_object * this, t_point * hit_point));
 	void		(*rotate)(t_object *this, t_vec3 angle);
 	void		((*translate)(t_object *this, t_vec3 offset));
-	t_color		((*get_color)(t_object *this, t_point * hit_point));
+	t_color		((*get_color)(t_object *this));
 }	t_object_ops;
 
 extern t_ambient_light	g_ambient_light;

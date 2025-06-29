@@ -6,12 +6,11 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:55:31 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/09 16:56:47 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:57:09 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
-#include "test.h"
 
 float	vec3_angle(t_vec3 v1, t_vec3 v2)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:05:33 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 01:42:24 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
-#include "test.h"
 #include "draw_pixels.h"
 #include <unistd.h>
 #include <fcntl.h>

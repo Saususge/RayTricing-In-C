@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:23:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:05:42 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:56:03 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include "rotate.h"
 #include <stdlib.h>
 
-t_vec3	plane_get_normal(t_object *this, t_point *hit_point, t_ray *ray)
+t_vec3	plane_get_normal(t_object *this, t_point *hit_point)
 {
+	(void)hit_point;
 	return (vec3_normalize(this->data.plane.normal));
 }
 
@@ -31,7 +32,7 @@ void	plane_rotate(t_object *this, t_vec3 angle)
 	(t_vec3)rotate_vector(this->data.plane.normal, angle);
 }
 
-t_color	plane_get_color(t_object *this, t_point *hit_point)
+t_color	plane_get_color(t_object *this)
 {
 	return (this->data.plane.color);
 }
