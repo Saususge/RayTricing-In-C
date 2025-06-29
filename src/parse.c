@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/27 13:15:22 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 04:06:06 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	dispatch_parse(const char *id)
 		return (parse_sphere());
 	if (!ft_strcmp(id, "pl"))
 		return (parse_plane());
-	// if (!ft_strcmp(id, "cy"))
-	// 	return (parse_cylinder());
+	if (!ft_strcmp(id, "cy"))
+		return (parse_cylinder());
 	return (1);
 }
 

@@ -20,6 +20,7 @@ ifdef DEBUG
 endif
 
 SRC := \
+	cylinder.c\
 	draw_pixels.c\
 	environment.c\
 	main.c\
@@ -30,6 +31,7 @@ SRC := \
 	parse_light.c\
 	parse_plane.c\
 	parse_sphere.c\
+	parse_cylinder.c\
 	parse_util.c\
 	plane_ops.c\
 	plane.c\

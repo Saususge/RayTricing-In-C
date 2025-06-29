@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:35:30 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 04:18:17 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct s_object_ops	t_object_ops;
 typedef enum e_type
 {
 	SPHERE = 0,
-	PLANE = 1
+	PLANE = 1,
+	CYLINDER = 2,
 }	t_type;
 
 // typedef struct s_color
@@ -71,10 +72,20 @@ typedef struct s_plane
 	t_vec3	normal;
 }	t_plane;
 
+typedef struct s_cylinder
+{
+	t_point		p1;
+	t_point		p2;
+	t_vec3		axis;
+	float		radius;
+	float		height;
+}	t_cylinder;
+
 typedef union u_obj_data
 {
-	struct s_sphere	sphere;
-	struct s_plane	plane;
+	struct s_sphere		sphere;
+	struct s_plane		plane;
+	struct s_cylinder	cylinder;
 }	t_obj_data;
 
 typedef struct s_object
