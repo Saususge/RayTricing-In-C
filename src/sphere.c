@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 23:12:02 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 23:34:43 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,19 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 	return (0);
 }
 
-static int clamp_color(int value)
-{
-	if (value < 0)
-		return 0;
-	if (value > 255)
-		return 255;
-	return value;
-}
+// static int clamp_color(int value)
+// {
+// 	if (value < 0)
+// 		return 0;
+// 	if (value > 255)
+// 		return 255;
+// 	return value;
+// }
 
 static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
 {
 	hit->t = t;
-	hit->point = vec3_to_point(vec3_add(ray->origin, vec3_mul(ray->direction, t)));
+	hit->point = vec3_lerp(ray->origin, ray->direction, t);
 	hit->normal = vec3_mul(vec3_sub(hit->point, sph->center), 1.0f / sph->radius);
 	hit->is_front_face = vec3_dot(ray->direction, hit->normal) < 0;
 	if (!hit->is_front_face)
@@ -103,28 +103,29 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 	t_vec3 view_dir = vec3_normalize(vec3_sub(g_camera.position, hit->point));
 	for (int i = 0; i < g_light_count; ++i)
 	{
-		t_light *light = g_lights + i;
-		t_vec3 light_dir = vec3_normalize(vec3_sub(light->position, hit->point));
-		float diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
-		float distance_sq = point_distance_squared(hit->point, light->position);
-		float attenuation = 1.0f / (distance_sq + 1.0f);
-		t_vec3 light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation);
-		t_ray shadow_ray = { hit->point, light_dir };
-		if (!hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point))))
-		{
-			diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
-			// Blinn-Phong specular
-			t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
-			float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
-			float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation;
-			t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
-			spec = vec3_add(spec, vec3_mul(spec_color, spec_factor));
-		}
+		t_light	*light = g_lights + i;
+		t_vec3	light_dir = vec3_normalize(vec3_sub(light->position, hit->point));
+		t_ray	shadow_ray = { hit->point, light_dir };
+		int		hit_shadow_flag = !hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point)));
+		float	diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
+		float	distance_sq = point_distance_squared(hit->point, light->position);
+		float	attenuation = 1.0f / (distance_sq + 1.0f);
+		t_vec3	light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation * hit_shadow_flag);
+		diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
+		// Blinn-Phong specular
+		t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
+		float spec_dot = fmaxf(vec3_dot(hit->normal, half_vec), 0.0f);
+		float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation * hit_shadow_flag;
+		t_vec3 spec_color = {255.0f, 255.0f, 255.0f};
+		spec = vec3_add(spec, vec3_mul(spec_color, spec_factor));
 	}
 	t_vec3 result = vec3_add(vec3_add(amb, diff), spec);
-	hit->color.r = clamp_color((int)result.x);
-	hit->color.g = clamp_color((int)result.y);
-	hit->color.b = clamp_color((int)result.z);
+	result = vec3_min(result, (t_vec3){255, 255, 255});
+	hit->color = (t_color){
+		.r = (int)result.x,
+		.g = (int)result.y,
+		.b = (int)result.z
+	};
 }
 
 int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
