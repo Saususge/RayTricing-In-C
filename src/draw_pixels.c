@@ -6,12 +6,11 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:09:36 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/17 14:01:22 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 00:55:02 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
-#include "test.h" // should change to main header
 
 void	pixel_put(t_data *data, int x, int y, int color)
 {

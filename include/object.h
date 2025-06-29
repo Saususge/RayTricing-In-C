@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 23:11:08 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 00:54:10 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct t_camera
 typedef struct t_light
 {
 	t_point		position;
-	t_vec3	intensity;
+	t_vec3		intensity;
 }	t_light;
 
 typedef struct s_ray
@@ -72,6 +72,7 @@ typedef struct s_plane
 	t_vec3	normal;
 	t_color	color;
 }	t_plane;
+
 typedef union u_obj_data
 {
 	struct s_sphere	sphere;
@@ -109,7 +110,6 @@ typedef struct s_object_ops
 	void		(*rotate)(t_object *this, t_vec3 angle);
 	void		((*translate)(t_object *this, t_vec3 offset));
 	t_color		((*get_color)(t_object *this, t_point * hit_point));
-	void		(*free)(t_object *this);
 }	t_object_ops;
 
 extern t_ambient_light	g_ambient_light;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 14:28:07 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 00:57:42 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "unistd.h"
 #include "vector.h"
 #include <stdlib.h>
+#include "rotate.h"
 
 static t_object_ops	g_plane_ops = {
 	.intersect = NULL,
 	.get_normal = NULL,
-	.rotate = NULL,
+	.rotate = rotate_vector,
 	.translate = NULL,
 	.get_color = NULL,
-	.free = NULL
 };
 
 t_object	create_plane(t_point point, t_vec3 normal, t_color color)

@@ -31,8 +31,10 @@ SRC := \
 	parse_plane.c\
 	parse_sphere.c\
 	parse_util.c\
+	plane_ops.c\
 	plane.c\
 	rotate.c\
+	sphere_ops.c\
 	sphere.c\
 	vector_arithmetic.c\
 	vector_calc.c\

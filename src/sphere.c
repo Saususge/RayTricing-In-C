@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 23:34:43 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 00:59:18 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@
 static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
 	.shadow_intersect = shpere_shadow_intersect,
-	.get_normal = NULL,
+	.get_normal = sphere_get_normal,
 	.rotate = NULL,
-	.translate = NULL,
-	.get_color = NULL,
-	.free = NULL
+	.translate = sphere_translate,
+	.get_color = sphere_get_color,
 };
 
 t_object	create_sphere(t_point center, float radius, t_color color)
