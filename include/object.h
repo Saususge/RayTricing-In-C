@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 19:33:16 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 23:11:08 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,13 @@ typedef struct s_t_bound
 
 typedef struct s_object_ops
 {
-	int			((*intersect)(const struct s_object *this, const t_ray *ray,
-				t_hit *hit, t_t_bound bound));
-	t_vec3		((*get_normal)(struct s_object * this,
-			t_point * hit_point));
-	void		(*rotate)(struct s_object *this,
-			t_vec3 angle);
-	void		((*translate)(struct s_object *this,
-				t_vec3 offset));
-	t_color		((*get_color)(struct s_object * this,
-			t_point * hit_point));
-	void		(*free)(struct s_object *this);
+	int			((*intersect)(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound));
+	int			((*shadow_intersect)(const t_object *this, const t_ray *ray, t_t_bound bound));
+	t_vec3		((*get_normal)(t_object * this, t_point * hit_point));
+	void		(*rotate)(t_object *this, t_vec3 angle);
+	void		((*translate)(t_object *this, t_vec3 offset));
+	t_color		((*get_color)(t_object *this, t_point * hit_point));
+	void		(*free)(t_object *this);
 }	t_object_ops;
 
 extern t_ambient_light	g_ambient_light;

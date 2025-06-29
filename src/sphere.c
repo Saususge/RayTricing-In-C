@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/29 20:42:55 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/29 23:12:02 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include <math.h>
 
 static t_object_ops	g_sphere_ops = {
-	.intersect = &sphere_intersect,
+	.intersect = sphere_intersect,
+	.shadow_intersect = shpere_shadow_intersect,
 	.get_normal = NULL,
 	.rotate = NULL,
 	.translate = NULL,
@@ -66,20 +67,21 @@ static void	calculate_sphere_equation(t_quad_eq *eq, const t_sphere *sph, const 
 // 	return (-1.0f);
 // }
 
-static int clamp_color(float c) {
-	if (c < 0) return 0;
-	if (c > 255) return 255;
-	return (int)c;
-}
-
 int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 {
-	t_hit	temp_hit;
-
 	for (int i = 0; i < g_object_count; ++i)
-		if (g_objects[i].ops->intersect(g_objects + i, ray, &temp_hit, (t_t_bound){t_min, t_max}))
+		if (g_objects[i].ops->shadow_intersect(g_objects + i, ray, (t_t_bound){t_min, t_max}))
 			return (1);
 	return (0);
+}
+
+static int clamp_color(int value)
+{
+	if (value < 0)
+		return 0;
+	if (value > 255)
+		return 255;
+	return value;
 }
 
 static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_sphere *sph)
@@ -99,7 +101,8 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 	const float shininess = 64.0f;
 	// View direction (from hit point to camera)
 	t_vec3 view_dir = vec3_normalize(vec3_sub(g_camera.position, hit->point));
-	for (int i = 0; i < g_light_count; ++i) {
+	for (int i = 0; i < g_light_count; ++i)
+	{
 		t_light *light = g_lights + i;
 		t_vec3 light_dir = vec3_normalize(vec3_sub(light->position, hit->point));
 		float diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
@@ -107,7 +110,8 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 		float attenuation = 1.0f / (distance_sq + 1.0f);
 		t_vec3 light_intensity = vec3_mul(light->intensity, g_k_d * diff_dot * attenuation);
 		t_ray shadow_ray = { hit->point, light_dir };
-		if (!hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point)))) {
+		if (!hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point))))
+		{
 			diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
 			// Blinn-Phong specular
 			t_vec3 half_vec = vec3_normalize(vec3_add(light_dir, view_dir));
@@ -118,9 +122,9 @@ static void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_s
 		}
 	}
 	t_vec3 result = vec3_add(vec3_add(amb, diff), spec);
-	hit->color.r = clamp_color(result.x);
-	hit->color.g = clamp_color(result.y);
-	hit->color.b = clamp_color(result.z);
+	hit->color.r = clamp_color((int)result.x);
+	hit->color.g = clamp_color((int)result.y);
+	hit->color.b = clamp_color((int)result.z);
 }
 
 int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
@@ -142,6 +146,29 @@ int	sphere_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bou
 		if (t < bound.min || t > bound.max)
 			return (0);
 	}
-	populate_hit_record(hit, t, ray, &sph);
+	if (hit)
+		populate_hit_record(hit, t, ray, &sph);
+	return (1);
+}
+
+int	shpere_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound bound)
+{
+	t_sphere	sph;
+	t_quad_eq	eq;
+	float		t;
+	float		sqrt_disc;
+
+	sph = this->data.sphere;
+	calculate_sphere_equation(&eq, &sph, ray);
+	if (eq.disc < 0)
+		return (0);
+	sqrt_disc = sqrtf(eq.disc);
+	t = -eq.b - sqrt_disc / eq.a;
+	if (t < bound.min || t > bound.max)
+	{
+		t = -eq.b + sqrt_disc / eq.a;
+		if (t < bound.min || t > bound.max)
+			return (0);
+	}
 	return (1);
 }
