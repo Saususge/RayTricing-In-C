@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:10:12 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 02:12:05 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,6 @@
 // 	draw_pixels(mlx, mlx_win, &img);
 // 	mlx_loop(mlx);
 // }
-
-typedef struct s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-} t_data;
 
 void	print_parsed_elems(void)
 {
