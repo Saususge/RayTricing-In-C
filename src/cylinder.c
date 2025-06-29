@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 04:10:29 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 04:30:41 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,40 @@ static t_object_ops	g_cylinder_ops = {
 	.translate = NULL,
 };
 
-t_object	create_cylinder(t_point p1, t_point p2, float radius, t_vec3 color)
+t_object	create_cylinder(t_point center, t_vec3 axis, float radius, float height, t_vec3 color)
 {
 	return ((t_object){
 		.type = CYLINDER,
 		.ops = &g_cylinder_ops,
 		.color = color,
 		.data.cylinder = (t_cylinder){
-		.p1 = p1,
-		.p2 = p2,
-		.axis = vec3_normalize(vec3_sub(p2, p1)),
-		.radius = radius,
-		.height = vec3_length(vec3_sub(p2, p1)),
-	}
+			.center = center,
+			.axis = axis,
+			.radius = radius,
+			.height = height,
+		}
 	});
 }
 
 static void calculate_cylinder_equation(t_quad_eq *eq, const t_cylinder *cyl, const t_ray *ray)
 {
-	t_vec3 delta_p = vec3_sub(ray->origin, cyl->p1);
-	t_vec3 v_cross_axis = vec3_cross(ray->direction, cyl->axis);
-	t_vec3 dp_cross_axis = vec3_cross(delta_p, cyl->axis);
-	
-	eq->a = vec3_dot(v_cross_axis, v_cross_axis);
-	eq->b = 2.0f * vec3_dot(v_cross_axis, dp_cross_axis);
-	eq->c = vec3_dot(dp_cross_axis, dp_cross_axis) - (cyl->radius * cyl->radius);
-	eq->disc = eq->b * eq->b - 4.0f * eq->a * eq->c;
+    t_point p1 = vec3_sub(cyl->center, vec3_mul(cyl->axis, cyl->height * 0.5f));
+    t_vec3 delta_p = vec3_sub(ray->origin, p1);
+    t_vec3 v_cross_axis = vec3_cross(ray->direction, cyl->axis);
+    t_vec3 dp_cross_axis = vec3_cross(delta_p, cyl->axis);
+
+    eq->a = vec3_dot(v_cross_axis, v_cross_axis);
+    eq->b = 2.0f * vec3_dot(v_cross_axis, dp_cross_axis);
+    eq->c = vec3_dot(dp_cross_axis, dp_cross_axis) - (cyl->radius * cyl->radius);
+    eq->disc = eq->b * eq->b - 4.0f * eq->a * eq->c;
 }
 
 static int check_height_bounds(const t_cylinder *cyl, t_point hit_point)
 {
-	t_vec3 p1_to_hit = vec3_sub(hit_point, cyl->p1);
-	float projection = vec3_dot(p1_to_hit, cyl->axis);
-	return (projection >= 0.0f && projection <= cyl->height);
+    t_point p1 = vec3_sub(cyl->center, vec3_mul(cyl->axis, cyl->height * 0.5f));
+    t_vec3 p1_to_hit = vec3_sub(hit_point, p1);
+    float projection = vec3_dot(p1_to_hit, cyl->axis);
+    return (projection >= 0.0f && projection <= cyl->height);
 }
 
 static int intersect_cap(const t_cylinder *cyl, const t_ray *ray, t_point cap_center, float *t, t_t_bound bound)
@@ -109,9 +110,11 @@ int cylinder_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_b
 		}
 	}
 	float t_cap;
-	if (intersect_cap(&cyl, ray, cyl.p1, &t_cap, bound))
+	t_point p1 = vec3_sub(cyl.center, vec3_mul(cyl.axis, cyl.height * 0.5f));
+	t_point p2 = vec3_add(cyl.center, vec3_mul(cyl.axis, cyl.height * 0.5f));
+	if (intersect_cap(&cyl, ray, p1, &t_cap, bound))
 		t_candidates[candidate_count++] = t_cap;
-	if (intersect_cap(&cyl, ray, cyl.p2, &t_cap, bound))
+	if (intersect_cap(&cyl, ray, p2, &t_cap, bound))
 		t_candidates[candidate_count++] = t_cap;
 	if (candidate_count == 0)
 		return (0);
@@ -151,23 +154,26 @@ int cylinder_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound 
 		}
 	}
 	float t_cap;
-	if (intersect_cap(&cyl, ray, cyl.p1, &t_cap, bound))
+	t_point p1 = vec3_sub(cyl.center, vec3_mul(cyl.axis, cyl.height * 0.5f));
+	t_point p2 = vec3_add(cyl.center, vec3_mul(cyl.axis, cyl.height * 0.5f));
+	if (intersect_cap(&cyl, ray, p1, &t_cap, bound))
 		return (1);
-	if (intersect_cap(&cyl, ray, cyl.p2, &t_cap, bound))
+	if (intersect_cap(&cyl, ray, p2, &t_cap, bound))
 		return (1);
 	return (0);
 }
 
 t_vec3 cylinder_get_normal(const t_object *this, t_point *hit_point)
 {
-	t_cylinder cyl = this->data.cylinder;
-	t_vec3 p1_to_hit = vec3_sub(*hit_point, cyl.p1);
-	float projection = vec3_dot(p1_to_hit, cyl.axis);
-	if (fabs(projection) < EPSILON)
-		return (vec3_neg(cyl.axis));
-	if (fabs(projection - cyl.height) < EPSILON)
-		return (cyl.axis);
-	t_vec3 projection_point = vec3_add(cyl.p1, vec3_mul(cyl.axis, projection));
-	t_vec3 normal = vec3_sub(*hit_point, projection_point);
-	return (vec3_normalize(normal));
+    t_cylinder cyl = this->data.cylinder;
+    t_point p1 = vec3_sub(cyl.center, vec3_mul(cyl.axis, cyl.height * 0.5f));
+    t_vec3 p1_to_hit = vec3_sub(*hit_point, p1);
+    float projection = vec3_dot(p1_to_hit, cyl.axis);
+    if (fabs(projection) < EPSILON)
+        return (vec3_neg(cyl.axis));
+    if (fabs(projection - cyl.height) < EPSILON)
+        return (cyl.axis);
+    t_vec3 projection_point = vec3_add(p1, vec3_mul(cyl.axis, projection));
+    t_vec3 normal = vec3_sub(*hit_point, projection_point);
+    return (vec3_normalize(normal));
 }

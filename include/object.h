@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 04:18:17 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 04:24:09 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	t_point		p1;
-	t_point		p2;
+	t_point		center;
 	t_vec3		axis;
 	float		radius;
 	float		height;

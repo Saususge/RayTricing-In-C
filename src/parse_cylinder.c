@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 03:18:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 04:12:51 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 04:25:55 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int parse_cylinder(void)
 
     radius = diameter * 0.5f;
     t_vec3 axis = vec3_normalize(orient);
-    t_point endp = vec3_add(center, vec3_mul(axis, height));
-    g_objects[g_object_count++] = create_cylinder(center, endp, radius, color);
+
+    g_objects[g_object_count++] = create_cylinder(center, axis, radius, height, color);
     return (0);
 }
