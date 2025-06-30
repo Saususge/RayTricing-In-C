@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:41:49 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 02:33:39 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 14:15:59 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	parse_light(void);
 int	parse_sphere(void);
 int	parse_plane(void);
 int	parse_cylinder(void);
+int	parse_cone(void);
 // int	parse_color(const char *color_str, t_color *out);
 int	parse_float(const char *float_str, float *out);
 int	parse_vec3(char *vec_str, t_vec3 *out);

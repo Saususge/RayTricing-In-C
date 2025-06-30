@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 10:39:43 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 14:15:11 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,17 @@ void	print_parsed_elems(void)
 				pl.point.x, pl.point.y, pl.point.z,
 				pl.normal.x, pl.normal.y, pl.normal.z);
 		}
+		else if (obj.type == CONE)
+		{
+			t_cone co = obj.data.cone;
+			printf("Cone %d: center=(%.2f, %.2f, %.2f), axis=(%.2f, %.2f, %.2f), radius=%.2f, height=%.2f,",
+				i + 1,
+				co.center.x, co.center.y, co.center.z,
+				co.axis.x, co.axis.y, co.axis.z,
+				co.radius, co.height);
+		}
 		printf(" color=(%d, %d, %d)\n",
-			(int)obj.color.x, (int)obj.color.y,  (int)obj.color.z);
+			(int)obj.color.x, (int)obj.color.y,(int)obj.color.z);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 09:55:21 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 14:01:23 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_type
 	SPHERE = 0,
 	PLANE = 1,
 	CYLINDER = 2,
+	CONE = 3,
 }	t_type;
 
 // typedef struct s_color
@@ -82,11 +83,20 @@ typedef struct s_cylinder
 	float		height;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_point	center;
+	t_vec3	axis;
+	float	height;
+	float	radius;
+}	t_cone;
+
 typedef union u_obj_data
 {
 	struct s_sphere		sphere;
 	struct s_plane		plane;
 	struct s_cylinder	cylinder;
+	struct s_cone		cone;
 }	t_obj_data;
 
 typedef struct s_object

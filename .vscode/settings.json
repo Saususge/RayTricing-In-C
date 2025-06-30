@@ -3,6 +3,12 @@
 		"sphere.h": "c",
 		"plane.h": "c",
 		"rotate.h": "c",
-		"object.h": "c"
+		"object.h": "c",
+		"fcntl.h": "c",
+		"unistd.h": "c",
+		"stdio.h": "c",
+		"time.h": "c",
+		"parse.h": "c",
+		"draw_pixels.h": "c"
 	}
 }

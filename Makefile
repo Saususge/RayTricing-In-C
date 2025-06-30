@@ -22,6 +22,8 @@ else
 endif
 
 SRC := \
+	cone.c\
+	parse_cone.c\
 	cylinder.c\
 	draw_pixels.c\
 	environment.c\
