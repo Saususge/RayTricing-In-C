@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 07:02:17 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 10:32:25 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
 	.shadow_intersect = shpere_shadow_intersect,
 	.get_normal = sphere_get_normal,
-	.rotate = NULL,
-	.translate = NULL,
+	.rotate = sphere_rotate,
+	.translate = sphere_translate,
 	// .free = NULL
 };
 
@@ -49,8 +49,8 @@ static void	calculate_sphere_equation(t_quad_eq *eq, const t_sphere *sph, const 
 	t_vec3	oc;
 
 	oc = vec3_sub(ray->origin, sph->center);
-	eq->a = vec3_dot(ray->direction, ray->direction);
-	eq->b = vec3_dot(oc, ray->direction);
+	eq->a = vec3_dot(ray->dir, ray->dir);
+	eq->b = vec3_dot(oc, ray->dir);
 	eq->c = vec3_dot(oc, oc) - (sph->radius * sph->radius);
 	eq->disc = (eq->b * eq->b) - (eq->a * eq->c);
 }
@@ -91,16 +91,16 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *this)
 {
 	hit->t = t;
-	hit->point = vec3_add(ray->origin, vec3_mul(ray->direction, t));
+	hit->point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
 	hit->normal = this->ops->get_normal(this, &hit->point);
-	hit->is_front_face = vec3_dot(ray->direction, hit->normal) < 0;
+	hit->is_front_face = vec3_dot(ray->dir, hit->normal) < 0;
 	if (!hit->is_front_face)
 		hit->normal = vec3_neg(hit->normal);
 	hit->object = (t_object *)this;
 
 	// Lambertian shading with multiple lights + Phong specular
 	t_vec3 color = this->color;
-	t_vec3 amb = vec3_hadamard(vec3_mul(g_ambient_light.intensity, g_k_a), color);
+	t_vec3 amb = vec3_hadamard(vec3_mul(g_amb_light.intensity, g_k_a), color);
 	t_vec3 diff = {0, 0, 0};
 	t_vec3 spec = {0, 0, 0};
 	const float shininess = 64.0f;
@@ -120,7 +120,7 @@ void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *
 			diff = vec3_add(diff, vec3_hadamard(light_intensity, color));
 			// Phong specular (replace Blinn-Phong)
 			t_vec3 reflect_dir = vec3_normalize(vec3_reflect(vec3_neg(light_dir), hit->normal));
-			t_vec3 view_dir = vec3_normalize(vec3_sub(g_camera.position, hit->point));
+			t_vec3 view_dir = vec3_normalize(vec3_sub(g_cam.pos, hit->point));
 			float spec_dot = fmaxf(vec3_dot(view_dir, reflect_dir), 0.0f);
 			float spec_factor = powf(spec_dot, shininess) * g_k_s * attenuation;
 			t_vec3 spec_color = {255.0f, 255.0f, 255.0f};

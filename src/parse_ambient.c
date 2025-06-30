@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 02:24:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 09:55:21 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parse_ambient(void)
 		return (1);
 	if (parse_vec3(rgb_str, &temp_color))
 		return (1);
-	g_ambient_light = (t_ambient_light){
+	g_amb_light = (t_ambient_light){
 		.intensity = (t_vec3){
 			.x = temp_color.x / 255.0f * temp_float,
 			.y = temp_color.y / 255.0f * temp_float,

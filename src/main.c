@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 07:03:15 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 10:39:43 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-	
-// int	main(void)
-// {
-// 	t_data	img;
-// 	t_scene	scene;
-// 	void	*mlx;
-// 	void	*mlx_win;
-
-// 	init_test(&scene);
-// 	mlx = mlx_init();
-// 	mlx_win = mlx_new_window(mlx, 1280, 720, "mini_rt");
-// 	draw_pixels(mlx, mlx_win, &img);
-// 	mlx_loop(mlx);
-// }
 
 void	print_parsed_elems(void)
 {
 	printf("Ambient Light: intensity=(%.2f, %.2f, %.2f)\n",
-		g_ambient_light.intensity.x,
-		g_ambient_light.intensity.y,
-		g_ambient_light.intensity.z);
-	printf("Camera: position=(%.2f, %.2f, %.2f), orientation=(%.2f, %.2f, %.2f), fov=%.2f\n",
-		g_camera.position.x, g_camera.position.y, g_camera.position.z,
-		g_camera.orientation.x, g_camera.orientation.y, g_camera.orientation.z,
-		g_camera.fov);
+		g_amb_light.intensity.x,
+		g_amb_light.intensity.y,
+		g_amb_light.intensity.z);
+	printf("Camera: pos=(%.2f, %.2f, %.2f), dir=(%.2f, %.2f, %.2f), fov=%.2f\n",
+		g_cam.pos.x, g_cam.pos.y, g_cam.pos.z,
+		g_cam.dir.x, g_cam.dir.y, g_cam.dir.z,
+		g_cam.fov);
 	for (int i = 0; i < g_light_count; ++i)
 	{
-		printf("Light %d: position=(%.2f, %.2f, %.2f), intensity=(%.2f, %.2f, %.2f)\n",
+		printf("Light %d: pos=(%.2f, %.2f, %.2f), intensity=(%.2f, %.2f, %.2f)\n",
 			i + 1,
 			g_lights[i].position.x, g_lights[i].position.y, g_lights[i].position.z,
 			g_lights[i].intensity.x, g_lights[i].intensity.y, g_lights[i].intensity.z);
@@ -94,7 +80,8 @@ int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
 
 	for (int i = 0; i < g_object_count; ++i)
 	{
-		if (g_objects[i].ops->intersect(g_objects + i, ray, &current_hit, (t_t_bound){t_min, closest_so_far}))
+		if (g_objects[i].ops->intersect(g_objects + i, ray,
+			&current_hit, (t_t_bound){t_min, closest_so_far}))
 		{
 			hit_anything = 1;
 			closest_so_far = current_hit.t;
@@ -106,24 +93,14 @@ int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
 
 #include "event.h"
 
-int	key_hook(int keycode, void *mlx)
-{
-	if (keycode == ESC)
-	{
-		mlx_loop_end(mlx);
-		return (0);
-	}
-	return (0);
-}
-
 typedef struct s_viewport
 {
-	int	width;
-	int	height;
+	int		width;
+	int		height;
 	float	aspect_ratio;
 	float	focal_length;
-	float	view_width;
-	float	view_height;
+	float	view_w;
+	float	view_h;
 	t_vec3	vup;
 	t_vec3	view_u;
 	t_vec3	view_v;
@@ -133,8 +110,129 @@ typedef struct s_viewport
 	t_vec3	pixel_origin;
 }	t_viewport;
 
+int	g_camera_choosed;
+int	g_light_choosed;
+int	g_light_index;
 t_viewport	g_viewport;
 t_object	*g_choosen_object;
+
+void	init_viewport(void)
+{
+	g_viewport.aspect_ratio = 21.0f / 9.0f;
+	g_viewport.width = 1680;
+	g_viewport.height = (int)(g_viewport.width / g_viewport.aspect_ratio);
+	g_viewport.focal_length = 1.0f;
+	g_viewport.view_w = 2.0f * g_viewport.focal_length * tan(g_cam.fov * M_PI / 360.0f);
+	g_viewport.view_h = g_viewport.view_w / g_viewport.aspect_ratio;
+	g_viewport.vup = vec3_create(0.0f, 1.0f, 0.0f);
+	g_viewport.view_u = vec3_mul(
+		vec3_normalize(vec3_cross(g_cam.dir, g_viewport.vup)),
+		g_viewport.view_w);
+	g_viewport.view_v = vec3_mul(
+		vec3_normalize(vec3_cross(g_viewport.view_u, g_cam.dir)),
+		-g_viewport.view_h);
+	g_viewport.view_u_per_pixel = vec3_mul(g_viewport.view_u,
+		1.0f / (float)g_viewport.width);
+	g_viewport.view_v_per_pixel = vec3_mul(g_viewport.view_v,
+		1.0f / (float)g_viewport.height);
+	g_viewport.view_upper_left = vec3_sub(g_cam.pos,
+		vec3_add(
+			vec3_mul(g_cam.dir, -g_viewport.focal_length),
+			vec3_add(
+				vec3_mul(g_viewport.view_u, 0.5f),
+				vec3_mul(g_viewport.view_v, 0.5f))));
+	g_viewport.pixel_origin = vec3_add(g_viewport.view_upper_left,
+		vec3_mul(vec3_add(g_viewport.view_v_per_pixel, g_viewport.view_u_per_pixel), 0.5f));
+}
+
+void	translate(t_vec3 offset)
+{
+	if (g_camera_choosed)
+	{
+		g_cam.pos = vec3_add(g_cam.pos, offset);
+		init_viewport();
+	}
+	else if (g_light_choosed)
+		g_lights[g_light_index].position = vec3_add(g_lights[g_light_index].position, offset);
+	else if (g_choosen_object)
+		g_choosen_object->ops->translate(g_choosen_object, offset);
+}
+
+#include "rotate.h"
+
+void	rotate(t_vec3 angle)
+{
+	if (g_camera_choosed)
+	{
+		g_cam.dir = vec3_normalize(rotate_vector(g_cam.dir, angle));
+		init_viewport();
+	}
+	else if (g_light_choosed)
+		printf("Cannot rotate light\n");
+	else if (g_choosen_object)
+		g_choosen_object->ops->rotate(g_choosen_object, angle);
+}
+
+t_data	g_img;
+void	*g_mlx;
+void	*g_mlx_win;
+
+void	render(void);
+
+int	key_hook(int keycode, void *mlx)
+{
+	if (keycode == ESC)
+	{
+		mlx_loop_end(mlx);
+		return (0);
+	}
+	else if (keycode == '1')
+	{
+		g_camera_choosed = 1;
+		g_light_choosed = 0;
+		printf("Camera selected\n");
+		return (0);
+	}
+	else if (keycode == '2')
+	{
+		g_camera_choosed = 0;
+		if (g_light_choosed)
+			g_light_index = (g_light_index + 1) % g_light_count;
+		g_light_choosed = 1;
+		printf("Light %d selected\n", g_light_index + 1);
+		return (0);
+	}
+	else if (keycode == 'q')
+		translate((t_vec3){0.5f, 0.0f, 0.0f});
+	else if (keycode == 'a')
+		translate((t_vec3){-0.5f, 0.0f, 0.0f});
+	else if (keycode == 'w')
+		translate((t_vec3){0.0f, 0.5f, 0.0f});
+	else if (keycode == 's')
+		translate((t_vec3){0.0f, -0.5f, 0.0f});
+	else if (keycode == 'e')
+		translate((t_vec3){0.0f, 0.0f, 0.5f});
+	else if (keycode == 'd')
+		translate((t_vec3){0.0f, 0.0f, -0.5f});
+	else if (keycode == 'p')
+		rotate((t_vec3){45, 0, 0});
+	else if (keycode == 'l')
+		rotate((t_vec3){-45, 0, 0});
+	else if (keycode == '[')
+		rotate((t_vec3){0, 45, 0});
+	else if (keycode == ';')
+		rotate((t_vec3){0, -45, 0});
+	else if (keycode == ']')
+		rotate((t_vec3){0, 0, 45});
+	else if (keycode == '\'')
+		rotate((t_vec3){0, 0, -45});
+
+	render();
+	mlx_put_image_to_window(mlx, g_mlx_win, g_img.img, 0, 0);
+	// else if (keycode == 'r' && g_choosen_object)
+	// 	g_choosen_object->ops->rotate(g_choosen_object, (t_vec3){M_PI / 4, M_PI / 4, M_PI / 4});
+	return (0);
+}
 
 int	mouse_hook(int button, int x, int y, void *mlx)
 {
@@ -142,23 +240,47 @@ int	mouse_hook(int button, int x, int y, void *mlx)
 	if (button == 1) // Left mouse button
 	{
 		t_vec3 pixel_pos = vec3_add(g_viewport.pixel_origin, vec3_add(vec3_mul(g_viewport.view_u_per_pixel, (float)x), vec3_mul(g_viewport.view_v_per_pixel, (float)y)));
-		t_vec3 ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_camera.position));
-		t_ray ray = {.origin = g_camera.position, .direction = ray_direction};
+		t_vec3 ray_dir = vec3_normalize(vec3_sub(pixel_pos, g_cam.pos));
+		t_ray ray = {.origin = g_cam.pos, .dir = ray_dir};
 		t_hit hit;
-		hit_objects(&ray, 0.0f, INFINITY, &hit);
-		g_choosen_object = hit.object;
-		if (g_choosen_object->type == SPHERE)
-			printf("Sphere %ld selected\n", g_choosen_object - g_objects + 1);
-		else if (g_choosen_object->type == PLANE)
-			printf("Plane %ld selected\n", g_choosen_object - g_objects + 1);
-		else if (g_choosen_object->type == CYLINDER)
-			printf("Cylinder %ld selected\n", g_choosen_object - g_objects + 1);
+		if (hit_objects(&ray, 0.0f, INFINITY, &hit))
+		{
+			g_camera_choosed = 0;
+			g_light_choosed = 0;
+			g_choosen_object = hit.object;
+			printf("Object %ld(%s) selected\n",
+				g_choosen_object - g_objects + 1,
+				g_choosen_object->type == SPHERE ? "Sphere" :
+				g_choosen_object->type == PLANE ? "Plane" :
+				g_choosen_object->type == CYLINDER ? "Cylinder" : "Unknown");
+		}
 	}
 	else if (button == 2) // Right mouse button
 		printf("Mouse right button clicked at (%d, %d)\n", x, y);
 	else if (button == 3) // Middle mouse button
 		printf("Mouse middle button clicked at (%d, %d)\n", x, y);
 	return (0);
+}
+
+void	render(void)
+{
+	clock_t start_time = clock();
+	for (int y = 0; y < g_viewport.height; ++y)
+	{
+		for (int x = 0; x < g_viewport.width; ++x)
+		{
+			t_vec3 pixel_pos = vec3_add(g_viewport.pixel_origin, vec3_add(vec3_mul(g_viewport.view_u_per_pixel, (float)x), vec3_mul(g_viewport.view_v_per_pixel, (float)y)));
+			t_vec3 ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_cam.pos));
+			t_ray ray = {.origin = g_cam.pos, .dir = ray_direction};
+			t_hit hit;
+			hit.color = (t_vec3){0.0f, 0.0f, 0.0f};
+			hit_objects(&ray, 0.0f, INFINITY, &hit);
+			my_mlx_pixel_put(&g_img, x, y, (int)hit.color.x << 16 | (int)hit.color.y << 8 | (int)hit.color.z);
+		}
+	}
+	clock_t end_time = clock();
+	double elapsed_sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+	printf("Rendering time: %.3f seconds\n", elapsed_sec);
 }
 
 int	main(int argc, char **argv)
@@ -177,55 +299,22 @@ int	main(int argc, char **argv)
 	close(fd);
 
 	print_parsed_elems();
+	init_viewport();
 
-	clock_t start_time = clock();
-
-	g_viewport.aspect_ratio = 21.0f / 9.0f;
-	g_viewport.width = 1680;
-	g_viewport.height = (int)(g_viewport.width / g_viewport.aspect_ratio);
-	g_viewport.focal_length = 1.0f;
-	g_viewport.view_width = 2.0f * g_viewport.focal_length * tan(g_camera.fov * M_PI / 360.0f);
-	g_viewport.view_height = g_viewport.view_width / g_viewport.aspect_ratio;
-	g_viewport.vup = vec3_create(0.0f, 1.0f, 0.0f);
-	g_viewport.view_u = vec3_mul(vec3_normalize(vec3_cross(g_camera.orientation, g_viewport.vup)), g_viewport.view_width);
-	g_viewport.view_v = vec3_mul(vec3_normalize(vec3_cross(g_viewport.view_u, g_camera.orientation)), -g_viewport.view_height);
-	g_viewport.view_u_per_pixel = vec3_mul(g_viewport.view_u, 1.0f / (float)g_viewport.width);
-	g_viewport.view_v_per_pixel = vec3_mul(g_viewport.view_v, 1.0f / (float)g_viewport.height);
-	g_viewport.view_upper_left = vec3_sub(g_camera.position, vec3_add(vec3_mul(g_camera.orientation, -g_viewport.focal_length), vec3_add(vec3_mul(g_viewport.view_u, 0.5f), vec3_mul(g_viewport.view_v, 0.5f))));
-	g_viewport.pixel_origin = vec3_add(g_viewport.view_upper_left, vec3_mul(vec3_add(g_viewport.view_v_per_pixel, g_viewport.view_u_per_pixel), 0.5f));
-
-	t_data img;
-	void *mlx = mlx_init();
-	void *mlx_win = mlx_new_window(mlx, g_viewport.width, g_viewport.height, "miniRT");
-	img.img = mlx_new_image(mlx, g_viewport.width, g_viewport.height);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	for (int y = 0; y < g_viewport.height; ++y)
-	{
-		for (int x = 0; x < g_viewport.width; ++x)
-		{
-			t_vec3 pixel_pos = vec3_add(g_viewport.pixel_origin, vec3_add(vec3_mul(g_viewport.view_u_per_pixel, (float)x), vec3_mul(g_viewport.view_v_per_pixel, (float)y)));
-			t_vec3 ray_direction = vec3_normalize(vec3_sub(pixel_pos, g_camera.position));
-			t_ray ray = {.origin = g_camera.position, .direction = ray_direction};
-			t_hit hit;
-			hit.color = (t_vec3){0.0f, 0.0f, 0.0f};
-			hit_objects(&ray, 0.0f, INFINITY, &hit);
-			my_mlx_pixel_put(&img, x, y, (int)hit.color.x << 16 | (int)hit.color.y << 8 | (int)hit.color.z);
-		}
-	}
-
-	clock_t end_time = clock();
-	double elapsed_sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-	printf("Rendering time: %.3f seconds\n", elapsed_sec);
-
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_key_hook(mlx_win, key_hook, mlx);
-	mlx_mouse_hook(mlx_win, mouse_hook, mlx);
-	mlx_hook(mlx_win, 33, 0, mlx_loop_end, mlx);
-	mlx_loop(mlx);
-	mlx_destroy_image(mlx, img.img);
-	mlx_destroy_window(mlx, mlx_win);
-	mlx_destroy_display(mlx);
-	free(mlx);
+	g_mlx = mlx_init();
+	g_mlx_win = mlx_new_window(g_mlx, g_viewport.width, g_viewport.height, "miniRT");
+	mlx_key_hook(g_mlx_win, key_hook, g_mlx);
+	mlx_mouse_hook(g_mlx_win, mouse_hook, g_mlx);
+	mlx_hook(g_mlx_win, 33, 0, mlx_loop_end, g_mlx);
+	g_img.img = mlx_new_image(g_mlx, g_viewport.width, g_viewport.height);
+	g_img.addr = mlx_get_data_addr(g_img.img, &g_img.bits_per_pixel, &g_img.line_length, &g_img.endian);
+	render();
+	mlx_put_image_to_window(g_mlx, g_mlx_win, g_img.img, 0, 0);
+	mlx_loop(g_mlx);
+	mlx_destroy_image(g_mlx, g_img.img);
+	mlx_destroy_window(g_mlx, g_mlx_win);
+	mlx_destroy_display(g_mlx);
+	free(g_mlx);
 
 	free(g_lights);
 	free(g_objects);

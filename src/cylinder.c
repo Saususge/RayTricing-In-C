@@ -6,12 +6,13 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 06:34:14 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 10:43:09 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cylinder.h"
 #include "vector.h"
+#include "rotate.h"
 #include <unistd.h>
 
 static void calculate_cylinder_equation(t_quad_eq *eq, const t_cylinder *cyl, const t_ray *ray);
@@ -21,12 +22,30 @@ int cylinder_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_b
 int cylinder_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound bound);
 t_vec3 cylinder_get_normal(const t_object *this, t_point *hit_point);
 
+void	cylinder_translate(t_object *this, t_vec3 offset)
+{
+	this->data.cylinder.p1 = vec3_add(this->data.cylinder.p1, offset);
+	this->data.cylinder.p2 = vec3_add(this->data.cylinder.p2, offset);
+	this->data.cylinder.center = vec3_add(this->data.cylinder.center, offset);
+}
+
+void	cylinder_rotate(t_object *this, t_vec3 angle)
+{
+	this->data.cylinder.axis = rotate_vector(this->data.cylinder.axis, angle);
+	this->data.cylinder.p1 = vec3_add(
+		this->data.cylinder.center,
+		vec3_mul(this->data.cylinder.axis, -this->data.cylinder.height * 0.5f));
+	this->data.cylinder.p2 = vec3_add(
+		this->data.cylinder.center,
+		vec3_mul(this->data.cylinder.axis, this->data.cylinder.height * 0.5f));
+}
+
 static t_object_ops	g_cylinder_ops = {
 	.intersect = cylinder_intersect,
 	.shadow_intersect = cylinder_shadow_intersect,
 	.get_normal = cylinder_get_normal,
-	.rotate = NULL,
-	.translate = NULL,
+	.rotate = cylinder_rotate,
+	.translate = cylinder_translate,
 };
 
 t_object	create_cylinder(t_point center, t_vec3 axis, float radius, float height, t_vec3 color)
@@ -50,7 +69,7 @@ static void calculate_cylinder_equation(t_quad_eq *eq, const t_cylinder *cyl, co
 {
     t_point p1 = vec3_sub(cyl->center, vec3_mul(cyl->axis, cyl->height * 0.5f));
     t_vec3 delta_p = vec3_sub(ray->origin, p1);
-    t_vec3 v_cross_axis = vec3_cross(ray->direction, cyl->axis);
+    t_vec3 v_cross_axis = vec3_cross(ray->dir, cyl->axis);
     t_vec3 dp_cross_axis = vec3_cross(delta_p, cyl->axis);
 
     eq->a = vec3_dot(v_cross_axis, v_cross_axis);
@@ -68,7 +87,7 @@ static int check_height_bounds(const t_cylinder *cyl, t_point hit_point)
 
 static int intersect_cap(const t_cylinder *cyl, const t_ray *ray, t_point cap_center, float *t, t_t_bound bound)
 {
-	float denom = vec3_dot(ray->direction, cyl->axis);
+	float denom = vec3_dot(ray->dir, cyl->axis);
 	if (fabs(denom) < EPSILON)
 		return (0);
 	t_vec3 oc = vec3_sub(cap_center, ray->origin);
@@ -76,7 +95,7 @@ static int intersect_cap(const t_cylinder *cyl, const t_ray *ray, t_point cap_ce
 	
 	if (*t < bound.min || *t > bound.max)
 		return (0);
-	t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->direction, *t));
+	t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, *t));
 	t_vec3 cap_to_hit = vec3_sub(hit_point, cap_center);
 	float dist_sq = vec3_dot(cap_to_hit, cap_to_hit);
 	
@@ -96,13 +115,13 @@ int cylinder_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_b
 	{
 		float sqrt_disc = sqrtf(eq.disc);
 		float t = (-eq.b - sqrt_disc) / (eq.a);
-		t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->direction, t));
+		t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
 		if (t > bound.min && t < bound.max && check_height_bounds(&cyl, hit_point))
 			t_candidates[candidate_count++] = t;
 		else
 		{
 			t = (-eq.b + sqrt_disc) / (eq.a);
-			hit_point = vec3_add(ray->origin, vec3_mul(ray->direction, t));
+			hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
 			if (t > bound.min && t < bound.max && check_height_bounds(&cyl, hit_point))
 				t_candidates[candidate_count++] = t;
 		}
@@ -135,13 +154,13 @@ int cylinder_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound 
 	{
 		float sqrt_disc = sqrtf(eq.disc);
 		float t = (-eq.b - sqrt_disc) / (eq.a);
-		t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->direction, t));
+		t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
 		if (t > bound.min && t < bound.max && check_height_bounds(&cyl, hit_point))
 			return (1);
 		else
 		{
 			t = (-eq.b + sqrt_disc) / (eq.a);
-			hit_point = vec3_add(ray->origin, vec3_mul(ray->direction, t));
+			hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
 			if (t > bound.min && t < bound.max && check_height_bounds(&cyl, hit_point))
 				return (1);
 		}

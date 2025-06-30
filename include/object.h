@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 04:46:08 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 09:55:21 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_ambient_light
 	t_vec3	intensity;
 }	t_ambient_light;
 
-// orientation: normalized vector
+// dir: normalized vector
 // fov: 0 to 180
 typedef struct t_camera
 {
-	t_point		position;
-	t_vec3		orientation;
+	t_point		pos;
+	t_vec3		dir;
 	float		fov;
 }	t_camera;
 
@@ -57,7 +57,7 @@ typedef struct t_light
 typedef struct s_ray
 {
 	t_vec3	origin;
-	t_vec3	direction;
+	t_vec3	dir;
 }	t_ray;
 
 typedef struct s_sphere
@@ -122,8 +122,8 @@ typedef struct s_object_ops
 	void		((*translate)(t_object *this, t_vec3 offset));
 }	t_object_ops;
 
-extern t_ambient_light	g_ambient_light;
-extern t_camera			g_camera;
+extern t_ambient_light	g_amb_light;
+extern t_camera			g_cam;
 extern t_light			*g_lights;
 extern int				g_light_count;
 extern int				g_light_capacity;

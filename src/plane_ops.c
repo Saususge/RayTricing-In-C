@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:23:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 02:37:58 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 10:34:03 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,12 @@ t_vec3	plane_get_normal(const t_object *this, t_point *hit_point)
 	return (this->data.plane.normal);
 }
 
-// void	plane_translate(t_object *this, t_vec3 offset)
-// {
-// 	this->data.plane.point = vec3_add(this->data.plane.point, offset);
-// }
+void	plane_translate(t_object *this, t_vec3 offset)
+{
+	this->data.plane.point = vec3_add(this->data.plane.point, offset);
+}
 
-// void	plane_rotate(t_object *this, t_vec3 angle)
-// {
-// 	this->data.plane.normal = \
-// 	(t_vec3)rotate_vector(this->data.plane.normal, angle);
-// }
-
-// t_color	plane_get_color(t_object *this)
-// {
-// 	return (this->data.plane.color);
-// }
+void	plane_rotate(t_object *this, t_vec3 angle)
+{
+	this->data.plane.normal = rotate_vector(this->data.plane.normal, angle);
+}
