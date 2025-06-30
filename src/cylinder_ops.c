@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:08:28 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 15:56:50 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void calculate_cylinder_equation(t_quad_eq *eq, const t_cylinder *cyl, co
     eq->disc = eq->b * eq->b - eq->a * eq->c;
 }
 
-static int check_height_bounds(const t_cylinder *cyl, t_point hit_point)
+static int check_height(const t_cylinder *cyl, t_point hit_point)
 {
     t_vec3 p1_to_hit = vec3_sub(hit_point, cyl->p1);
     float projection = vec3_dot(p1_to_hit, cyl->axis);
@@ -96,11 +96,11 @@ static int intersect_lateral(const t_cylinder *cyl, const t_ray *ray, float *t, 
 	float sqrt_disc = sqrtf(eq.disc);
 	t_temp = (-eq.b - sqrt_disc) / (eq.a);
 	t_point hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
-	if (t_temp < bound.min || t_temp > bound.max || !check_height_bounds(cyl, hit_point))
+	if (t_temp < bound.min || t_temp > bound.max || !check_height(cyl, hit_point))
 	{
 		t_temp = (-eq.b + sqrt_disc) / (eq.a);
 		hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
-		if (t_temp < bound.min || t_temp > bound.max || !check_height_bounds(cyl, hit_point))
+		if (t_temp < bound.min || t_temp > bound.max || !check_height(cyl, hit_point))
 			return (0);
 	}
 	*t = t_temp;

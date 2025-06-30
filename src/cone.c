@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 15:12:35 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 16:05:04 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static t_object_ops	g_cone_ops = {
 	.translate = cone_translate,
 };
 
-static void	calculate_cone_equation(t_quad_eq *eq, const t_cone *cone, const t_ray *ray)
+static void	calculate_cone_equation(
+				t_quad_eq *eq,
+				const t_cone *cone,
+				const t_ray *ray)
 {
 	t_vec3	co;
 	float	cos2;
@@ -41,7 +44,9 @@ static void	calculate_cone_equation(t_quad_eq *eq, const t_cone *cone, const t_r
 	eq->disc = eq->b * eq->b - eq->a * eq->c;
 }
 
-static int	check_height_bounds(const t_cone *cone, t_point hit_point)
+static int	check_height(
+				const t_cone *cone,
+				t_point hit_point)
 {
 	t_vec3	center_to_hit;
 	float	projection;
@@ -51,32 +56,42 @@ static int	check_height_bounds(const t_cone *cone, t_point hit_point)
 	return (projection >= 0.0f && projection <= cone->height);
 }
 
-static int	intersect_cap(const t_cone *cone, const t_ray *ray, float *t, t_t_bound bound)
+static int	intersect_cap(
+				const t_cone *cone,
+				const t_ray *ray,
+				float *t,
+				t_t_bound bound)
 {
 	float	temp_t;
 	float	denom;
 	t_vec3	oc;
 	t_point	hit_point;
 	t_vec3	cap_to_hit;
-	float	dist_sq;
 
 	denom = vec3_dot(ray->dir, cone->axis);
 	if (fabs(denom) < EPSILON)
 		return (0);
-	oc = vec3_sub(vec3_add(cone->center, vec3_mul(cone->axis, cone->height)), ray->origin);
+	oc = vec3_sub(
+			vec3_add(cone->center, vec3_mul(cone->axis, cone->height)),
+			ray->origin);
 	temp_t = vec3_dot(oc, cone->axis) / denom;
 	if (temp_t < bound.min || temp_t > bound.max)
 		return (0);
 	hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, temp_t));
-	cap_to_hit = vec3_sub(hit_point, vec3_add(cone->center, vec3_mul(cone->axis, cone->height)));
-	dist_sq = vec3_dot(cap_to_hit, cap_to_hit);
-	if (dist_sq > cone->radius * cone->radius)
+	cap_to_hit = vec3_sub(
+			hit_point,
+			vec3_add(cone->center, vec3_mul(cone->axis, cone->height)));
+	if (vec3_dot(cap_to_hit, cap_to_hit) > cone->radius * cone->radius)
 		return (0);
 	*t = temp_t;
 	return (1);
 }
 
-static int	cone_lateral_intersect(const t_cone *cone, const t_ray *ray, float *t, t_t_bound bound)
+static int	cone_lateral_intersect(
+				const t_cone *cone,
+				const t_ray *ray,
+				float *t,
+				t_t_bound bound)
 {
 	t_quad_eq	eq;
 	float		sqrt_disc;
@@ -89,14 +104,14 @@ static int	cone_lateral_intersect(const t_cone *cone, const t_ray *ray, float *t
 	sqrt_disc = sqrtf(eq.disc);
 	t_temp = (-eq.b - sqrt_disc) / eq.a;
 	hit = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
-	if (t_temp > bound.min && t_temp < bound.max && check_height_bounds(cone, hit))
+	if (t_temp > bound.min && t_temp < bound.max && check_height(cone, hit))
 	{
 		*t = t_temp;
 		return (1);
 	}
 	t_temp = (-eq.b + sqrt_disc) / eq.a;
 	hit = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
-	if (t_temp > bound.min && t_temp < bound.max && check_height_bounds(cone, hit))
+	if (t_temp > bound.min && t_temp < bound.max && check_height(cone, hit))
 	{
 		*t = t_temp;
 		return (1);
@@ -121,24 +136,24 @@ t_object	create_cone(struct s_cone_data data)
 		.ops = &g_cone_ops,
 		.color = data.color,
 		.data.cone = (t_cone){
-			.center = data.center,
-			.axis = data.axis,
-			.radius = data.radius,
-			.height = data.height,
-		}
-	});
+		.center = data.center,
+		.axis = data.axis,
+		.radius = data.radius,
+		.height = data.height,
+	}});
 }
 
-int	cone_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
+int	cone_intersect(
+		const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
 {
-	float			t;
-	int			lateral_hit;
-	int			cap_hit;
+	float	t;
+	int		lateral_hit;
+	int		cap_hit;
 
-	t = 0.0f;
 	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
 	if (lateral_hit)
-		cap_hit = intersect_cap(&this->data.cone, ray, &t, (t_t_bound){bound.min, t});
+		cap_hit = intersect_cap(
+				&this->data.cone, ray, &t, (t_t_bound){bound.min, t});
 	else
 		cap_hit = intersect_cap(&this->data.cone, ray, &t, bound);
 	if (!lateral_hit && !cap_hit)
@@ -147,20 +162,19 @@ int	cone_intersect(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound
 	return (1);
 }
 
-int	cone_shadow_intersect(const t_object *this, const t_ray *ray, t_t_bound bound)
+int	cone_shadow_intersect(
+		const t_object *this, const t_ray *ray, t_t_bound bound)
 {
-	const t_cone	*cone;
 	float			t;
-	int			lateral_hit;
-	int			cap_hit;
+	int				lateral_hit;
+	int				cap_hit;
 
-	t = 0.0f;
-	cone = &this->data.cone;
-	lateral_hit = cone_lateral_intersect(cone, ray, &t, bound);
+	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
 	if (lateral_hit)
-		cap_hit = intersect_cap(cone, ray, &t, (t_t_bound){bound.min, t});
+		cap_hit = intersect_cap(
+				&this->data.cone, ray, &t, (t_t_bound){bound.min, t});
 	else
-		cap_hit = intersect_cap(cone, ray, &t, bound);
+		cap_hit = intersect_cap(&this->data.cone, ray, &t, bound);
 	if (lateral_hit || cap_hit)
 		return (1);
 	return (0);
@@ -182,7 +196,9 @@ t_vec3	cone_get_normal(const t_object *this, t_point *hit_point)
 	axis_point = vec3_add(cone.center, vec3_mul(cone.axis, projection));
 	normal = vec3_sub(*hit_point, axis_point);
 	normal = vec3_sub(
-		normal,
-		vec3_mul(cone.axis, cone.radius / cone.height * vec3_length(normal)));
+			normal,
+			vec3_mul(
+				cone.axis,
+				cone.radius / cone.height * vec3_length(normal)));
 	return (vec3_normalize(normal));
 }
