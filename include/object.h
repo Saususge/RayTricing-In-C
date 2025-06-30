@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 16:55:17 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:47:14 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,21 @@ typedef struct s_t_bound
 
 typedef struct s_object_ops
 {
-	int			((*intersect)(const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound));
-	int			((*shadow_intersect)(const t_object *this, const t_ray *ray, t_t_bound bound));
-	t_vec3		((*get_normal)(const t_object *this, t_point *hit_point));
-	void		(*rotate)(t_object *this, t_vec3 angle);
-	void		((*translate)(t_object *this, t_vec3 offset));
+	int	
+		(*intersect)(const t_object *this, const t_ray *ray,
+			t_hit *hit, t_t_bound bound);
+	int
+		(*shadow_intersect)(const t_object *this,
+			const t_ray *ray, t_t_bound bound);
+	void
+		(*rotate)(t_object *this, t_vec3 angle);
+	void
+		(*translate)(t_object *this, t_vec3 offset);
+	t_vec3
+		(*get_normal)(
+			const t_object	*this,
+			const t_point	*hit_point
+			);
 }	t_object_ops;
 
 typedef struct s_viewport
@@ -183,5 +193,6 @@ typedef struct s_gvar
 
 t_gvar	*g(void);
 int		process_object_arr_size(void);
-void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *obj);
+void	populate_hit_record(
+			t_hit *hit, float t, const t_ray *ray, const t_object *obj);
 #endif

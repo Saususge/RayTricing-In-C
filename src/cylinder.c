@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:11:49 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:21:04 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			cylinder_shadow_intersect(
 				t_t_bound bound);
 t_vec3		cylinder_get_normal(
 				const t_object *this,
-				t_point *hit_point);
+				const t_point *hit_point);
 void		cylinder_translate(t_object *this, t_vec3 offset);
 void		cylinder_rotate(t_object *this, t_vec3 angle);
 

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 16:58:45 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:21:46 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec3	sphere_get_normal(const t_object *this, t_point *hit_point)
+t_vec3	sphere_get_normal(const t_object *this, const t_point *hit_point)
 {
 	return (vec3_mul(vec3_sub(*hit_point, this->data.sphere.center), 1.0f / this->data.sphere.radius));
 }

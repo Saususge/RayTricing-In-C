@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 15:56:50 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:20:55 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	cylinder_shadow_intersect(const t_object *this,
 	return (1);
 }
 
-t_vec3 cylinder_get_normal(const t_object *this, t_point *hit_point)
+t_vec3 cylinder_get_normal(const t_object *this, const t_point *hit_point)
 {
     t_cylinder cyl = this->data.cylinder;
     t_vec3 p1_to_hit = vec3_sub(*hit_point, this->data.cylinder.p1);

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 16:58:10 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:06:20 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ int	parse_sphere(void)
 	center_str = ft_strtok(NULL, " \t\n");
 	diameter_str = ft_strtok(NULL, " \t\n");
 	color_str = ft_strtok(NULL, " \t\n");
-	if (parse_vec3(center_str, (t_vec3 *)&center))
+	if (parse_vec3(center_str, (t_vec3 *)&center)
+		|| parse_float(diameter_str, &diameter)|| diameter <= 0.0f
+		|| parse_vec3(color_str, &color)
+		|| process_object_arr_size())
 		return (1);
-	if (parse_float(diameter_str, &diameter) || diameter <= 0.0f)
-		return (1);
-	if (parse_vec3(color_str, &color))
-		return (1);
-	if (process_object_arr_size())
-		return (1);
-	g()->objects[g()->object_count++] = create_sphere(center, diameter / 2.0f, color);
+	g()->objects[g()->object_count++] = create_sphere(
+											center,
+											diameter * 0.5f, color);
 	return (0);
 }

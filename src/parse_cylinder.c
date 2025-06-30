@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 03:18:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 16:57:42 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:03:21 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	parse_cylinder(void)
 		.axis = axis,
 		.radius = data.diameter * 0.5f,
 		.height = data.height,
-		.color = data.color,
-	});
+		.color = data.color});
 	return (0);
 }

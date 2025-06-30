@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 16:05:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:21:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int	cone_shadow_intersect(
 	return (0);
 }
 
-t_vec3	cone_get_normal(const t_object *this, t_point *hit_point)
+t_vec3	cone_get_normal(const t_object *this, const t_point *hit_point)
 {
 	t_cone	cone;
 	t_vec3	center_to_hit;
