@@ -22,10 +22,10 @@ else
 endif
 
 SRC := \
+	cylinder.c\
+	cylinder_ops.c\
 	cone.c\
 	parse_cone.c\
-	cylinder.c\
-	draw_pixels.c\
 	environment.c\
 	main.c\
 	object_util.c\

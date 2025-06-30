@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:59:46 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 04:18:08 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 13:35:05 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_object		*g_objects;
 int				g_object_count;
 int				g_object_capacity = 4;
 
-int process_object_arr_size(void)
+int	process_object_arr_size(void)
 {
 	t_object	*new_objects;
 
@@ -32,8 +32,8 @@ int process_object_arr_size(void)
 	if (g_object_count >= g_object_capacity)
 	{
 		new_objects = ft_realloc(g_objects,
-						sizeof(t_object) * g_object_capacity,
-						sizeof(t_object) * g_object_capacity << 1);
+				sizeof(t_object) * g_object_capacity,
+				sizeof(t_object) * g_object_capacity << 1);
 		if (!new_objects)
 		{
 			free(g_objects);

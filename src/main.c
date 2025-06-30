@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:15:11 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:21:32 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,56 +22,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-void	print_parsed_elems(void)
-{
-	printf("Ambient Light: intensity=(%.2f, %.2f, %.2f)\n",
-		g_amb_light.intensity.x,
-		g_amb_light.intensity.y,
-		g_amb_light.intensity.z);
-	printf("Camera: pos=(%.2f, %.2f, %.2f), dir=(%.2f, %.2f, %.2f), fov=%.2f\n",
-		g_cam.pos.x, g_cam.pos.y, g_cam.pos.z,
-		g_cam.dir.x, g_cam.dir.y, g_cam.dir.z,
-		g_cam.fov);
-	for (int i = 0; i < g_light_count; ++i)
-	{
-		printf("Light %d: pos=(%.2f, %.2f, %.2f), intensity=(%.2f, %.2f, %.2f)\n",
-			i + 1,
-			g_lights[i].position.x, g_lights[i].position.y, g_lights[i].position.z,
-			g_lights[i].intensity.x, g_lights[i].intensity.y, g_lights[i].intensity.z);
-	}
-	for (int i = 0; i < g_object_count; ++i)
-	{
-		t_object obj = g_objects[i];
-		if (obj.type == SPHERE)
-		{
-			t_sphere sph = obj.data.sphere;
-			printf("Sphere %d: center=(%.2f, %.2f, %.2f), radius=%.2f,",
-				i + 1,
-				sph.center.x, sph.center.y, sph.center.z,
-				sph.radius);
-		}
-		else if (obj.type == PLANE)
-		{
-			t_plane pl = obj.data.plane;
-			printf("Plane %d: point=(%.2f, %.2f, %.2f), normal=(%.2f, %.2f, %.2f),",
-				i + 1,
-				pl.point.x, pl.point.y, pl.point.z,
-				pl.normal.x, pl.normal.y, pl.normal.z);
-		}
-		else if (obj.type == CONE)
-		{
-			t_cone co = obj.data.cone;
-			printf("Cone %d: center=(%.2f, %.2f, %.2f), axis=(%.2f, %.2f, %.2f), radius=%.2f, height=%.2f,",
-				i + 1,
-				co.center.x, co.center.y, co.center.z,
-				co.axis.x, co.axis.y, co.axis.z,
-				co.radius, co.height);
-		}
-		printf(" color=(%d, %d, %d)\n",
-			(int)obj.color.x, (int)obj.color.y,(int)obj.color.z);
-	}
-}
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -235,11 +185,8 @@ int	key_hook(int keycode, void *mlx)
 		rotate((t_vec3){0, 0, 45});
 	else if (keycode == '\'')
 		rotate((t_vec3){0, 0, -45});
-
 	render();
 	mlx_put_image_to_window(mlx, g_mlx_win, g_img.img, 0, 0);
-	// else if (keycode == 'r' && g_choosen_object)
-	// 	g_choosen_object->ops->rotate(g_choosen_object, (t_vec3){M_PI / 4, M_PI / 4, M_PI / 4});
 	return (0);
 }
 
@@ -303,13 +250,12 @@ int	main(int argc, char **argv)
 	if (parse(fd))
 	{
 		ft_putstr_fd("Error: Failed to parse scene file.\n", 2);
+		free(g_lights);
+		free(g_objects);
 		return (1);
 	}
 	close(fd);
-
-	print_parsed_elems();
 	init_viewport();
-
 	g_mlx = mlx_init();
 	g_mlx_win = mlx_new_window(g_mlx, g_viewport.width, g_viewport.height, "miniRT");
 	mlx_key_hook(g_mlx_win, key_hook, g_mlx);
@@ -324,7 +270,6 @@ int	main(int argc, char **argv)
 	mlx_destroy_window(g_mlx, g_mlx_win);
 	mlx_destroy_display(g_mlx);
 	free(g_mlx);
-
 	free(g_lights);
 	free(g_objects);
 	return (0);
