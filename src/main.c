@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:21:32 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 15:43:47 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,29 +162,31 @@ int	key_hook(int keycode, void *mlx)
 		return (0);
 	}
 	else if (keycode == 'q')
-		translate((t_vec3){0.5f, 0.0f, 0.0f});
+		translate((t_vec3){0.1f, 0.0f, 0.0f});
 	else if (keycode == 'a')
-		translate((t_vec3){-0.5f, 0.0f, 0.0f});
+		translate((t_vec3){-0.1f, 0.0f, 0.0f});
 	else if (keycode == 'w')
-		translate((t_vec3){0.0f, 0.5f, 0.0f});
+		translate((t_vec3){0.0f, 0.1f, 0.0f});
 	else if (keycode == 's')
-		translate((t_vec3){0.0f, -0.5f, 0.0f});
+		translate((t_vec3){0.0f, -0.1f, 0.0f});
 	else if (keycode == 'e')
-		translate((t_vec3){0.0f, 0.0f, 0.5f});
+		translate((t_vec3){0.0f, 0.0f, 0.1f});
 	else if (keycode == 'd')
-		translate((t_vec3){0.0f, 0.0f, -0.5f});
+		translate((t_vec3){0.0f, 0.0f, -0.1f});
 	else if (keycode == 'p')
-		rotate((t_vec3){45, 0, 0});
+		rotate((t_vec3){22.5, 0, 0});
 	else if (keycode == 'l')
-		rotate((t_vec3){-45, 0, 0});
+		rotate((t_vec3){-22.5, 0, 0});
 	else if (keycode == '[')
-		rotate((t_vec3){0, 45, 0});
+		rotate((t_vec3){0, 22.5, 0});
 	else if (keycode == ';')
-		rotate((t_vec3){0, -45, 0});
+		rotate((t_vec3){0, -22.5, 0});
 	else if (keycode == ']')
-		rotate((t_vec3){0, 0, 45});
+		rotate((t_vec3){0, 0, 22.5});
 	else if (keycode == '\'')
-		rotate((t_vec3){0, 0, -45});
+		rotate((t_vec3){0, 0, -22.5});
+	else
+		return (0);
 	render();
 	mlx_put_image_to_window(mlx, g_mlx_win, g_img.img, 0, 0);
 	return (0);

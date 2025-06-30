@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:30 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 10:32:25 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 15:41:28 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *
 		t_light	*light = g_lights + i;
 		t_vec3	light_dir = vec3_normalize(vec3_sub(light->position, hit->point));
 		t_ray	shadow_ray = { hit->point, light_dir };
-		int		hit_shadow_flag = !hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point)));
+		int		hit_shadow_flag = !hit_shadow(&shadow_ray, 0.001f, vec3_length(vec3_sub(light->position, hit->point)) - 0.001f);
 		if (hit_shadow_flag)
 		{
 			float	diff_dot = fmaxf(vec3_dot(hit->normal, light_dir), 0.0f);
