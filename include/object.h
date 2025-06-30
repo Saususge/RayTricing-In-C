@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:01:23 by chakim           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:55:17 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +132,56 @@ typedef struct s_object_ops
 	void		((*translate)(t_object *this, t_vec3 offset));
 }	t_object_ops;
 
-extern t_ambient_light	g_amb_light;
-extern t_camera			g_cam;
-extern t_light			*g_lights;
-extern int				g_light_count;
-extern int				g_light_capacity;
-extern t_object			*g_objects;
-extern int				g_object_count;
-extern int				g_object_capacity;
-extern float			g_k_a;
-extern float			g_k_d;
-extern float			g_k_s;
+typedef struct s_viewport
+{
+	int		width;
+	int		height;
+	float	aspect_ratio;
+	float	focal_length;
+	float	view_w;
+	float	view_h;
+	t_vec3	vup;
+	t_vec3	view_u;
+	t_vec3	view_v;
+	t_vec3	view_u_per_pixel;
+	t_vec3	view_v_per_pixel;
+	t_vec3	view_upper_left;
+	t_vec3	pixel_origin;
+}	t_viewport;
 
-int	process_object_arr_size(void);
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
+typedef struct s_gvar
+{
+	t_ambient_light	amb_light;
+	t_camera		cam;
+	t_light			*lights;
+	int				light_count;
+	int				light_capacity;
+	t_object		*objects;
+	int				object_count;
+	int				object_capacity;
+	float			k_a;
+	float			k_d;
+	float			k_s;
+	int				camera_choosed;
+	int				light_choosed;
+	int				light_index;
+	t_viewport		viewport;
+	t_object		*choosen_object;
+	t_data			img;
+	void			*mlx;
+	void			*mlx_win;
+}	t_gvar;
+
+t_gvar	*g(void);
+int		process_object_arr_size(void);
 void	populate_hit_record(t_hit *hit, float t, const t_ray *ray, const t_object *obj);
 #endif

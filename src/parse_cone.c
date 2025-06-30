@@ -47,7 +47,7 @@ int	parse_cone(void)
 		|| parse_vec3(data.color_str, &data.color)
 		|| process_object_arr_size())
 		return (1);
-	g_objects[g_object_count++] = create_cone((struct s_cone_data){
+	g()->objects[g()->object_count++] = create_cone((struct s_cone_data){
 		.center = data.center,
 		.axis = vec3_normalize(data.orient),
 		.radius = data.diameter * 0.5f,

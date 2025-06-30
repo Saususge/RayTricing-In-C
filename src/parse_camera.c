@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 09:53:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:05 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int	parse_camera(void)
 	if (parse_float(fov_str, &camera.fov)
 		|| camera.fov < 0.0f || camera.fov > 180.0f)
 		return (1);
-	g_cam = camera;
+	g()->cam = camera;
 	return (0);
 }

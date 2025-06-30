@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 02:25:48 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 16:58:01 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	parse_plane(void)
 		return (1);
 	if (process_object_arr_size())
 		return (1);
-	g_objects[g_object_count++] = create_plane(center, normal, color);
+	g()->objects[g()->object_count++] = create_plane(center, normal, color);
 	return (0);
 }

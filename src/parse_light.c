@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 02:25:28 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:52 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,25 @@ int process_light_arr(void)
 {
 	t_light	*new_lights;
 
-	if (!g_lights)
+	if (!g()->lights)
 	{
-		g_lights = malloc(sizeof(t_light) * g_light_capacity);
-		if (!g_lights)
+		g()->lights = malloc(sizeof(t_light) * g()->light_capacity);
+		if (!g()->lights)
 			return (1);
 	}
-	if (g_light_count >= g_light_capacity)
+	if (g()->light_count >= g()->light_capacity)
 	{
-		new_lights = ft_realloc(g_lights,
-						sizeof(t_light) * g_light_capacity,
-						sizeof(t_light) * g_light_capacity << 1);
+		new_lights = ft_realloc(g()->lights,
+						sizeof(t_light) * g()->light_capacity,
+						sizeof(t_light) * g()->light_capacity << 1);
 		if (!new_lights)
 		{
-			free(g_lights);
-			g_lights = NULL;
+			free(g()->lights);
+			g()->lights = NULL;
 			return (1);
 		}
-		g_lights = new_lights;
-		g_light_capacity <<= 1;
+		g()->lights = new_lights;
+		g()->light_capacity <<= 1;
 	}
 	return (0);
 }
@@ -74,6 +74,6 @@ int parse_light(void)
 	light.intensity.x = (color.x / 255.0f) * intensity;
 	light.intensity.y = (color.y / 255.0f) * intensity;
 	light.intensity.z = (color.z / 255.0f) * intensity;
-	g_lights[g_light_count++] = light;
+	g()->lights[g()->light_count++] = light;
 	return (0);
 }

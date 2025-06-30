@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 03:18:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:13:44 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:42 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_cylinder(void)
 		|| process_object_arr_size())
 		return (1);
 	axis = vec3_normalize(data.orient);
-	g_objects[g_object_count++] = create_cylinder((struct s_cyl_data){
+	g()->objects[g()->object_count++] = create_cylinder((struct s_cyl_data){
 		.center = data.center,
 		.axis = axis,
 		.radius = data.diameter * 0.5f,
