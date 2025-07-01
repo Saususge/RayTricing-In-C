@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 17:01:48 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 17:15:20 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "event.h"
+#include "rotate.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
@@ -49,63 +51,89 @@ int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
 	return (hit_anything);
 }
 
-#include "event.h"
-
 void	init_viewport(void)
 {
-	g()->viewport.aspect_ratio = 21.0f / 9.0f;
-	g()->viewport.width = 1680;
-	g()->viewport.height = (int)(g()->viewport.width / g()->viewport.aspect_ratio);
-	g()->viewport.focal_length = 1.0f;
-	g()->viewport.view_w = 2.0f * g()->viewport.focal_length * tan(g()->cam.fov * M_PI / 360.0f);
-	g()->viewport.view_h = g()->viewport.view_w / g()->viewport.aspect_ratio;
-	g()->viewport.vup = vec3_create(0.0f, 1.0f, 0.0f);
-	g()->viewport.view_u = vec3_mul(
-		vec3_normalize(vec3_cross(g()->cam.dir, g()->viewport.vup)),
-		g()->viewport.view_w);
-	g()->viewport.view_v = vec3_mul(
-		vec3_normalize(vec3_cross(g()->viewport.view_u, g()->cam.dir)),
-		-g()->viewport.view_h);
-	g()->viewport.view_u_per_pixel = vec3_mul(g()->viewport.view_u,
-		1.0f / (float)g()->viewport.width);
-	g()->viewport.view_v_per_pixel = vec3_mul(g()->viewport.view_v,
-		1.0f / (float)g()->viewport.height);
-	g()->viewport.view_upper_left = vec3_sub(g()->cam.pos,
+	t_viewport	*viewport;
+
+	viewport = &g()->viewport;
+	viewport->aspect_ratio = 21.0f / 9.0f;
+	viewport->width = 1680;
+	viewport->height = (int)(viewport->width / viewport->aspect_ratio);
+	viewport->focal_length = 1.0f;
+	viewport->view_w = 2.0f * viewport->focal_length * tan(g()->cam.fov * M_PI / 360.0f);
+	viewport->view_h = viewport->view_w / viewport->aspect_ratio;
+	viewport->vup.y = 1.0f;
+	viewport->view_u = vec3_mul(
+		vec3_normalize(vec3_cross(g()->cam.dir, viewport->vup)),
+		viewport->view_w);
+	viewport->view_v = vec3_mul(
+		vec3_normalize(vec3_cross(viewport->view_u, g()->cam.dir)),
+		-viewport->view_h);
+	viewport->view_u_per_pixel = vec3_mul(viewport->view_u,
+		1.0f / (float)viewport->width);
+	viewport->view_v_per_pixel = vec3_mul(viewport->view_v,
+		1.0f / (float)viewport->height);
+	viewport->view_upper_left = vec3_sub(g()->cam.pos,
 		vec3_add(
-			vec3_mul(g()->cam.dir, -g()->viewport.focal_length),
+			vec3_mul(g()->cam.dir, -viewport->focal_length),
 			vec3_add(
-				vec3_mul(g()->viewport.view_u, 0.5f),
-				vec3_mul(g()->viewport.view_v, 0.5f))));
-	g()->viewport.pixel_origin = vec3_add(g()->viewport.view_upper_left,
-		vec3_mul(vec3_add(g()->viewport.view_v_per_pixel, g()->viewport.view_u_per_pixel), 0.5f));
+				vec3_mul(viewport->view_u, 0.5f),
+				vec3_mul(viewport->view_v, 0.5f))));
+	viewport->pixel_origin = vec3_add(viewport->view_upper_left,
+		vec3_mul(vec3_add(viewport->view_v_per_pixel, viewport->view_u_per_pixel), 0.5f));
 }
 
 void	translate(t_vec3 offset)
 {
-	if (g()->camera_choosed)
+	t_gvar *gvar;
+	t_camera *cam;
+	t_light *light;
+	t_object *obj;
+
+	gvar = g();
+	cam = NULL;
+	light = NULL;
+	obj = NULL;
+	if (gvar->camera_choosed)
 	{
-		g()->cam.pos = vec3_add(g()->cam.pos, offset);
+		cam = &gvar->cam;
+		cam->pos = vec3_add(cam->pos, offset);
 		init_viewport();
 	}
-	else if (g()->light_choosed)
-		g()->lights[g()->light_index].position = vec3_add(g()->lights[g()->light_index].position, offset);
-	else if (g()->choosen_object)
-		g()->choosen_object->ops->translate(g()->choosen_object, offset);
+	else if (gvar->light_choosed)
+	{
+		light = &gvar->lights[gvar->light_index];
+		light->position = vec3_add(light->position, offset);
+	}
+	else if (gvar->choosen_object)
+	{
+		obj = gvar->choosen_object;
+		obj->ops->translate(obj, offset);
+	}
 }
-
-#include "rotate.h"
 
 void	rotate(t_vec3 angle)
 {
-	if (g()->camera_choosed)
+	t_gvar *gvar;
+	t_camera *cam;
+	t_object *obj;
+
+	gvar = g();
+	cam = NULL;
+	obj = NULL;
+	if (gvar->camera_choosed)
 	{
-		g()->cam.dir = vec3_normalize(rotate_vector(g()->cam.dir, angle));
+		cam = &gvar->cam;
+		cam->dir = vec3_normalize(rotate_vector(cam->dir, angle));
 		init_viewport();
 	}
-	else if (g()->light_choosed)
+	else if (gvar->light_choosed)
 		printf("Cannot rotate light\n");
-	else if (g()->choosen_object)
-		g()->choosen_object->ops->rotate(g()->choosen_object, angle);
+	else if (gvar->choosen_object)
+	{
+		obj = gvar->choosen_object;
+		obj->ops->rotate(obj, angle);
+	}
 }
 
 
@@ -169,7 +197,7 @@ int	key_hook(int keycode, void *mlx)
 int	mouse_hook(int button, int x, int y, void *mlx)
 {
 	(void)mlx;
-	if (button == 1) // Left mouse button
+	if (button == 1)
 	{
 		t_vec3 pixel_pos = vec3_add(g()->viewport.pixel_origin, vec3_add(vec3_mul(g()->viewport.view_u_per_pixel, (float)x), vec3_mul(g()->viewport.view_v_per_pixel, (float)y)));
 		t_vec3 ray_dir = vec3_normalize(vec3_sub(pixel_pos, g()->cam.pos));
@@ -184,13 +212,9 @@ int	mouse_hook(int button, int x, int y, void *mlx)
 				g()->choosen_object - g()->objects + 1,
 				g()->choosen_object->type == SPHERE ? "Sphere" :
 				g()->choosen_object->type == PLANE ? "Plane" :
-				g()->choosen_object->type == CYLINDER ? "Cylinder" : "Unknown");
+				g()->choosen_object->type == CYLINDER ? "Cylinder" : "Cone");
 		}
 	}
-	else if (button == 2) // Right mouse button
-		printf("Mouse right button clicked at (%d, %d)\n", x, y);
-	else if (button == 3) // Middle mouse button
-		printf("Mouse middle button clicked at (%d, %d)\n", x, y);
 	return (0);
 }
 
@@ -217,12 +241,18 @@ void	render(void)
 
 int	main(int argc, char **argv)
 {
+	void		**mlx;
+	void		**mlx_win;
+	t_viewport	*viewport;
+	t_data		*img;
+	int			fd;
+
+	fd = open(argv[1], O_RDONLY);
 	if (argc != 2)
 	{
 		ft_putstr_fd("Usage: ./miniRT <scene_file>\n", STDERR_FILENO);
 		return (1);
 	}
-	int	fd = open(argv[1], O_RDONLY);
 	if (parse(fd))
 	{
 		ft_putstr_fd("Error: Failed to parse scene file.\n", 2);
@@ -232,20 +262,26 @@ int	main(int argc, char **argv)
 	}
 	close(fd);
 	init_viewport();
-	g()->mlx = mlx_init();
-	g()->mlx_win = mlx_new_window(g()->mlx, g()->viewport.width, g()->viewport.height, "miniRT");
-	mlx_key_hook(g()->mlx_win, key_hook, g()->mlx);
-	mlx_mouse_hook(g()->mlx_win, mouse_hook, g()->mlx);
-	mlx_hook(g()->mlx_win, 33, 0, mlx_loop_end, g()->mlx);
-	g()->img.img = mlx_new_image(g()->mlx, g()->viewport.width, g()->viewport.height);
-	g()->img.addr = mlx_get_data_addr(g()->img.img, &g()->img.bits_per_pixel, &g()->img.line_length, &g()->img.endian);
+	mlx = &g()->mlx;
+	mlx_win = &g()->mlx_win;
+	viewport = &g()->viewport;
+	img = &g()->img;
+	*mlx = mlx_init();
+	*mlx_win = mlx_new_window(*mlx, viewport->width, viewport->height, \
+		"miniRT");
+	mlx_key_hook(*mlx_win, key_hook, *mlx);
+	mlx_mouse_hook(*mlx_win, mouse_hook, *mlx);
+	mlx_hook(*mlx_win, 33, 0, mlx_loop_end, *mlx);
+	img->img = mlx_new_image(*mlx, viewport->width, viewport->height);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
+		&img->line_length, &img->endian);
 	render();
-	mlx_put_image_to_window(g()->mlx, g()->mlx_win, g()->img.img, 0, 0);
-	mlx_loop(g()->mlx);
-	mlx_destroy_image(g()->mlx, g()->img.img);
-	mlx_destroy_window(g()->mlx, g()->mlx_win);
-	mlx_destroy_display(g()->mlx);
-	free(g()->mlx);
+	mlx_put_image_to_window(*mlx, *mlx_win, img->img, 0, 0);
+	mlx_loop(*mlx);
+	mlx_destroy_image(*mlx, img->img);
+	mlx_destroy_window(*mlx, *mlx_win);
+	mlx_destroy_display(*mlx);
+	free(*mlx);
 	free(g()->lights);
 	free(g()->objects);
 	return (0);
