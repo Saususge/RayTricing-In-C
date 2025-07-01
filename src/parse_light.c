@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_light.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 16:57:52 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 13:35:13 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int process_light_arr(void)
+int	process_light_arr(void)
 {
 	t_light	*new_lights;
 
@@ -30,9 +30,9 @@ int process_light_arr(void)
 	}
 	if (g()->light_count >= g()->light_capacity)
 	{
-		new_lights = ft_realloc(g()->lights,
-						sizeof(t_light) * g()->light_capacity,
-						sizeof(t_light) * g()->light_capacity << 1);
+		new_lights = ft_realloc(g()->lights, \
+		sizeof(t_light) * g()->light_capacity, \
+		sizeof(t_light) * g()->light_capacity << 1);
 		if (!new_lights)
 		{
 			free(g()->lights);
@@ -45,32 +45,40 @@ int process_light_arr(void)
 	return (0);
 }
 
-int parse_light(void)
+static int	parse_light_fields(t_light *light, float *intensity, t_vec3 *color)
 {
-	t_light light;
-	char *pos_str;
-	char *intensity_str;
-	char *rgb_str;
-	float intensity;
-	t_vec3 color;
+	char	*pos_str;
+	char	*intensity_str;
+	char	*rgb_str;
 
-	if (process_light_arr())
-		return (1);
 	pos_str = ft_strtok(NULL, " \t\n");
 	intensity_str = ft_strtok(NULL, " \t\n");
 	rgb_str = ft_strtok(NULL, " \t\n");
-	if (parse_vec3(pos_str, &light.position))
+	if (parse_vec3(pos_str, &light->position))
 		return (1);
-	if (parse_float(intensity_str, &intensity) || intensity < 0.0f || intensity > 1.0f)
+	if (parse_float(intensity_str, intensity) || *intensity < 0.0f \
+	|| *intensity > 1.0f)
 		return (1);
 	if (rgb_str)
 	{
-		if (parse_vec3(rgb_str, &color))
+		if (parse_vec3(rgb_str, color))
 			return (1);
 	}
 	else
-		color = (t_vec3){255, 255, 255};
-	// Convert color and intensity to t_vec3 intensity (range 0.0-1.0)
+		*color = (t_vec3){255, 255, 255};
+	return (0);
+}
+
+int	parse_light(void)
+{
+	t_light	light;
+	float	intensity;
+	t_vec3	color;
+
+	if (process_light_arr())
+		return (1);
+	if (parse_light_fields(&light, &intensity, &color))
+		return (1);
 	light.intensity.x = (color.x / 255.0f) * intensity;
 	light.intensity.y = (color.y / 255.0f) * intensity;
 	light.intensity.z = (color.z / 255.0f) * intensity;

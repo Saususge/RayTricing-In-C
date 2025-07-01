@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 17:21:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 12:54:28 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ t_object	create_cylinder(struct s_cyl_data data)
 		.ops = &g_cylinder_ops,
 		.color = data.color,
 		.data.cylinder = (t_cylinder){
-			.p1 = vec3_sub(data.center,
-						vec3_mul(data.axis, data.height * 0.5f)),
-			.p2 = vec3_add(data.center,
-						vec3_mul(data.axis, data.height * 0.5f)),
-			.center = data.center,
-			.axis = data.axis,
-			.radius = data.radius,
-			.height = data.height,
-		}
+		.p1 = vec3_sub(data.center,
+			vec3_mul(data.axis, data.height * 0.5f)),
+		.p2 = vec3_add(data.center,
+			vec3_mul(data.axis, data.height * 0.5f)),
+		.center = data.center,
+		.axis = data.axis,
+		.radius = data.radius,
+		.height = data.height,
+	}
 	});
 }

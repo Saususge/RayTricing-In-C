@@ -17,21 +17,22 @@
 #include <stdlib.h>
 
 struct s_cone_parse_data {
-	t_point center;
-	t_vec3 orient;
-	float diameter;
-	float height;
-	t_vec3 color;
-	char *center_str;
-	char *orient_str;
-	char *diam_str;
-	char *height_str;
-	char *color_str;
+	t_point	center;
+	t_vec3	orient;
+	float	diameter;
+	float	height;
+	t_vec3	color;
+	char	*center_str;
+	char	*orient_str;
+	char	*diam_str;
+	char	*height_str;
+	char	*color_str;
 };
 
 int	parse_cone(void)
 {
-	struct s_cone_parse_data data;
+	struct s_cone_parse_data	data;
+	struct s_cone_data			cone_data;
 
 	data.center_str = ft_strtok(NULL, " \t\n");
 	data.orient_str = ft_strtok(NULL, " \t\n");
@@ -47,12 +48,11 @@ int	parse_cone(void)
 		|| parse_vec3(data.color_str, &data.color)
 		|| process_object_arr_size())
 		return (1);
-	g()->objects[g()->object_count++] = create_cone((struct s_cone_data){
-		.center = data.center,
-		.axis = vec3_normalize(data.orient),
-		.radius = data.diameter * 0.5f,
-		.height = data.height,
-		.color = data.color,
-	});
+	cone_data.center = data.center;
+	cone_data.axis = vec3_normalize(data.orient);
+	cone_data.radius = data.diameter * 0.5f;
+	cone_data.height = data.height;
+	cone_data.color = data.color;
+	g()->objects[g()->object_count++] = create_cone(cone_data);
 	return (0);
 }

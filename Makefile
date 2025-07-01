@@ -22,27 +22,33 @@ else
 endif
 
 SRC := \
+	cone_0.c\
+	cone_1.c\
+	cone_2.c\
 	cylinder.c\
 	cylinder_ops.c\
-	cone.c\
-	parse_cone.c\
+	cylinder_ops_helper.c\
 	environment.c\
 	main.c\
 	object_util.c\
-	parse_ambient.c\
 	parse.c\
+	parse_ambient.c\
 	parse_camera.c\
+	parse_cone.c\
+	parse_cylinder.c\
 	parse_light.c\
 	parse_plane.c\
 	parse_sphere.c\
-	parse_cylinder.c\
 	parse_util.c\
-	plane_ops.c\
 	plane.c\
+	plane_ops.c\
 	rotate.c\
+	sphere_0.c\
+	sphere_1.c\
+	sphere_2.c\
+	sphere_3.c\
 	sphere_ops.c\
-	sphere.c\
-	vector_arithmetic.c\
+	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\
 	vector_conversion.c\

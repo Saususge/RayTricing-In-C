@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 14:12:26 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 13:04:52 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ struct s_cyl_data
 };
 
 t_object	create_cylinder(struct s_cyl_data data);
+void		calculate_cylinder_equation(t_quad_eq *eq, \
+	const t_cylinder *cyl, const t_ray *ray);
+int			check_in_circle(const t_cylinder *cyl, \
+	const t_ray *ray, t_point cap_center, float t);
+int			intersect_cap(const t_cylinder *cyl, \
+	const t_ray *ray, float *t, t_t_bound bound);
+int			check_height(const t_cylinder *cyl, t_point hit_point);
+int			intersect_lateral(const t_cylinder *cyl, \
+	const t_ray *ray, float *t, t_t_bound bound);
 #endif

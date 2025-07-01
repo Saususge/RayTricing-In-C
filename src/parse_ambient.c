@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/01 09:19:17 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:36:08 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-int	parse_ambient(void)
+static int	parse_ambient_intensity(t_vec3 *intensity)
 {
-	t_vec3			temp_color;
-	float			temp_float;
-	char			*intensity_str;
-	char			*rgb_str;
+	char	*intensity_str;
+	char	*rgb_str;
+	float	temp_float;
+	t_vec3	temp_color;
 
 	intensity_str = ft_strtok(NULL, " \t\n");
 	rgb_str = ft_strtok(NULL, " \t\n");
@@ -32,11 +32,18 @@ int	parse_ambient(void)
 		return (1);
 	if (parse_vec3(rgb_str, &temp_color))
 		return (1);
-	g()->amb_light = (t_ambient_light){
-		.intensity = (t_vec3){
-		.x = temp_color.x / 255.0f * temp_float,
-		.y = temp_color.y / 255.0f * temp_float,
-		.z = temp_color.z / 255.0f * temp_float
-	}};
+	intensity->x = temp_color.x / 255.0f * temp_float;
+	intensity->y = temp_color.y / 255.0f * temp_float;
+	intensity->z = temp_color.z / 255.0f * temp_float;
+	return (0);
+}
+
+int	parse_ambient(void)
+{
+	t_ambient_light	amb;
+
+	if (parse_ambient_intensity(&amb.intensity))
+		return (1);
+	g()->amb_light = amb;
 	return (0);
 }

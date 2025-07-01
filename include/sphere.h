@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 17:21:58 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 14:23:05 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,23 @@ int			shpere_shadow_intersect(const t_object *this,
 void		sphere_rotate(t_object *this, t_vec3 angle);
 void		sphere_translate(t_object *this, t_vec3 offset);
 t_vec3		sphere_get_normal(const t_object *this, const t_point *hit_point);
+void		calculate_sphere_equation(t_quad_eq *eq, \
+	const t_sphere *sph, const t_ray *ray);
+int			hit_shadow(const t_ray *ray, float t_min, float t_max);
+void		set_hit_geometry(t_hit *hit, float t, \
+	const t_ray *ray, const t_object *this);
+t_vec3		calc_ambient(const t_object *this);
+t_vec3		get_light_dir(const t_light *light, const t_hit *hit);
+float		get_light_distance(const t_light *light, const t_hit *hit);
+int			is_lit(const t_light *light, const t_hit *hit);
+void		add_diffuse(const t_light *light, \
+	const t_hit *hit, t_vec3 *diff, const t_object *this);
+float		calc_spec_factor(const t_light *light, \
+	const t_hit *hit, t_vec3 reflect_dir);
+void		add_specular(const t_light *light, const t_hit *hit, t_vec3 *spec);
+void		calc_diff_spec(const t_hit *hit, \
+	t_vec3 *diff, t_vec3 *spec, const t_object *this);
+t_vec3		clamp_color_vec3(t_vec3 color);
+void		populate_hit_record(t_hit *hit, \
+	float t, const t_ray *ray, const t_object *this);
 #endif
