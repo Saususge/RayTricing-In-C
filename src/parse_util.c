@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:35:19 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 16:58:22 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/01 09:20:15 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parse_float(const char *float_str, float *out)
 	return (0);
 }
 
-int parse_vec3(char *vec_str, t_vec3 *out)
+int	parse_vec3(char *vec_str, t_vec3 *out)
 {
 	char	*str[3];
 	t_vec3	v;

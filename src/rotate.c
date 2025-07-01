@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:09:44 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 21:24:47 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/01 09:15:41 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_vec3	rotate(t_vec3 target, t_rotation rot)
 	res.x3 = res.x2;
 	res.y3 = res.y2 * rot.cos_x - res.z2 * rot.sin_x;
 	res.z3 = res.y2 * rot.sin_x + res.z2 * rot.cos_x;
-
 	return ((t_vec3){res.x3, res.y3, res.z3});
 }
 
@@ -37,7 +36,6 @@ static void	init_rotation(t_rotation *rot, t_vec3 *angle)
 	rot->cos_x = cosf(angle->x * degree_to_radian);
 	rot->cos_y = cosf(angle->y * degree_to_radian);
 	rot->cos_z = cosf(angle->z * degree_to_radian);
-
 	rot->sin_x = sinf(angle->x * degree_to_radian);
 	rot->sin_y = sinf(angle->y * degree_to_radian);
 	rot->sin_z = sinf(angle->z * degree_to_radian);

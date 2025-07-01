@@ -43,6 +43,7 @@ SRC := \
 	sphere_ops.c\
 	sphere.c\
 	vector_arithmetic.c\
+	vector_arithmetic_1.c\
 	vector_calc.c\
 	vector_conversion.c\
 	vector_init.c\

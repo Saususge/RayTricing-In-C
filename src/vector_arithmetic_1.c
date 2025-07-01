@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   vector_arithmetic_1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 19:28:22 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/01 09:18:25 by chakim           ###   ########.fr       */
+/*   Created: 2025/07/01 09:16:46 by chakim            #+#    #+#             */
+/*   Updated: 2025/07/01 09:16:50 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "object.h"
+#include "vector.h"
 
-t_gvar	*g(void)
+t_vec3	vec3_hadamard(t_vec3 v1, t_vec3 v2)
 {
-	static t_gvar	data = {
-		.light_capacity = 4,
-		.object_capacity = 4,
-		.k_a = 0.2,
-		.k_d = 10,
-		.k_s = 10,
-	};
-
-	return (&data);
+	return ((t_vec3){v1.x * v2.x, v1.y * v2.y, v1.z * v2.z});
 }

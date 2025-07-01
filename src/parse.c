@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/06/30 14:08:10 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/01 09:15:17 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	dispatch_parse(const char *id)
 // Main parse function
 int	parse(int fd)
 {
-	char *line;
-	char *id;
+	char	*line;
+	char	*id;
 
 	line = get_next_line(fd);
 	while (line)
@@ -60,4 +60,3 @@ int	parse(int fd)
 	}
 	return (0);
 }
-
