@@ -29,6 +29,7 @@ static t_object_ops	g_sphere_ops = {
 	.get_normal = sphere_get_normal,
 	.rotate = sphere_rotate,
 	.translate = sphere_translate,
+	.scale = sphere_scale,
 };
 
 t_object	create_sphere(t_point center, float radius, t_vec3 color)

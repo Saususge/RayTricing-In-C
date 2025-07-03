@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:36:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 13:21:09 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:05:26 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ int			cone_lateral_intersect(
 				const t_ray *ray,
 				float *t,
 				t_t_bound bound);
+void		cone_scale(t_object *this, float scale);
 #endif

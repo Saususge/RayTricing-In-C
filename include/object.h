@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 17:47:14 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 17:28:48 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ typedef enum e_type
 	CYLINDER = 2,
 	CONE = 3,
 }	t_type;
-
-// typedef struct s_color
-// {
-// 	int	r;
-// 	int	g;
-// 	int	b;
-// }	t_color;
 
 // intensity: 0.0 to 1.0
 typedef struct s_ambient_light
@@ -140,6 +133,7 @@ typedef struct s_object_ops
 			const t_object	*this,
 			const t_point	*hit_point
 			);
+	void	(*scale)(t_object *this, float scale);
 }	t_object_ops;
 
 typedef struct s_viewport

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_ops.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 13:19:57 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 17:59:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,18 @@ t_vec3	cylinder_get_normal(const t_object *this, const t_point *hit_point)
 	normal = vec3_mul(vec3_sub(*hit_point, projection_point), \
 	1.0f / cyl.radius);
 	return (normal);
+}
+
+void	cylinder_scale(t_object *this, float scale)
+{
+	this->data.cylinder.radius *= scale;
+	this->data.cylinder.height *= scale;
+	this->data.cylinder.p1 = vec3_add(
+			this->data.cylinder.center,
+			vec3_mul(this->data.cylinder.axis,
+				-this->data.cylinder.height * 0.5f));
+	this->data.cylinder.p2 = vec3_add(
+			this->data.cylinder.center,
+			vec3_mul(this->data.cylinder.axis,
+				this->data.cylinder.height * 0.5f));
 }

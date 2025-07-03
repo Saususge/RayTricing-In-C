@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:25:34 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 13:28:53 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:06:28 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,10 @@ int	cone_intersect_cap(
 		return (0);
 	*t = temp_t;
 	return (1);
+}
+
+void	cone_scale(t_object *this, float scale)
+{
+	this->data.cone.radius *= scale;
+	this->data.cone.height *= scale;
 }

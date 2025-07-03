@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 09:17:44 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:00:27 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_object_ops	g_plane_ops = {
 	.get_normal = plane_get_normal,
 	.rotate = plane_rotate,
 	.translate = plane_translate,
+	.scale = plane_scale,
 };
 
 t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)

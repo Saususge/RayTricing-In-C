@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 17:15:20 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:03:59 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,23 @@ void	translate(t_vec3 offset)
 		obj = gvar->choosen_object;
 		obj->ops->translate(obj, offset);
 	}
+	else
+		printf("No object selected to translate\n");
+}
+
+void	scale(float scale_factor)
+{
+	t_gvar	*gvar;
+
+	gvar = g();
+	if (gvar->camera_choosed)
+		printf("Cannot scale camera\n");
+	else if (gvar->light_choosed)
+		printf("Cannot scale light\n");
+	else if (gvar->choosen_object)
+		gvar->choosen_object->ops->scale(gvar->choosen_object, scale_factor);
+	else
+		printf("No object selected to scale\n");
 }
 
 void	rotate(t_vec3 angle)
@@ -134,9 +151,9 @@ void	rotate(t_vec3 angle)
 		obj = gvar->choosen_object;
 		obj->ops->rotate(obj, angle);
 	}
+	else
+		printf("No object selected to rotate\n");
 }
-
-
 
 void	render(void);
 
@@ -187,8 +204,15 @@ int	key_hook(int keycode, void *mlx)
 		rotate((t_vec3){0, 0, 22.5});
 	else if (keycode == '\'')
 		rotate((t_vec3){0, 0, -22.5});
+	else if (keycode == '=')
+		scale(1.1f);
+	else if (keycode == '-')
+		scale(0.9f);
 	else
+	{
+		printf("Key %d pressed, no action defined\n", keycode);
 		return (0);
+	}
 	render();
 	mlx_put_image_to_window(mlx, g()->mlx_win, g()->img.img, 0, 0);
 	return (0);
