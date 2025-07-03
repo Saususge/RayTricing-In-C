@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:23:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 17:54:08 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:40:15 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	plane_translate(t_object *this, t_vec3 offset)
 	this->data.plane.point = vec3_add(this->data.plane.point, offset);
 }
 
-void	plane_rotate(t_object *this, t_vec3 angle)
+void	plane_rotate(t_object *this, t_vec3 axis, float angle)
 {
-	this->data.plane.normal = rotate_vector(this->data.plane.normal, angle);
+	this->data.plane.normal = rotate_vector_rodrigues(this->data.plane.normal, axis, angle);
 }
 
 void	plane_scale(t_object *this, float scale)

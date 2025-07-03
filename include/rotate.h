@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:31:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/26 23:48:44 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:30:54 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ typedef struct s_rot_res
 }	t_rot_res;
 
 t_vec3	rotate_vector(t_vec3 target, t_vec3 angle);
+t_vec3	rotate_vector_rodrigues(t_vec3 target, t_vec3 axis, float angle);
 #endif

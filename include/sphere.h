@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 17:57:44 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:34:06 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			sphere_intersect(const t_object *this,
 				const t_ray *ray, t_hit *hit, t_t_bound bound);
 int			shpere_shadow_intersect(const t_object *this,
 				const t_ray *ray, t_t_bound bound);
-void		sphere_rotate(t_object *this, t_vec3 angle);
+void		sphere_rotate(t_object *this, t_vec3 axis, float angle);
 void		sphere_translate(t_object *this, t_vec3 offset);
 t_vec3		sphere_get_normal(const t_object *this, const t_point *hit_point);
 void		calculate_sphere_equation(t_quad_eq *eq, \

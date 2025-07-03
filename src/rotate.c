@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:09:44 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 09:15:41 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 20:30:41 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rotate.h"
+
+#define DEGREE_TO_RADIAN ((float)M_PI / 180.0f)
 
 static t_vec3	rotate(t_vec3 target, t_rotation rot)
 {
@@ -47,4 +49,21 @@ t_vec3	rotate_vector(t_vec3 target, t_vec3 angle)
 
 	init_rotation(&rot, &angle);
 	return (rotate(target, rot));
+}
+
+// axis must be normalized
+t_vec3	rotate_vector_rodrigues(t_vec3 target, t_vec3 axis, float angle)
+{
+	float	cos_theta;
+	float	sin_theta;
+	t_vec3	term1;
+	t_vec3	term2;
+	t_vec3	term3;
+
+	cos_theta = cosf(angle * DEGREE_TO_RADIAN);
+	sin_theta = sinf(angle * DEGREE_TO_RADIAN);
+	term1 = vec3_mul(target, cos_theta);
+	term2 = vec3_mul(vec3_cross(axis, target), sin_theta);
+	term3 = vec3_mul(axis, vec3_dot(axis, target) * (1.0f - cos_theta));
+	return (vec3_add(vec3_add(term1, term2), term3));
 }

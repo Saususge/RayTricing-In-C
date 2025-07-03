@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:44:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/01 13:24:51 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/03 20:38:41 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include <math.h>
 #include <unistd.h>
 
-void	cone_rotate(t_object *this, t_vec3 angle)
+void	cone_rotate(t_object *this, t_vec3 axis, float angle)
 {
-	this->data.cone.axis = rotate_vector(this->data.cone.axis, angle);
+	this->data.cone.axis = rotate_vector_rodrigues(
+								this->data.cone.axis, axis, angle);
 }
 
 void	cone_translate(t_object *this, t_vec3 offset)

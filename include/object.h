@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 17:28:48 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:33:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ typedef struct s_object_ops
 		(*shadow_intersect)(const t_object *this,
 			const t_ray *ray, t_t_bound bound);
 	void
-		(*rotate)(t_object *this, t_vec3 angle);
+		(*rotate)(t_object *this, t_vec3 axis, float angle);
 	void
 		(*translate)(t_object *this, t_vec3 offset);
 	t_vec3

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 17:59:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:39:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	cylinder_translate(t_object *this, t_vec3 offset)
 	this->data.cylinder.center = vec3_add(this->data.cylinder.center, offset);
 }
 
-void	cylinder_rotate(t_object *this, t_vec3 angle)
+void	cylinder_rotate(t_object *this, t_vec3 axis, float angle)
 {
-	this->data.cylinder.axis = rotate_vector(this->data.cylinder.axis, angle);
+	this->data.cylinder.axis = rotate_vector_rodrigues(this->data.cylinder.axis, axis, angle);
 	this->data.cylinder.p1 = vec3_add(
 			this->data.cylinder.center,
 			vec3_mul(this->data.cylinder.axis,

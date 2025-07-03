@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 18:03:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 20:52:39 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_viewport(void)
 	viewport->width = 1680;
 	viewport->height = (int)(viewport->width / viewport->aspect_ratio);
 	viewport->focal_length = 1.0f;
-	viewport->view_w = 2.0f * viewport->focal_length * tan(g()->cam.fov * M_PI / 360.0f);
+	viewport->view_w = 2.0f * viewport->focal_length * tanf(g()->cam.fov * (float)M_PI / 360.0f);
 	viewport->view_h = viewport->view_w / viewport->aspect_ratio;
 	viewport->vup.y = 1.0f;
 	viewport->view_u = vec3_mul(
@@ -129,7 +129,7 @@ void	scale(float scale_factor)
 		printf("No object selected to scale\n");
 }
 
-void	rotate(t_vec3 angle)
+void	rotate(t_vec3 axis, float angle)
 {
 	t_gvar *gvar;
 	t_camera *cam;
@@ -141,7 +141,7 @@ void	rotate(t_vec3 angle)
 	if (gvar->camera_choosed)
 	{
 		cam = &gvar->cam;
-		cam->dir = vec3_normalize(rotate_vector(cam->dir, angle));
+		cam->dir = vec3_normalize(rotate_vector_rodrigues(cam->dir, axis, angle));
 		init_viewport();
 	}
 	else if (gvar->light_choosed)
@@ -149,7 +149,7 @@ void	rotate(t_vec3 angle)
 	else if (gvar->choosen_object)
 	{
 		obj = gvar->choosen_object;
-		obj->ops->rotate(obj, angle);
+		obj->ops->rotate(obj, axis, angle);
 	}
 	else
 		printf("No object selected to rotate\n");
@@ -180,30 +180,30 @@ int	key_hook(int keycode, void *mlx)
 		printf("Light %d selected\n", g()->light_index + 1);
 		return (0);
 	}
-	else if (keycode == 'q')
-		translate((t_vec3){0.1f, 0.0f, 0.0f});
-	else if (keycode == 'a')
-		translate((t_vec3){-0.1f, 0.0f, 0.0f});
 	else if (keycode == 'w')
-		translate((t_vec3){0.0f, 0.1f, 0.0f});
+		translate(vec3_mul(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), 0.1f));
 	else if (keycode == 's')
-		translate((t_vec3){0.0f, -0.1f, 0.0f});
-	else if (keycode == 'e')
-		translate((t_vec3){0.0f, 0.0f, 0.1f});
+		translate(vec3_mul(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), -0.1f));
+	else if (keycode == 'a')
+		translate(vec3_mul(vec3_normalize(g()->viewport.view_u), -0.1f));
 	else if (keycode == 'd')
-		translate((t_vec3){0.0f, 0.0f, -0.1f});
+		translate(vec3_mul(vec3_normalize(g()->viewport.view_u), 0.1f));
+	else if (keycode == 'q')
+		translate(vec3_mul(vec3_normalize(g()->viewport.view_v), -0.1f));
+	else if (keycode == 'e')
+		translate(vec3_mul(vec3_normalize(g()->viewport.view_v), 0.1f));
 	else if (keycode == 'p')
-		rotate((t_vec3){22.5, 0, 0});
-	else if (keycode == 'l')
-		rotate((t_vec3){-22.5, 0, 0});
-	else if (keycode == '[')
-		rotate((t_vec3){0, 22.5, 0});
+		rotate(vec3_normalize(g()->viewport.view_u), -22.5f);
 	else if (keycode == ';')
-		rotate((t_vec3){0, -22.5, 0});
-	else if (keycode == ']')
-		rotate((t_vec3){0, 0, 22.5});
+		rotate(vec3_normalize(g()->viewport.view_u), 22.5f);
+	else if (keycode == 'l')
+		rotate(vec3_normalize(g()->viewport.view_v), 22.5f);
 	else if (keycode == '\'')
-		rotate((t_vec3){0, 0, -22.5});
+		rotate(vec3_normalize(g()->viewport.view_v), -22.5f);
+	else if (keycode == 'o')
+		rotate(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), 22.5f);
+	else if (keycode == '[')
+		rotate(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), -22.5f);
 	else if (keycode == '=')
 		scale(1.1f);
 	else if (keycode == '-')
