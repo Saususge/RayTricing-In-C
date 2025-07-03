@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:52:39 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/03 23:07:39 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,20 @@ int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
 void	init_viewport(void)
 {
 	t_viewport	*viewport;
+	static int	initialized = 0;
 
 	viewport = &g()->viewport;
 	viewport->aspect_ratio = 21.0f / 9.0f;
-	viewport->width = 1680;
-	viewport->height = (int)(viewport->width / viewport->aspect_ratio);
-	viewport->focal_length = 1.0f;
-	viewport->view_w = 2.0f * viewport->focal_length * tanf(g()->cam.fov * (float)M_PI / 360.0f);
-	viewport->view_h = viewport->view_w / viewport->aspect_ratio;
-	viewport->vup.y = 1.0f;
+	if (!initialized)
+	{
+		viewport->width = 1680;
+		viewport->height = (int)(viewport->width / viewport->aspect_ratio);
+		viewport->focal_length = 1.0f;
+		viewport->view_w = 2.0f * viewport->focal_length * tanf(g()->cam.fov * (float)M_PI / 360.0f);
+		viewport->view_h = viewport->view_w / viewport->aspect_ratio;
+		viewport->vup.y = 1.0f;
+		initialized = 1;
+	}
 	viewport->view_u = vec3_mul(
 		vec3_normalize(vec3_cross(g()->cam.dir, viewport->vup)),
 		viewport->view_w);
@@ -142,6 +147,7 @@ void	rotate(t_vec3 axis, float angle)
 	{
 		cam = &gvar->cam;
 		cam->dir = vec3_normalize(rotate_vector_rodrigues(cam->dir, axis, angle));
+		gvar->viewport.vup = vec3_normalize(rotate_vector_rodrigues(gvar->viewport.vup, axis, angle));
 		init_viewport();
 	}
 	else if (gvar->light_choosed)
@@ -201,9 +207,9 @@ int	key_hook(int keycode, void *mlx)
 	else if (keycode == '\'')
 		rotate(vec3_normalize(g()->viewport.view_v), -22.5f);
 	else if (keycode == 'o')
-		rotate(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), 22.5f);
+		rotate(g()->cam.dir, 22.5f);
 	else if (keycode == '[')
-		rotate(vec3_normalize(vec3_cross(g()->viewport.view_u, g()->viewport.view_v)), -22.5f);
+		rotate(g()->cam.dir, -22.5f);
 	else if (keycode == '=')
 		scale(1.1f);
 	else if (keycode == '-')
