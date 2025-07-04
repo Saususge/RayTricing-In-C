@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 16:58:02 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:25:04 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define OBJECT_H
 
 # include "vector.h"
+# include "viewport.h"
 
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
@@ -134,25 +135,11 @@ typedef struct s_object_ops
 			const t_object	*this,
 			const t_point	*hit_point
 			);
-	void	(*scale)(t_object *this, float scale);
+	void
+		(*scale)(t_object *this, float scale);
+	t_vec3
+		(*get_color)(const t_object *obj, t_point hit_point);
 }	t_object_ops;
-
-typedef struct s_viewport
-{
-	int		width;
-	int		height;
-	float	aspect_ratio;
-	float	focal_length;
-	float	view_w;
-	float	view_h;
-	t_vec3	vup;
-	t_vec3	view_u;
-	t_vec3	view_v;
-	t_vec3	view_u_per_pixel;
-	t_vec3	view_v_per_pixel;
-	t_vec3	view_upper_left;
-	t_vec3	pixel_origin;
-}	t_viewport;
 
 typedef struct s_data
 {

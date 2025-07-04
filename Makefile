@@ -15,8 +15,6 @@ LDFLAGS := -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 ifdef DEBUG
 	CFLAGS += -g
-	# CFLAGS += -fsanitize=address
-	# LDFLAGS += -fsanitize=address
 else
 	CFLAGS += -O2
 endif
@@ -29,32 +27,40 @@ SRC := \
 	cone_2.c\
 	cone_utils.c\
 	cylinder.c\
-	cylinder_ops.c\
+	cylinder_ops_0.c\
+	cylinder_ops_1.c\
 	cylinder_ops_helper.c\
 	cylinder_utils.c\
 	cylinder_checkerboard.c\
 	environment.c\
+	hit_color.c\
+	hit_color_util.c\
+	hit_def.c\
+	hit_util.c\
+	hook_key.c\
+	hook_mouse.c\
 	main.c\
 	object_util.c\
-	parse.c\
 	parse_ambient.c\
+	parse.c\
 	parse_camera.c\
 	parse_cone.c\
 	parse_cylinder.c\
 	parse_light.c\
 	parse_plane.c\
+	parse_scene_file.c\
 	parse_sphere.c\
 	parse_util.c\
 	plane.c\
 	plane_ops.c\
 	plane_checkerboard.c\
+	render.c\
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
-	sphere_2.c\
-	sphere_3.c\
 	sphere_ops.c\
 	sphere_checkerboard.c\
+	transform_def.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\
@@ -63,7 +69,8 @@ SRC := \
 	vector_length.c\
 	vector_product.c\
 	vector_reflect_refract.c\
-	vector_utility.c
+	vector_utility.c\
+	viewport.c
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
@@ -107,7 +114,7 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-.bonus: $(BONUS_OBJ) $(LIBFT)
+.bonus: $(BONUS_OBJ) $(LIBFT) $(MLX)
 	$(CC) $(BONUS_OBJ) $(LDFLAGS) -o $(MINIRT)
 	touch .bonus
 

@@ -30,6 +30,7 @@ static t_object_ops	g_sphere_ops = {
 	.rotate = sphere_rotate,
 	.translate = sphere_translate,
 	.scale = sphere_scale,
+	.get_color = sphere_get_color,
 };
 
 t_object	create_sphere(t_point center, float radius, t_vec3 color)
@@ -56,19 +57,4 @@ void	calculate_sphere_equation(t_quad_eq *eq, \
 	eq->b = vec3_dot(oc, ray->dir);
 	eq->c = vec3_dot(oc, oc) - (sph->radius * sph->radius);
 	eq->disc = (eq->b * eq->b) - (eq->a * eq->c);
-}
-
-int	hit_shadow(const t_ray *ray, float t_min, float t_max)
-{
-	int	i;
-
-	i = 0;
-	while (i < g()->object_count)
-	{
-		if (g()->objects[i].ops->shadow_intersect(g()->objects + i, \
-		ray, (t_t_bound){t_min, t_max}))
-			return (1);
-		i++;
-	}
-	return (0);
 }

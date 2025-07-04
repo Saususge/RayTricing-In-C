@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 17:05:54 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:42:11 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void		calculate_sphere_equation(t_quad_eq *eq, \
 int			hit_shadow(const t_ray *ray, float t_min, float t_max);
 void		set_hit_geometry(t_hit *hit, float t, \
 	const t_ray *ray, const t_object *this);
-t_vec3		calc_ambient(const t_object *this);
 t_vec3		get_light_dir(const t_light *light, const t_hit *hit);
-float		get_light_distance(const t_light *light, const t_hit *hit);
 int			is_lit(const t_light *light, const t_hit *hit);
 void		add_diffuse(const t_light *light, \
 	const t_hit *hit, t_vec3 *diff, const t_object *this);

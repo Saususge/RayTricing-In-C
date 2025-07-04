@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:02:41 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:41:32 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_vec3		cylinder_get_color(const t_object *obj, t_point hit_point);
 
 // cylinder utility functions
 t_vec3		get_cylinder_u_axis(t_vec3 axis);
-void		calculate_cylinder_uv_dirs(t_vec3 axis, t_vec3 *u_dir, t_vec3 *v_dir);
-void		cylinder_get_uv(t_point p, const t_cylinder *cy, float *u, float *v);
+void		calculate_cylinder_uv_dirs(t_vec3 axis,
+				t_vec3 *u_dir, t_vec3 *v_dir);
+void		cylinder_get_uv(t_point p,
+				const t_cylinder *cy, float *u, float *v);
 #endif

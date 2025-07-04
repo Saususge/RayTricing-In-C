@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 17:59:25 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:28:31 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_object_ops	g_cone_ops = {
 	.rotate = cone_rotate,
 	.translate = cone_translate,
 	.scale = cone_scale,
+	.get_color = cone_get_color,
 };
 
 void	calculate_cone_equation(

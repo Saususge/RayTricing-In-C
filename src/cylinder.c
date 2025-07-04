@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:00:55 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:28:40 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static t_object_ops	g_cylinder_ops = {
 	.rotate = cylinder_rotate,
 	.translate = cylinder_translate,
 	.scale = cylinder_scale,
+	.get_color = cylinder_get_color,
 };
 
 t_object	create_cylinder(struct s_cyl_data data)

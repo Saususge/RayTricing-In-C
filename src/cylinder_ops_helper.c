@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_ops_helper.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:01:46 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:08:55 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:17:37 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	check_in_circle(const t_cylinder *cyl, \
 	return (dist_sq <= cyl->radius * cyl->radius);
 }
 
-int	intersect_cap(const t_cylinder *cyl, const t_ray *ray, \
-	float *t, t_t_bound bound)
+int	intersect_cap(const t_cylinder *cyl,
+		const t_ray *ray, float *t, t_t_bound bound)
 {
 	float	t1;
 	float	t2;
@@ -63,10 +63,10 @@ int	intersect_cap(const t_cylinder *cyl, const t_ray *ray, \
 		return (0);
 	t1 = vec3_dot(vec3_sub(cyl->p1, ray->origin), cyl->axis) / denom;
 	t2 = vec3_dot(vec3_sub(cyl->p2, ray->origin), cyl->axis) / denom;
-	valid1 = (t1 >= bound.min && t1 <= bound.max && \
-		check_in_circle(cyl, ray, cyl->p1, t1));
-	valid2 = (t2 >= bound.min && t2 <= bound.max && \
-		check_in_circle(cyl, ray, cyl->p2, t2));
+	valid1 = (t1 >= bound.min && t1 <= bound.max
+			&& check_in_circle(cyl, ray, cyl->p1, t1));
+	valid2 = (t2 >= bound.min && t2 <= bound.max
+			&& check_in_circle(cyl, ray, cyl->p2, t2));
 	if (!valid1 && !valid2)
 		return (0);
 	if (valid1 && (!valid2 || t1 < t2))
