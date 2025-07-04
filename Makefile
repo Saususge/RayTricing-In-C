@@ -28,8 +28,8 @@ SRC := \
 	cone_utils.c\
 	cylinder.c\
 	cylinder_ops_0.c\
-	cylinder_ops_1.c\
 	cylinder_ops_helper.c\
+	cylinder_rotate.c\
 	cylinder_utils.c\
 	cylinder_checkerboard.c\
 	environment.c\
@@ -40,6 +40,7 @@ SRC := \
 	hook_key.c\
 	hook_mouse.c\
 	main.c\
+	matrix.c\
 	object_util.c\
 	parse_ambient.c\
 	parse.c\
@@ -58,7 +59,6 @@ SRC := \
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
-	sphere_ops.c\
 	sphere_checkerboard.c\
 	transform_def.c\
 	vector_arithmetic_0.c\
