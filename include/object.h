@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 21:38:34 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 22:37:47 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "vector.h"
 # include "viewport.h"
+# include "matrix.h"
 
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
@@ -55,12 +56,22 @@ typedef struct s_ray
 	t_vec3	dir;
 }	t_ray;
 
+// T-> translation
+// R -> rotation
+// S -> scaling
+// M -> TRS
+// M_inv -> M^-1
 typedef struct s_object
 {
 	t_type			type;
 	t_object_ops	*ops;
 	t_vec3			color;
 	int				checkerboard;
+	t_mat			t;
+	t_mat			r;
+	t_mat			s;
+	t_mat			m;
+	t_mat			m_inv;
 }	t_object;
 
 typedef struct s_hit
