@@ -38,6 +38,7 @@ t_object	create_sphere(t_point center, float radius, t_vec3 color)
 		.type = SPHERE,
 		.ops = &g_sphere_ops,
 		.color = color,
+		.checkerboard = 0,
 		.data.sphere = (t_sphere){
 		.center = center,
 		.radius = radius,

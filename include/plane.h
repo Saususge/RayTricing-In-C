@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:08:13 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:33:54 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 17:05:54 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ t_vec3		plane_get_normal(const t_object *this, const t_point *hit_point);
 void		plane_translate(t_object *this, t_vec3 offset);
 void		plane_rotate(t_object *this, t_vec3 axis, float angle);
 void		plane_scale(t_object *this, float scale);
+t_vec3		plane_get_color(const t_object *obj, t_point hit_point);
 #endif

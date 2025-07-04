@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:39:43 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 18:00:55 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_object	create_cylinder(struct s_cyl_data data)
 		.type = CYLINDER,
 		.ops = &g_cylinder_ops,
 		.color = data.color,
+		.checkerboard = 0,
 		.data.cylinder = (t_cylinder){
 		.p1 = vec3_sub(data.center,
 			vec3_mul(data.axis, data.height * 0.5f)),

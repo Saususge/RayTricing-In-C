@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:36:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:33:23 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 18:04:38 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ struct s_cone_data
 	float	height;
 	t_vec3	color;
 };
+
+typedef struct s_cone_cap_data
+{
+	t_point	p;
+	t_point	cap_center;
+	t_vec3	axis;
+	float	radius;
+}	t_cone_cap_data;
 
 t_object	create_cone(struct s_cone_data data);
 int			cone_intersect(
@@ -53,4 +61,10 @@ int			cone_lateral_intersect(
 				float *t,
 				t_t_bound bound);
 void		cone_scale(t_object *this, float scale);
+t_vec3		cone_get_color(const t_object *obj, t_point hit_point);
+t_vec3		get_cone_u_axis(t_vec3 axis);
+void		calculate_cone_uv_dirs(t_vec3 axis, t_vec3 *u_dir, t_vec3 *v_dir);
+void		cone_lateral_uv(t_point p, const t_cone *cone, float *u, float *v);
+void		cone_cap_uv(t_cone_cap_data data, float *u, float *v);
+
 #endif

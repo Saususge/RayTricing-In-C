@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 18:05:31 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 17:59:25 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_object	create_cone(struct s_cone_data data)
 		.type = CONE,
 		.ops = &g_cone_ops,
 		.color = data.color,
+		.checkerboard = 0,
 		.data.cone = (t_cone){
 		.center = data.center,
 		.axis = data.axis,

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_ops.c                                       :+:      :+:    :+:   */
+/*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 17:25:35 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:10:39 by chakim           ###   ########.fr       */
+/*   Created: 2025/07/03 17:53:23 by chakim            #+#    #+#             */
+/*   Updated: 2025/07/04 18:00:12 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sphere.h"
+#include <math.h>
+#include "object.h"
 #include "vector.h"
-#include <unistd.h>
-#include <stdio.h>
+#include "plane.h"
+#include "sphere.h"
+#include "cone.h"
+#include "cylinder.h"
 
-void	sphere_translate(t_object *this, t_vec3 offset)
+t_vec3	checkerboard_color_at(float u, float v)
 {
-	this->data.sphere.center = vec3_add(this->data.sphere.center, offset);
-}
+	int	checker;
 
-void	sphere_rotate(t_object *this, t_vec3 axis, float angle)
-{
-	(void)this;
-	(void)axis;
-	(void)angle;
-	printf("Sphere cannot be rotated.\n");
-}
-
-void	sphere_scale(t_object *this, float scale)
-{
-	this->data.sphere.radius *= scale;
+	checker = (int)(floorf(u * 10) + floorf(v * 10));
+	if (checker % 2 == 0)
+		return ((t_vec3){0, 0, 0});
+	return ((t_vec3){255, 255, 255});
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:33:13 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 16:58:02 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_object
 	t_object_ops	*ops;
 	t_obj_data		data;
 	t_vec3			color;
+	int				checkerboard;
 }	t_object;
 
 typedef struct s_hit
@@ -189,4 +190,5 @@ t_gvar	*g(void);
 int		process_object_arr_size(void);
 void	populate_hit_record(
 			t_hit *hit, float t, const t_ray *ray, const t_object *obj);
+t_vec3	checkerboard_color_at(float u, float v);
 #endif

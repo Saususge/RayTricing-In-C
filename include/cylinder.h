@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:33:38 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 18:02:41 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ struct s_cyl_data
 	t_vec3	color;
 };
 
+typedef struct s_cap_uv_data
+{
+	t_point	p;
+	t_point	center;
+	t_vec3	axis;
+	float	radius;
+}	t_cap_uv_data;
+
 t_object	create_cylinder(struct s_cyl_data data);
 void		calculate_cylinder_equation(t_quad_eq *eq, \
 	const t_cylinder *cyl, const t_ray *ray);
@@ -46,4 +54,10 @@ t_vec3		cylinder_get_normal(const t_object *this, const t_point *hit_point);
 void		cylinder_translate(t_object *this, t_vec3 offset);
 void		cylinder_rotate(t_object *this, t_vec3 axis, float angle);
 void		cylinder_scale(t_object *this, float scale);
+t_vec3		cylinder_get_color(const t_object *obj, t_point hit_point);
+
+// cylinder utility functions
+t_vec3		get_cylinder_u_axis(t_vec3 axis);
+void		calculate_cylinder_uv_dirs(t_vec3 axis, t_vec3 *u_dir, t_vec3 *v_dir);
+void		cylinder_get_uv(t_point p, const t_cylinder *cy, float *u, float *v);
 #endif

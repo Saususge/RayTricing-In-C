@@ -22,12 +22,17 @@ else
 endif
 
 SRC := \
+	cone_checkerboard.c\
+	texture.c\
 	cone_0.c\
 	cone_1.c\
 	cone_2.c\
+	cone_utils.c\
 	cylinder.c\
 	cylinder_ops.c\
 	cylinder_ops_helper.c\
+	cylinder_utils.c\
+	cylinder_checkerboard.c\
 	environment.c\
 	main.c\
 	object_util.c\
@@ -42,12 +47,14 @@ SRC := \
 	parse_util.c\
 	plane.c\
 	plane_ops.c\
+	plane_checkerboard.c\
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
 	sphere_2.c\
 	sphere_3.c\
 	sphere_ops.c\
+	sphere_checkerboard.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\

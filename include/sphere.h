@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:34:06 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 17:05:54 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ t_vec3		clamp_color_vec3(t_vec3 color);
 void		populate_hit_record(t_hit *hit, \
 	float t, const t_ray *ray, const t_object *this);
 void		sphere_scale(t_object *this, float scale);
+t_vec3		sphere_get_color(const t_object *obj, t_point hit_point);
 #endif

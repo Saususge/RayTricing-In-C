@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 23:07:39 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 17:59:09 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <time.h>
 #include "event.h"
 #include "rotate.h"
+#include "cylinder.h"
+#include "cone.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -214,6 +216,18 @@ int	key_hook(int keycode, void *mlx)
 		scale(1.1f);
 	else if (keycode == '-')
 		scale(0.9f);
+	else if (keycode == 't')
+	{
+		if (g()->choosen_object)
+		{
+			g()->choosen_object->checkerboard = !g()->choosen_object->checkerboard;
+			printf("Checkerboard %s for selected object\n", g()->choosen_object->checkerboard ? "enabled" : "disabled");
+		}
+		else
+		{
+			printf("No object selected to toggle checkerboard\n");
+		}
+	}
 	else
 	{
 		printf("Key %d pressed, no action defined\n", keycode);
@@ -261,6 +275,17 @@ void	render(void)
 			t_hit hit;
 			hit.color = (t_vec3){0.0f, 0.0f, 0.0f};
 			hit_objects(&ray, 0.0f, INFINITY, &hit);
+			if (hit.object && hit.object->checkerboard)
+			{
+				if (hit.object->type == SPHERE)
+					hit.color = sphere_get_color(hit.object, hit.point);
+				else if (hit.object->type == PLANE)
+					hit.color = plane_get_color(hit.object, hit.point);
+				else if (hit.object->type == CYLINDER)
+					hit.color = cylinder_get_color(hit.object, hit.point);
+				else if (hit.object->type == CONE)
+					hit.color = cone_get_color(hit.object, hit.point);
+			}
 			my_mlx_pixel_put(&g()->img, x, y, (int)hit.color.x << 16 | (int)hit.color.y << 8 | (int)hit.color.z);
 		}
 	}

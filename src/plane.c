@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 18:00:27 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 17:38:55 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 		.type = PLANE,
 		.ops = &g_plane_ops,
 		.color = color,
+		.checkerboard = 0,
 		.data.plane = (t_plane){
 		.point = point,
 		.normal = normal,
