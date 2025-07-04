@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_length.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:25:13 by chakim            #+#    #+#             */
-/*   Updated: 2025/06/30 01:57:04 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 16:00:49 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vec3	vec3_normalize(t_vec3 v)
 	float	mag;
 
 	mag = vec3_length(v);
-	if (mag < 0.00001f)
+	if (mag < EPSILON)
 		return (vec3_create(0.0f, 0.0f, 0.0f));
 	return (vec3_create(v.x / mag, v.y / mag, v.z / mag));
 }

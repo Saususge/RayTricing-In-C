@@ -56,5 +56,5 @@ int	is_lit(const t_light *light, const t_hit *hit)
 	shadow_ray.origin = hit->point;
 	shadow_ray.dir = get_light_dir(light, hit);
 	dist = get_light_distance(light, hit);
-	return (!hit_shadow(&shadow_ray, 0.001f, dist - 0.001f));
+	return (!hit_shadow(&shadow_ray, EPSILON, dist - EPSILON));
 }
