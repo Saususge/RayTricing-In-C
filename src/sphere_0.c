@@ -27,9 +27,6 @@ static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
 	.shadow_intersect = shpere_shadow_intersect,
 	.get_normal = sphere_get_normal,
-	.rotate = sphere_rotate,
-	.translate = sphere_translate,
-	.scale = sphere_scale,
 	.get_color = sphere_get_color,
 };
 
@@ -40,10 +37,6 @@ t_object	create_sphere(t_point center, float radius, t_vec3 color)
 		.ops = &g_sphere_ops,
 		.color = color,
 		.checkerboard = 0,
-		.data.sphere = (t_sphere){
-		.center = center,
-		.radius = radius,
-	}
 	});
 }
 

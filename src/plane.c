@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:28:10 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 21:59:00 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ static t_object_ops	g_plane_ops = {
 	.intersect = plane_intersect,
 	.shadow_intersect = plane_shadow_intersect,
 	.get_normal = plane_get_normal,
-	.rotate = plane_rotate,
-	.translate = plane_translate,
-	.scale = plane_scale,
 	.get_color = plane_get_color,
 };
 
@@ -33,10 +30,6 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 		.ops = &g_plane_ops,
 		.color = color,
 		.checkerboard = 0,
-		.data.plane = (t_plane){
-		.point = point,
-		.normal = normal,
-	}
 	});
 }
 

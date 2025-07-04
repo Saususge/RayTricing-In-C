@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:10:04 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/04 22:00:06 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 #include "vector.h"
 #include "rotate.h"
 #include <unistd.h>
-
-void	cylinder_translate(t_object *this, t_vec3 offset)
-{
-	this->data.cylinder.p1 = vec3_add(this->data.cylinder.p1, offset);
-	this->data.cylinder.p2 = vec3_add(this->data.cylinder.p2, offset);
-	this->data.cylinder.center = vec3_add(this->data.cylinder.center, offset);
-}
 
 int	cylinder_intersect(const t_object *this,
 						const t_ray *ray,
@@ -82,18 +75,4 @@ t_vec3	cylinder_get_normal(const t_object *this, const t_point *hit_point)
 	normal = vec3_mul(vec3_sub(*hit_point, projection_point), \
 	1.0f / cyl.radius);
 	return (normal);
-}
-
-void	cylinder_scale(t_object *this, float scale)
-{
-	this->data.cylinder.radius *= scale;
-	this->data.cylinder.height *= scale;
-	this->data.cylinder.p1 = vec3_add(
-			this->data.cylinder.center,
-			vec3_mul(this->data.cylinder.axis,
-				-this->data.cylinder.height * 0.5f));
-	this->data.cylinder.p2 = vec3_add(
-			this->data.cylinder.center,
-			vec3_mul(this->data.cylinder.axis,
-				this->data.cylinder.height * 0.5f));
 }

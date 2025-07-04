@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:25:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 21:38:34 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,49 +55,10 @@ typedef struct s_ray
 	t_vec3	dir;
 }	t_ray;
 
-typedef struct s_sphere
-{
-	t_point	center;
-	float	radius;
-}	t_sphere;
-
-typedef struct s_plane
-{
-	t_point	point;
-	t_vec3	normal;
-}	t_plane;
-
-typedef struct s_cylinder
-{
-	t_point		p1;
-	t_point		p2;
-	t_point		center;
-	t_vec3		axis;
-	float		radius;
-	float		height;
-}	t_cylinder;
-
-typedef struct s_cone
-{
-	t_point	center;
-	t_vec3	axis;
-	float	height;
-	float	radius;
-}	t_cone;
-
-typedef union u_obj_data
-{
-	struct s_sphere		sphere;
-	struct s_plane		plane;
-	struct s_cylinder	cylinder;
-	struct s_cone		cone;
-}	t_obj_data;
-
 typedef struct s_object
 {
 	t_type			type;
 	t_object_ops	*ops;
-	t_obj_data		data;
 	t_vec3			color;
 	int				checkerboard;
 }	t_object;
@@ -126,17 +87,11 @@ typedef struct s_object_ops
 	int
 		(*shadow_intersect)(const t_object *this,
 			const t_ray *ray, t_t_bound bound);
-	void
-		(*rotate)(t_object *this, t_vec3 axis, float angle);
-	void
-		(*translate)(t_object *this, t_vec3 offset);
 	t_vec3
 		(*get_normal)(
 			const t_object	*this,
 			const t_point	*hit_point
 			);
-	void
-		(*scale)(t_object *this, float scale);
 	t_vec3
 		(*get_color)(const t_object *obj, t_point hit_point);
 }	t_object_ops;

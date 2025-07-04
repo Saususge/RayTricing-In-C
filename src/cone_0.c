@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:28:31 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/04 22:00:40 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,11 @@ static t_object_ops	g_cone_ops = {
 	.intersect = cone_intersect,
 	.shadow_intersect = cone_shadow_intersect,
 	.get_normal = cone_get_normal,
-	.rotate = cone_rotate,
-	.translate = cone_translate,
-	.scale = cone_scale,
 	.get_color = cone_get_color,
 };
 
 void	calculate_cone_equation(
 				t_quad_eq *eq,
-				const t_cone *cone,
 				const t_ray *ray)
 {
 	t_vec3	co;
@@ -47,7 +43,6 @@ void	calculate_cone_equation(
 }
 
 int	cone_check_height(
-				const t_cone *cone,
 				t_point hit_point)
 {
 	t_vec3	center_to_hit;
@@ -68,7 +63,6 @@ static int	cone_lateral_check(const t_cone *cone, \
 }
 
 int	cone_lateral_intersect(
-				const t_cone *cone,
 				const t_ray *ray,
 				float *t,
 				t_t_bound bound)
@@ -103,10 +97,9 @@ t_object	create_cone(struct s_cone_data data)
 		.ops = &g_cone_ops,
 		.color = data.color,
 		.checkerboard = 0,
-		.data.cone = (t_cone){
 		.center = data.center,
 		.axis = data.axis,
 		.radius = data.radius,
 		.height = data.height,
-	}});
+	});
 }
