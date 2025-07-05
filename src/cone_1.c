@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:44:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 22:00:41 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 
 int	cone_intersect(
-		const t_object *this, const t_ray *ray, t_hit *hit, t_t_bound bound)
+		const t_object *this, const t_ray *ray, t_hit *hit, t_interval bound)
 {
 	float	t;
 	int		lateral_hit;
@@ -26,7 +26,7 @@ int	cone_intersect(
 	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
 	if (lateral_hit)
 		cap_hit = cone_intersect_cap(
-				&this->data.cone, ray, &t, (t_t_bound){bound.min, t});
+				&this->data.cone, ray, &t, (t_interval){bound.min, t});
 	else
 		cap_hit = cone_intersect_cap(&this->data.cone, ray, &t, bound);
 	if (!lateral_hit && !cap_hit)
@@ -36,7 +36,7 @@ int	cone_intersect(
 }
 
 int	cone_shadow_intersect(
-		const t_object *this, const t_ray *ray, t_t_bound bound)
+		const t_object *this, const t_ray *ray, t_interval bound)
 {
 	float			t;
 	int				lateral_hit;
@@ -45,7 +45,7 @@ int	cone_shadow_intersect(
 	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
 	if (lateral_hit)
 		cap_hit = cone_intersect_cap(
-				&this->data.cone, ray, &t, (t_t_bound){bound.min, t});
+				&this->data.cone, ray, &t, (t_interval){bound.min, t});
 	else
 		cap_hit = cone_intersect_cap(&this->data.cone, ray, &t, bound);
 	if (lateral_hit || cap_hit)

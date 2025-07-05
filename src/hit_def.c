@@ -26,7 +26,7 @@ int	hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit)
 	while (i < g()->object_count)
 	{
 		if (g()->objects[i].ops->intersect(g()->objects + i, ray,
-				&current_hit, (t_t_bound){t_min, closest_so_far}))
+				&current_hit, (t_interval){t_min, closest_so_far}))
 		{
 			hit_anything = 1;
 			closest_so_far = current_hit.t;
@@ -45,7 +45,7 @@ int	hit_shadow(const t_ray *ray, float t_min, float t_max)
 	while (i < g()->object_count)
 	{
 		if (g()->objects[i].ops->shadow_intersect(g()->objects + i,
-				ray, (t_t_bound){t_min, t_max}))
+				ray, (t_interval){t_min, t_max}))
 			return (1);
 		i++;
 	}

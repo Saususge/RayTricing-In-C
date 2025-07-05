@@ -16,7 +16,7 @@
 #include <math.h>
 
 int	sphere_intersect(const t_object *this, \
-	const t_ray *ray, t_hit *hit, t_t_bound bound)
+	const t_ray *ray, t_hit *hit, t_interval bound)
 {
 	t_quad_eq	eq;
 	t_ray		local_ray;
@@ -41,7 +41,7 @@ int	sphere_intersect(const t_object *this, \
 }
 
 int	shpere_shadow_intersect(const t_object *this, \
-	const t_ray *ray, t_t_bound bound)
+	const t_ray *ray, t_interval bound)
 {
 	t_ray		local_ray;
 	t_quad_eq	eq;

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:25:34 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cone_intersect_cap(
 	const t_cone *cone,
 	const t_ray *ray,
 	float *t,
-	t_t_bound bound)
+	t_interval bound)
 {
 	float	temp_t;
 	float	denom;

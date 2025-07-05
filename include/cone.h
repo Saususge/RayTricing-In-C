@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:36:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:04:38 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_cone_cap_data
 t_object	create_cone(struct s_cone_data data);
 int			cone_intersect(
 				const t_object *this,
-				const t_ray *ray, t_hit *hit, t_t_bound bound);
+				const t_ray *ray, t_hit *hit, t_interval bound);
 int			cone_shadow_intersect(
-				const t_object *this, const t_ray *ray, t_t_bound bound);
+				const t_object *this, const t_ray *ray, t_interval bound);
 t_vec3		cone_get_normal(const t_object *this, const t_point *hit_point);
 void		cone_translate(t_object *this, t_vec3 offset);
 void		cone_rotate(t_object *this, t_vec3 axis, float angle);
@@ -54,12 +54,12 @@ int			cone_intersect_cap(
 				const t_cone *cone,
 				const t_ray *ray,
 				float *t,
-				t_t_bound bound);
+				t_interval bound);
 int			cone_lateral_intersect(
 				const t_cone *cone,
 				const t_ray *ray,
 				float *t,
-				t_t_bound bound);
+				t_interval bound);
 void		cone_scale(t_object *this, float scale);
 t_vec3		cone_get_color(const t_object *obj, t_point hit_point);
 t_vec3		get_cone_u_axis(t_vec3 axis);

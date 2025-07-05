@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:41:32 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ void		calculate_cylinder_equation(t_quad_eq *eq, \
 int			check_in_circle(const t_cylinder *cyl, \
 	const t_ray *ray, t_point cap_center, float t);
 int			intersect_cap(const t_cylinder *cyl, \
-	const t_ray *ray, float *t, t_t_bound bound);
+	const t_ray *ray, float *t, t_interval bound);
 int			check_height(const t_cylinder *cyl, t_point hit_point);
 int			intersect_lateral(const t_cylinder *cyl, \
-	const t_ray *ray, float *t, t_t_bound bound);
+	const t_ray *ray, float *t, t_interval bound);
 int			cylinder_intersect(
 				const t_object *this,
-				const t_ray *ray, t_hit *hit, t_t_bound bound);
+				const t_ray *ray, t_hit *hit, t_interval bound);
 int			cylinder_shadow_intersect(
-				const t_object *this, const t_ray *ray, t_t_bound bound);
+				const t_object *this, const t_ray *ray, t_interval bound);
 t_vec3		cylinder_get_normal(const t_object *this, const t_point *hit_point);
 void		cylinder_translate(t_object *this, t_vec3 offset);
 void		cylinder_rotate(t_object *this, t_vec3 axis, float angle);

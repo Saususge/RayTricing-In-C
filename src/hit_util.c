@@ -12,10 +12,12 @@
 
 #include "hit.h"
 #include "object.h"
+#include <math.h>
 
-t_vec3	get_light_dir(const t_light *light, const t_hit *hit)
+t_vec4	get_light_dir(const t_light *light, const t_hit *hit)
 {
-	return (vec3_normalize(vec3_sub(light->position, hit->point)));
+	t_vec4	v = vec4_sub(light->position, hit->point);
+	return (vec4_mul(v, 1.0f / sqrtf(vec4_dot(v, v))));
 }
 
 int	shoot_ray_from_viewport(int x, int y, t_hit *hit)
@@ -28,7 +30,8 @@ int	shoot_ray_from_viewport(int x, int y, t_hit *hit)
 			vec3_add(vec3_mul(g()->viewport.view_u_per_pixel, (float)x),
 				vec3_mul(g()->viewport.view_v_per_pixel, (float)y)));
 	ray = (t_ray){
-		.o = g()->cam.pos,
-		.d = vec3_normalize(vec3_sub(pixel_pos, g()->cam.pos))};
+		.o = vec3_to_vec4(g()->cam.pos, 1.0f),
+		.d = vec3_to_vec4(
+			vec3_normalize(vec3_sub(pixel_pos, g()->cam.pos)), 0.0f)};
 	return (hit_objects(&ray, 0.0f, INFINITY, hit));
 }

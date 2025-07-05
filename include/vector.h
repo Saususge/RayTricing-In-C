@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 12:24:30 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 13:42:59 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,11 @@ float	point_distance(t_point p1, t_point p2);
 float	point_distance_squared(t_point p1, t_point p2);
 t_point	point_add_vec(t_point p, t_vec3 v);
 
+// try extern inline
 float	vec4_dot(t_vec4 v1, t_vec4 v2);
-t_vec3	vec4_add(t_vec3 v1, t_vec3 v2);
-t_vec3	vec4_sub(t_vec3 v1, t_vec3 v2);
-t_vec3	vec4_mul(t_vec3 v, float s);
-t_vec3	vec4_div(t_vec3 v, float s);
-t_vec3	vec4_neg(t_vec3 v);
+t_vec4	vec4_add(t_vec4 v1, t_vec4 v2);
+t_vec4	vec4_sub(t_vec4 v1, t_vec4 v2);
+t_vec4	vec4_mul(t_vec4 v, float s);
+t_vec4	vec4_div(t_vec4 v, float s);
+t_vec4	vec4_neg(t_vec4 v);
 #endif

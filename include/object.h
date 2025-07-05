@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 12:39:25 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,16 @@ typedef struct s_t_bound
 {
 	float	min;
 	float	max;
-}	t_t_bound;
+}	t_interval;
 
 typedef struct s_object_ops
 {
 	int	
 		(*intersect)(const t_object *this, const t_ray *ray,
-			t_hit *hit, t_t_bound bound);
+			t_hit *hit, t_interval bound);
 	int
 		(*shadow_intersect)(const t_object *this,
-			const t_ray *ray, t_t_bound bound);
+			const t_ray *ray, t_interval bound);
 	t_vec4
 		(*get_normal)(
 			const t_object	*this,

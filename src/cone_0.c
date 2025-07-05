@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	cone_check_height(
 }
 
 static int	cone_lateral_check(const t_cone *cone, \
-	const t_ray *ray, float t, t_t_bound bound)
+	const t_ray *ray, float t, t_interval bound)
 {
 	t_point	hit;
 
@@ -65,7 +65,7 @@ static int	cone_lateral_check(const t_cone *cone, \
 int	cone_lateral_intersect(
 				const t_ray *ray,
 				float *t,
-				t_t_bound bound)
+				t_interval bound)
 {
 	t_quad_eq	eq;
 	float		sqrt_disc;

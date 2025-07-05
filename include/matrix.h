@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:14:36 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/05 12:10:04 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 13:01:59 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_matrix44
 }	t_mat;
 
 // Homogeneous vector
-t_vec4	vec3_to_vec4(t_vec3 v);
+t_vec4	vec3_to_vec4(t_vec3 v, float w);
 // U = M * V
 void	mat_mul_vec4(const t_mat *m, const t_vec4 *v, t_vec4 *u);
 // O = M * N

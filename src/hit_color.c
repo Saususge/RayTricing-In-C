@@ -12,8 +12,9 @@
 
 #include "object.h"
 #include "hit.h"
+#define SHININESS 128.0f
 
-t_vec3	calc_ambient(const t_object *this, t_point hit_point)
+t_vec3	ambient_term(const t_object *this, t_vec4 hit_point)
 {
 	t_vec3	amb;
 	t_vec3	amb_intensity;
@@ -23,58 +24,34 @@ t_vec3	calc_ambient(const t_object *this, t_point hit_point)
 	return (amb);
 }
 
-void	add_diffuse(const t_light *light, const t_hit *hit, t_vec3 *diff,
-	const t_object *this)
+t_vec3	diffuse_term(t_vec3 intensity, const t_hit *hit,
+	const t_object *this, const t_light_v *light_v)
 {
 	float	diff_dot;
-	float	distance_sq;
-	float	attenuation;
 	t_vec3	light_intensity;
 
-	diff_dot = fmaxf(vec3_dot(hit->normal, get_light_dir(light, hit)), 0.0f);
-	distance_sq = point_distance_squared(hit->point, light->position);
-	attenuation = 1.0f / (distance_sq + 1.0f);
+	diff_dot = fmaxf(vec4_dot(hit->normal, light_v->l), 0.0f);
 	light_intensity = vec3_mul(
-			light->intensity, g()->k_d * diff_dot * attenuation);
-	*diff = vec3_add(*diff,
-			vec3_hadamard(
+		intensity, g()->k_d * diff_dot * light_v->attenuation);
+	return (vec3_hadamard(
 				light_intensity,
 				this->ops->get_color(this, hit->point)));
 }
 
-float	calc_spec_factor(const t_light *light, const t_hit *hit,
-	t_vec3 reflect_dir)
+// Assume specular color is white (255, 255, 255)
+t_vec3	specular_term(t_vec3 intensity, const t_hit *hit, const t_light_v *light_v)
 {
-	float	shininess;
-	t_vec3	view_dir;
+	t_vec4	view;
+	t_vec4	reflect;
 	float	spec_dot;
-	float	attenuation;
-
-	shininess = 64.0f;
-	view_dir = vec3_normalize(vec3_sub(g()->cam.pos, hit->point));
-	spec_dot = fmaxf(vec3_dot(view_dir, reflect_dir), 0.0f);
-	attenuation = 1.0f
-		/ (point_distance_squared(hit->point, light->position) + 1.0f);
-	return (powf(spec_dot, shininess) * g()->k_s * attenuation);
-}
-
-void	add_specular(const t_light *light, const t_hit *hit, t_vec3 *spec)
-{
-	t_vec3	spec_color;
-	t_vec3	light_dir;
-	t_vec3	reflect_dir;
 	float	spec_factor;
 	t_vec3	spec_light_intensity;
 
-	spec_color.x = 255.0f;
-	spec_color.y = 255.0f;
-	spec_color.z = 255.0f;
-	light_dir = get_light_dir(light, hit);
-	reflect_dir = vec3_normalize(
-			vec3_reflect(vec3_neg(light_dir), hit->normal));
-	spec_factor = calc_spec_factor(light, hit, reflect_dir);
-	spec_light_intensity = vec3_mul(light->intensity, spec_factor);
-	*spec = vec3_add(*spec, vec3_hadamard(spec_color, spec_light_intensity));
+	view = vec4_sub(vec3_to_vec4(g()->cam.pos, 1.0f), hit->point);
+	reflect = vec4_sub(vec4_neg(light_v->l), vec4_mul(hit->normal, 2.0f * vec4_dot(vec4_neg(light_v->l), hit->normal)));
+	spec_dot = fmaxf(vec4_dot(view, reflect) / (sqrtf(vec4_dot(view, view)) * sqrtf(vec4_dot(reflect, reflect))), 0.0f);
+	spec_factor = powf(spec_dot, SHININESS) * g()->k_s * light_v->attenuation;
+	return (vec3_mul(intensity, spec_factor * 255.0f));
 }
 
 void	calc_diff_spec(const t_hit *hit, t_vec3 *diff, t_vec3 *spec,

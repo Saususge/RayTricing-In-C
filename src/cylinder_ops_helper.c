@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:01:46 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_in_circle(const t_cylinder *cyl, \
 }
 
 int	intersect_cap(const t_cylinder *cyl,
-		const t_ray *ray, float *t, t_t_bound bound)
+		const t_ray *ray, float *t, t_interval bound)
 {
 	float	t1;
 	float	t2;
@@ -87,7 +87,7 @@ int	check_height(const t_cylinder *cyl, t_point hit_point)
 }
 
 int	intersect_lateral(const t_cylinder *cyl, \
-	const t_ray *ray, float *t, t_t_bound bound)
+	const t_ray *ray, float *t, t_interval bound)
 {
 	t_quad_eq	eq;
 	float		t_temp;

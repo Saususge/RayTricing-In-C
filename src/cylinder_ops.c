@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_ops.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 22:00:06 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int	cylinder_intersect(const t_object *this,
 						const t_ray *ray,
 						t_hit *hit,
-						t_t_bound bound)
+						t_interval bound)
 {
 	int			lateral_hit;
 	int			cap_hit;
@@ -27,7 +27,7 @@ int	cylinder_intersect(const t_object *this,
 	lateral_hit = intersect_lateral(&this->data.cylinder, ray, &t, bound);
 	if (lateral_hit)
 		cap_hit = intersect_cap(&this->data.cylinder, ray, &t, \
-			(t_t_bound){bound.min, t});
+			(t_interval){bound.min, t});
 	else
 		cap_hit = intersect_cap(&this->data.cylinder, ray, &t, bound);
 	if (!lateral_hit && !cap_hit)
@@ -38,7 +38,7 @@ int	cylinder_intersect(const t_object *this,
 
 int	cylinder_shadow_intersect(const t_object *this,
 						const t_ray *ray,
-						t_t_bound bound)
+						t_interval bound)
 {
 	int			lateral_hit;
 	int			cap_hit;
@@ -47,7 +47,7 @@ int	cylinder_shadow_intersect(const t_object *this,
 	lateral_hit = intersect_lateral(&this->data.cylinder, ray, &t, bound);
 	if (lateral_hit)
 		cap_hit = intersect_cap(&this->data.cylinder, ray, &t, \
-			(t_t_bound){bound.min, t});
+			(t_interval){bound.min, t});
 	else
 		cap_hit = intersect_cap(&this->data.cylinder, ray, &t, bound);
 	if (!lateral_hit && !cap_hit)

@@ -6,15 +6,15 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:38:29 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/04 22:17:38 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 13:02:14 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "matrix.h"
 
-t_vec4	vec3_to_vec4(t_vec3 v)
+t_vec4	vec3_to_vec4(t_vec3 v, float w)
 {
-	return ((t_vec4){{v.x, v.y, v.z, 1.0f}});
+	return ((t_vec4){{v.x, v.y, v.z, w}});
 }
 
 void	mat_mul_vec4(const t_mat *m, const t_vec4 *v, t_vec4 *u)
