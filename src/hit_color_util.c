@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:20:25 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/04 18:31:58 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	set_hit_geometry(t_hit *hit, float t, const t_ray *ray,
 	const t_object *this)
 {
 	hit->t = t;
-	hit->point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
+	hit->point = vec3_add(ray->o, vec3_mul(ray->d, t));
 	hit->normal = this->ops->get_normal(this, &hit->point);
-	hit->is_front_face = vec3_dot(ray->dir, hit->normal) < 0;
+	hit->is_front_face = vec3_dot(ray->d, hit->normal) < 0;
 	if (!hit->is_front_face)
 		hit->normal = vec3_neg(hit->normal);
 	hit->object = (t_object *)this;
@@ -67,8 +67,8 @@ int	is_lit(const t_light *light, const t_hit *hit)
 	t_ray	shadow_ray;
 	float	dist;
 
-	shadow_ray.origin = hit->point;
-	shadow_ray.dir = get_light_dir(light, hit);
+	shadow_ray.o = hit->point;
+	shadow_ray.d = get_light_dir(light, hit);
 	dist = point_distance(light->position, hit->point);
 	return (!hit_shadow(&shadow_ray, EPSILON, dist - EPSILON));
 }

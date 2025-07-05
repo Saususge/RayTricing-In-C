@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 22:37:47 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 12:39:25 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_ambient_light
 // fov: 0 to 180
 typedef struct t_camera
 {
-	t_point		pos;
+	t_vec3		pos;
 	t_vec3		dir;
 	float		fov;
 }	t_camera;
@@ -46,14 +46,14 @@ typedef struct t_camera
 // intensity: 0.0 to 1.0
 typedef struct t_light
 {
-	t_point		position;
+	t_vec4		position;
 	t_vec3		intensity;
 }	t_light;
 
 typedef struct s_ray
 {
-	t_vec3	origin;
-	t_vec3	dir;
+	t_vec4	o;
+	t_vec4	d;
 }	t_ray;
 
 // T-> translation
@@ -77,8 +77,8 @@ typedef struct s_object
 typedef struct s_hit
 {
 	float		t;
-	t_point		point;
-	t_vec3		normal;
+	t_vec4		point;
+	t_vec4		normal;
 	t_vec3		color;
 	t_object	*object;
 	int			is_front_face;
@@ -98,13 +98,13 @@ typedef struct s_object_ops
 	int
 		(*shadow_intersect)(const t_object *this,
 			const t_ray *ray, t_t_bound bound);
-	t_vec3
+	t_vec4
 		(*get_normal)(
 			const t_object	*this,
-			const t_point	*hit_point
+			t_vec4			hit_point
 			);
 	t_vec3
-		(*get_color)(const t_object *obj, t_point hit_point);
+		(*get_color)(const t_object *obj, t_vec4 hit_point);
 }	t_object_ops;
 
 typedef struct s_data

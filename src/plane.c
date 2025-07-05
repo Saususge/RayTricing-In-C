@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 21:59:00 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	plane_intersect(const t_object *this, \
 	t_vec3	p0_to_l0;
 
 	pl = this->data.plane;
-	denominator = vec3_dot(ray->dir, pl.normal);
+	denominator = vec3_dot(ray->d, pl.normal);
 	if (fabs(denominator) < EPSILON)
 		return (0);
-	p0_to_l0 = vec3_sub(pl.point, ray->origin);
+	p0_to_l0 = vec3_sub(pl.point, ray->o);
 	t = vec3_dot(p0_to_l0, pl.normal) / denominator;
 	if (t < bound.min || t > bound.max)
 		return (0);
@@ -62,8 +62,8 @@ int	plane_shadow_intersect(const t_object *this, \
 	t_vec3	p0_to_l0;
 
 	pl = this->data.plane;
-	p0_to_l0 = vec3_sub(pl.point, ray->origin);
-	denominator = vec3_dot(ray->dir, pl.normal);
+	p0_to_l0 = vec3_sub(pl.point, ray->o);
+	denominator = vec3_dot(ray->d, pl.normal);
 	if (fabs(denominator) < EPSILON)
 		return (0);
 	t = vec3_dot(p0_to_l0, pl.normal) / denominator;

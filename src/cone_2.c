@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:25:34 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 18:06:28 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	cone_intersect_cap(
 	t_point	hit_point;
 	t_vec3	cap_to_hit;
 
-	denom = vec3_dot(ray->dir, cone->axis);
+	denom = vec3_dot(ray->d, cone->axis);
 	if (fabs(denom) < EPSILON)
 		return (0);
 	oc = vec3_sub(
 			vec3_add(cone->center, vec3_mul(cone->axis, cone->height)),
-			ray->origin);
+			ray->o);
 	temp_t = vec3_dot(oc, cone->axis) / denom;
 	if (temp_t < bound.min || temp_t > bound.max)
 		return (0);
-	hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, temp_t));
+	hit_point = vec3_add(ray->o, vec3_mul(ray->d, temp_t));
 	cap_to_hit = vec3_sub(
 			hit_point,
 			vec3_add(cone->center, vec3_mul(cone->axis, cone->height)));

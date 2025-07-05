@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:01:46 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:17:37 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	calculate_cylinder_equation(t_quad_eq *eq, \
 	t_vec3	dp_cross_axis;
 
 	p1 = vec3_sub(cyl->center, vec3_mul(cyl->axis, cyl->height * 0.5f));
-	delta_p = vec3_sub(ray->origin, p1);
-	v_cross_axis = vec3_cross(ray->dir, cyl->axis);
+	delta_p = vec3_sub(ray->o, p1);
+	v_cross_axis = vec3_cross(ray->d, cyl->axis);
 	dp_cross_axis = vec3_cross(delta_p, cyl->axis);
 	eq->a = vec3_dot(v_cross_axis, v_cross_axis);
 	eq->b = vec3_dot(v_cross_axis, dp_cross_axis);
@@ -41,7 +41,7 @@ int	check_in_circle(const t_cylinder *cyl, \
 	t_vec3	cap_to_hit;
 	float	dist_sq;
 
-	hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t));
+	hit_point = vec3_add(ray->o, vec3_mul(ray->d, t));
 	cap_to_hit = vec3_sub(hit_point, cap_center);
 	dist_sq = vec3_dot(cap_to_hit, cap_to_hit);
 	return (dist_sq <= cyl->radius * cyl->radius);
@@ -58,11 +58,11 @@ int	intersect_cap(const t_cylinder *cyl,
 
 	t1 = 0.0f;
 	t2 = 0.0f;
-	denom = vec3_dot(ray->dir, cyl->axis);
+	denom = vec3_dot(ray->d, cyl->axis);
 	if (fabs(denom) < EPSILON)
 		return (0);
-	t1 = vec3_dot(vec3_sub(cyl->p1, ray->origin), cyl->axis) / denom;
-	t2 = vec3_dot(vec3_sub(cyl->p2, ray->origin), cyl->axis) / denom;
+	t1 = vec3_dot(vec3_sub(cyl->p1, ray->o), cyl->axis) / denom;
+	t2 = vec3_dot(vec3_sub(cyl->p2, ray->o), cyl->axis) / denom;
 	valid1 = (t1 >= bound.min && t1 <= bound.max
 			&& check_in_circle(cyl, ray, cyl->p1, t1));
 	valid2 = (t2 >= bound.min && t2 <= bound.max
@@ -99,12 +99,12 @@ int	intersect_lateral(const t_cylinder *cyl, \
 		return (0);
 	sqrt_disc = sqrtf(eq.disc);
 	t_temp = (-eq.b - sqrt_disc) / (eq.a);
-	hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
+	hit_point = vec3_add(ray->o, vec3_mul(ray->d, t_temp));
 	if (t_temp < bound.min || t_temp > bound.max || \
 		!check_height(cyl, hit_point))
 	{
 		t_temp = (-eq.b + sqrt_disc) / (eq.a);
-		hit_point = vec3_add(ray->origin, vec3_mul(ray->dir, t_temp));
+		hit_point = vec3_add(ray->o, vec3_mul(ray->d, t_temp));
 		if (t_temp < bound.min || t_temp > bound.max || \
 			!check_height(cyl, hit_point))
 			return (0);

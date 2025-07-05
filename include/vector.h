@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 22:52:46 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 12:24:30 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ typedef struct s_point
 }	t_point;
 
 typedef t_point	t_vec3;
+
+typedef struct s_vec4
+{
+	float	v[4];
+}	t_vec4;
 
 // creating vector
 t_vec3	vec3_create(float x, float y, float z);
@@ -64,4 +69,11 @@ t_point	vec3_to_point(t_vec3 v);
 float	point_distance(t_point p1, t_point p2);
 float	point_distance_squared(t_point p1, t_point p2);
 t_point	point_add_vec(t_point p, t_vec3 v);
+
+float	vec4_dot(t_vec4 v1, t_vec4 v2);
+t_vec3	vec4_add(t_vec3 v1, t_vec3 v2);
+t_vec3	vec4_sub(t_vec3 v1, t_vec3 v2);
+t_vec3	vec4_mul(t_vec3 v, float s);
+t_vec3	vec4_div(t_vec3 v, float s);
+t_vec3	vec4_neg(t_vec3 v);
 #endif

@@ -28,7 +28,7 @@ int	shoot_ray_from_viewport(int x, int y, t_hit *hit)
 			vec3_add(vec3_mul(g()->viewport.view_u_per_pixel, (float)x),
 				vec3_mul(g()->viewport.view_v_per_pixel, (float)y)));
 	ray = (t_ray){
-		.origin = g()->cam.pos,
-		.dir = vec3_normalize(vec3_sub(pixel_pos, g()->cam.pos))};
+		.o = g()->cam.pos,
+		.d = vec3_normalize(vec3_sub(pixel_pos, g()->cam.pos))};
 	return (hit_objects(&ray, 0.0f, INFINITY, hit));
 }

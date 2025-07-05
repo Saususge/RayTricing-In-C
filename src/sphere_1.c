@@ -18,13 +18,14 @@
 int	sphere_intersect(const t_object *this, \
 	const t_ray *ray, t_hit *hit, t_t_bound bound)
 {
-	t_sphere	sph;
 	t_quad_eq	eq;
+	t_ray		local_ray;
 	float		t;
 	float		sqrt_disc;
 
-	sph = this->data.sphere;
-	calculate_sphere_equation(&eq, &sph, ray);
+	mat_mul_vec4(&this->m_inv, &ray->o, &local_ray.o);
+	mat_mul_vec4(&this->m_inv, &ray->d, &local_ray.d);
+	calculate_sphere_equation(&eq, &local_ray);
 	if (eq.disc < 0)
 		return (0);
 	sqrt_disc = sqrtf(eq.disc);
@@ -42,13 +43,14 @@ int	sphere_intersect(const t_object *this, \
 int	shpere_shadow_intersect(const t_object *this, \
 	const t_ray *ray, t_t_bound bound)
 {
-	t_sphere	sph;
+	t_ray		local_ray;
 	t_quad_eq	eq;
 	float		t;
 	float		sqrt_disc;
 
-	sph = this->data.sphere;
-	calculate_sphere_equation(&eq, &sph, ray);
+	mat_mul_vec4(&this->m_inv, &ray->o, &local_ray.o);
+	mat_mul_vec4(&this->m_inv, &ray->d, &local_ray.d);
+	calculate_sphere_equation(&eq, &local_ray);
 	if (eq.disc < 0)
 		return (0);
 	sqrt_disc = sqrtf(eq.disc);

@@ -17,10 +17,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec3	sphere_get_normal(const t_object *this, const t_point *hit_point)
+t_vec4	sphere_get_normal(const t_object *this, t_vec4 hit_point)
 {
-	return (vec3_mul(vec3_sub(*hit_point, \
-		this->data.sphere.center), 1.0f / this->data.sphere.radius));
+	(void)this;
+	hit_point.v[3] = 0.0f;
+	return (hit_point);
 }
 
 static t_object_ops	g_sphere_ops = {
@@ -32,22 +33,37 @@ static t_object_ops	g_sphere_ops = {
 
 t_object	create_sphere(t_point center, float radius, t_vec3 color)
 {
-	return ((t_object){
-		.type = SPHERE,
-		.ops = &g_sphere_ops,
-		.color = color,
-		.checkerboard = 0,
-	});
+	t_object	sph;
+	t_mat		temp;
+
+	sph.type = SPHERE;
+	sph.ops = &g_sphere_ops;
+	sph.color = color;
+	sph.checkerboard = 0;
+	sph.t = (t_mat){{1, 0, 0, center.x},
+	{0, 1, 0, center.y},
+	{0, 0, 1, center.z},
+	{0, 0, 0, 1}};
+	sph.r = (t_mat){{1, 0, 0, 0},
+	{0, 1, 0, 0},
+	{0, 0, 1, 0},
+	{0, 0, 0, 1}};
+	sph.s = (t_mat){{radius, 0, 0, 0},
+	{0, radius, 0, 0},
+	{0, 0, radius, 0},
+	{0, 0, 0, 1}};
+	mat_mul_mat(&sph.r, &sph.s, &temp);
+	mat_mul_mat(&sph.t, &temp, &sph.m);
+	mat_inverse(&sph.m, &sph.m_inv);
+	return (sph);
 }
 
-void	calculate_sphere_equation(t_quad_eq *eq, \
-	const t_sphere *sph, const t_ray *ray)
+// Assume that sphere is unit sphere centered at the origin,
+// and the ray is converted (M^-1 * ray)
+void	calculate_sphere_equation(t_quad_eq *eq, const t_ray *ray)
 {
-	t_vec3	oc;
-
-	oc = vec3_sub(ray->origin, sph->center);
-	eq->a = vec3_dot(ray->dir, ray->dir);
-	eq->b = vec3_dot(oc, ray->dir);
-	eq->c = vec3_dot(oc, oc) - (sph->radius * sph->radius);
+	eq->a = vec4_dot(ray->d, ray->d);
+	eq->b = vec4_dot(ray->o, ray->d);
+	eq->c = vec4_dot(ray->o, ray->o) - 1;
 	eq->disc = (eq->b * eq->b) - (eq->a * eq->c);
 }

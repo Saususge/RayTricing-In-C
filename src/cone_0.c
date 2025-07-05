@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 22:00:40 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:08:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	calculate_cone_equation(
 	float	dv;
 	float	cov;
 
-	co = vec3_sub(ray->origin, cone->center);
+	co = vec3_sub(ray->o, cone->center);
 	cos2 = (cone->radius / cone->height) * (cone->radius / cone->height);
-	dv = vec3_dot(ray->dir, cone->axis);
+	dv = vec3_dot(ray->d, cone->axis);
 	cov = vec3_dot(co, cone->axis);
-	eq->a = vec3_dot(ray->dir, ray->dir) - (1 + cos2) * dv * dv;
-	eq->b = vec3_dot(ray->dir, co) - (1 + cos2) * dv * cov;
+	eq->a = vec3_dot(ray->d, ray->d) - (1 + cos2) * dv * dv;
+	eq->b = vec3_dot(ray->d, co) - (1 + cos2) * dv * cov;
 	eq->c = vec3_dot(co, co) - (1 + cos2) * cov * cov;
 	eq->disc = eq->b * eq->b - eq->a * eq->c;
 }
@@ -58,7 +58,7 @@ static int	cone_lateral_check(const t_cone *cone, \
 {
 	t_point	hit;
 
-	hit = vec3_add(ray->origin, vec3_mul(ray->dir, t));
+	hit = vec3_add(ray->o, vec3_mul(ray->d, t));
 	return (t > bound.min && t < bound.max && cone_check_height(cone, hit));
 }
 
