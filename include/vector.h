@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 13:42:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 16:21:30 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,7 @@ t_vec4	vec4_sub(t_vec4 v1, t_vec4 v2);
 t_vec4	vec4_mul(t_vec4 v, float s);
 t_vec4	vec4_div(t_vec4 v, float s);
 t_vec4	vec4_neg(t_vec4 v);
+
+// return v1 * v2 / (||v1|| * ||v2||)
+t_vec4	vec4_dot_unit(t_vec4 v1, t_vec4 v2);
 #endif

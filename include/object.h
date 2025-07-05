@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 16:21:48 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,18 @@ typedef struct s_object
 	t_mat			s;
 	t_mat			m;
 	t_mat			m_inv;
+	t_vec4			local_light_pos[16];	// temp 16 modify it later.
+	t_vec4			local_cam_pos;
 }	t_object;
+
+typedef struct s_intersect
+{
+	float		t_local;
+	t_vec4		hit_point_local;
+	// float		t_world;
+	// t_vec4		hit_point_world;
+	t_object	*object;
+}	t_intersect;
 
 typedef struct s_hit
 {
@@ -93,18 +104,17 @@ typedef struct s_t_bound
 typedef struct s_object_ops
 {
 	int	
-		(*intersect)(const t_object *this, const t_ray *ray,
-			t_hit *hit, t_interval bound);
+		(*intersect)(const t_object *obj, const t_ray *ray_wolrd,
+			t_intersect *intersect_record, t_interval t_world_bound);
 	int
-		(*shadow_intersect)(const t_object *this,
-			const t_ray *ray, t_interval bound);
+		(*shadow_intersect)(const t_object *this, t_vec4 point_world);
 	t_vec4
 		(*get_normal)(
 			const t_object	*this,
-			t_vec4			hit_point
+			t_vec4			hit_point_local
 			);
 	t_vec3
-		(*get_color)(const t_object *obj, t_vec4 hit_point);
+		(*get_color)(const t_object *obj, t_vec4 hit_point_world);
 }	t_object_ops;
 
 typedef struct s_data
@@ -126,9 +136,10 @@ typedef struct s_gvar
 	t_object		*objects;
 	int				object_count;
 	int				object_capacity;
-	float			k_a;
-	float			k_d;
-	float			k_s;
+	// float			k_a;
+	// float			k_d;
+	// float			k_s;
+	int				specular;
 	int				camera_choosed;
 	int				light_choosed;
 	int				light_index;

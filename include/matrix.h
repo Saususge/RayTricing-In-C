@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:14:36 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/05 13:01:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/05 15:35:54 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_matrix44
 // Homogeneous vector
 t_vec4	vec3_to_vec4(t_vec3 v, float w);
 // U = M * V
-void	mat_mul_vec4(const t_mat *m, const t_vec4 *v, t_vec4 *u);
+t_vec4	mat_mul_vec4(const t_mat *m, t_vec4 v);
 // O = M * N
 void	mat_mul_mat(const t_mat *m, const t_mat *n, t_mat *o);
 // N = M^-1, If it can be inversed return 1, or not return 0

@@ -34,7 +34,7 @@ void	populate_hit_record(t_hit *hit, float t,
 			const t_ray *ray, const t_object *this);
 t_vec4	get_light_dir(const t_light *light, const t_hit *hit);
 int		is_lit(const t_light *light, const t_hit *hit);
-int		hit_objects(const t_ray *ray, float t_min, float t_max, t_hit *hit);
-int		hit_shadow(const t_ray *ray, float t_min, float t_max);
+int		hit_ray(const t_ray *ray_world, t_interval bound_world, t_intersect *intersect_record, t_vec3 *color);
+int		hit_shadow_ray(const t_ray *shadow_ray_world, t_interval bound_world);
 int		shoot_ray_from_viewport(int x, int y, t_hit *hit);
 #endif
