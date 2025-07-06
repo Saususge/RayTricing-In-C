@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/06 20:21:22 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 22:15:36 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int	dispatch_parse(const char *id)
 		return (parse_light());
 	if (!ft_strcmp(id, "sp"))
 		return (parse_sphere());
-	// if (!ft_strcmp(id, "pl"))
-	// 	return (parse_plane());
+	if (!ft_strcmp(id, "pl"))
+		return (parse_plane());
 	// if (!ft_strcmp(id, "cy"))
 	// 	return (parse_cylinder());
 	// if (!ft_strcmp(id, "co"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_ops.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:23:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 21:59:07 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/06 22:20:27 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-t_vec3	plane_get_normal(const t_object *this, const t_point *hit_point)
+t_vec4	plane_get_normal(const t_object *obj, t_vec4 p_local)
 {
-	(void)hit_point;
-	return (this->data.plane.normal);
+	(void)obj;
+	(void)p_local;
+	return ((t_vec4){{0.0f, 0.0f, 1.0f, 0.0f}});
 }

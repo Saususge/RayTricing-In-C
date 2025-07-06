@@ -34,7 +34,11 @@ SRC := \
 	parse_light.c\
 	parse_scene_file.c\
 	parse_sphere.c\
+	parse_plane.c\
 	parse_util.c\
+	plane_checkerboard.c\
+	plane_ops.c\
+	plane.c\
 	render.c\
 	rotate.c\
 	sphere_0.c\

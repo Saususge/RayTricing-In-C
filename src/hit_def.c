@@ -17,14 +17,6 @@
 #define K_SPECULAR 1.0f
 #define SHININESS 64.0f
 
-float convert_t_local_to_world(const t_object *obj, t_vec4 p_local, const t_ray *ray_world)
-{
-	t_vec4	p_world;
-
-	p_world = mat_mul_vec4(&obj->m, p_local);
-	return (vec4_dot(vec4_sub(p_world, ray_world->o), ray_world->d));	// Assume ray_world->d is normalized
-}
-
 t_vec3	clamp_color(t_vec3 color)
 {
 	color = vec3_max(color, (t_vec3){0, 0, 0});
@@ -59,13 +51,12 @@ t_vec3	get_color(const t_intersect *record)
 		{
 			t_vec4	light_v_local = vec4_sub(record->obj->local_light_pos[i], record->p_local);
 			light_v_local = vec4_mul(light_v_local, 1.0f / sqrtf(vec4_dot(light_v_local, light_v_local)));
-			t_vec4	normal_local = record->obj->ops->get_normal(record->obj, record->p_local);
 			attenuation = 1.0f / (1.0f + 0.05 * dist_sq_world);
-			float	diffusion_dot = fmaxf(vec4_dot(normal_local, light_v_local), 0.0f);
+			float	diffusion_dot = fmaxf(vec4_dot(record->n_local, light_v_local), 0.0f);
 			t_vec3	diffusion_light_intensity = vec3_mul(g()->lights[i].intensity, K_DIFFUSE * diffusion_dot * attenuation);
 			diffuse = vec3_add(diffuse, vec3_hadamard(diffusion_light_intensity, record->obj->ops->get_color(record)));
 			t_vec4	view_local = vec4_sub(vec3_to_vec4(g()->cam.pos, 1.0f), hit_point_world);
-			t_vec4	reflect_local = vec4_sub(vec4_neg(light_v_local), vec4_mul(normal_local, 2.0f * vec4_dot(vec4_neg(light_v_local), normal_local)));
+			t_vec4	reflect_local = vec4_sub(vec4_neg(light_v_local), vec4_mul(record->n_local, 2.0f * vec4_dot(vec4_neg(light_v_local), record->n_local)));
 			reflect_local.v[3] = 0.0f;	
 			float	specular_dot = fmaxf(vec4_dot(view_local, reflect_local) / (sqrtf(vec4_dot(view_local, view_local)) * sqrtf(vec4_dot(reflect_local, reflect_local))), 0.0f);
 			float	specular_factor = powf(specular_dot, SHININESS) * K_SPECULAR * attenuation * g()->specular;
@@ -90,7 +81,7 @@ int	hit_ray(const t_ray *ray_world, t_interval bound_world, t_intersect *interse
 				&current_intersect, bound_world))
 		{
 			hit_anything = 1;
-			bound_world.max = convert_t_local_to_world(g()->objects + i, intersect_record->p_local, ray_world);
+			bound_world.max = current_intersect.t;
 			*intersect_record = current_intersect;
 		}
 		++i;

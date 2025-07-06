@@ -49,30 +49,9 @@ int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *r
 	}
 	else
 		return (0);
+	record->n_local = sphere_get_normal(obj, record->p_local);
+	if (vec4_dot(record->n_local, local_ray.d) > 0.0f)
+		record->n_local = vec4_neg(record->n_local);
 	record->obj = (t_object *)obj;
 	return (1);
 }
-
-// int	shpere_shadow_intersect(const t_object *this, \
-// 	const t_ray *ray, t_interval bound)
-// {
-// 	t_ray		local_ray;
-// 	t_quad_eq	eq;
-// 	float		t;
-// 	float		sqrt_disc;
-
-// 	local_ray.o = mat_mul_vec4(&this->m_inv, ray->o);
-// 	local_ray.d = mat_mul_vec4(&this->m_inv, ray->d);
-// 	calculate_sphere_equation(&eq, &local_ray);
-// 	if (eq.disc < 0)
-// 		return (0);
-// 	sqrt_disc = sqrtf(eq.disc);
-// 	t = -eq.b - sqrt_disc / eq.a;
-// 	if (t < bound.min || t > bound.max)
-// 	{
-// 		t = -eq.b + sqrt_disc / eq.a;
-// 		if (t < bound.min || t > bound.max)
-// 			return (0);
-// 	}
-// 	return (1);
-// }

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 20:12:15 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 23:13:40 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_intersect
 {
 	float		t;
 	t_vec4		p_local;
+	t_vec4		n_local;
 	t_object	*obj;
 }	t_intersect;
 

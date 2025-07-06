@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 20:55:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 23:21:53 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,43 +56,7 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 	return (pl);
 }
 
-int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_world_bound)
-{
-	t_quad_eq	eq;
-	t_ray		local_ray;
-	float		t1;
-	float		t2;
-	int			t1_valid;
-	int			t2_valid;
-	float		sqrt_disc;
-
-	local_ray.o = mat_mul_vec4(&obj->m_inv, ray_world->o);
-	local_ray.d = mat_mul_vec4(&obj->m_inv, ray_world->d);
-	calculate_sphere_equation(&eq, &local_ray);
-	if (eq.disc < 0)
-		return (0);
-	sqrt_disc = sqrtf(eq.disc);
-	t1 = (-eq.b - sqrt_disc) / eq.a;
-	t2 = (-eq.b + sqrt_disc) / eq.a;
-	t1_valid = (t1 >= t_world_bound.min && t1 <= t_world_bound.max);
-	t2_valid = (t2 >= t_world_bound.min && t2 <= t_world_bound.max);
-	if (t1_valid && (!t2_valid || t1 < t2))
-	{
-		record->t = t1;
-		record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t1));
-	}
-	else if (t2_valid)
-	{
-		record->t = t2;
-		record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t2));
-	}
-	else
-		return (0);
-	record->obj = (t_object *)obj;
-	return (1);
-}
-
-int	plane_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *intersect_record, t_interval t_world_bound)
+int	plane_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_bound)
 {
 	t_ray	ray_local;
 	float	t;
@@ -100,24 +64,16 @@ int	plane_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *in
 	ray_local.o = mat_mul_vec4(&obj->m_inv, ray_world->o);
 	ray_local.d = mat_mul_vec4(&obj->m_inv, ray_world->d);
 	if (fabs(ray_local.d.v[2]) < EPSILON)
+		return (0);
+	t = - ray_local.o.v[2] / ray_local.d.v[2];
+	if (t < t_bound.min || t > t_bound.max)
+		return (0);
+	record->t = t;
+	record->p_local = vec4_add(ray_local.o, vec4_mul(ray_local.d, t));
+	record->n_local = plane_get_normal(obj, record->p_local);
+	if (vec4_dot(record->n_local, ray_local.d) > 0.0f)
+		record->n_local = vec4_neg(record->n_local);
+	record->obj = (t_object *)obj;
 	return (1);
 }
 
-int	plane_shadow_intersect(const t_object *this, \
-	const t_ray *ray, t_interval bound)
-{
-	t_plane	pl;	
-	float	denominator;
-	float	t;
-	t_vec3	p0_to_l0;
-
-	pl = this->data.plane;
-	p0_to_l0 = vec3_sub(pl.point, ray->o);
-	denominator = vec3_dot(ray->d, pl.normal);
-	if (fabs(denominator) < EPSILON)
-		return (0);
-	t = vec3_dot(p0_to_l0, pl.normal) / denominator;
-	if (t < bound.min || t > bound.max)
-		return (0);
-	return (1);
-}

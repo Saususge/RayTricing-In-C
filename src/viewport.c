@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:34:32 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/06 14:41:19 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 23:18:20 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	init_viewport(void)
 	viewport->aspect_ratio = 21.0f / 9.0f;
 	if (!initialized)
 	{
-		viewport->width = 420;
+		viewport->width = 630;
 		viewport->height = (int)(viewport->width / viewport->aspect_ratio);
 		viewport->focal_length = 1.0f;
 		viewport->view_w = 2.0f * viewport->focal_length
