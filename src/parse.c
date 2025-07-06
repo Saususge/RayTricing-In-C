@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/06 14:34:09 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 20:21:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,26 @@ int	parse(int fd)
 	return (0);
 }
 
-void	move_cam_light_to_local(int light_idx, int obj_idx)
+void	move_cam_to_local(int obj_idx)
 {
 	t_gvar		*gvar;
 	t_camera	*cam;
-	t_light		*light;
 	t_object	*obj;
 
 	gvar = g();
 	cam = &gvar->cam;
-	light = gvar->lights + light_idx;
 	obj = gvar->objects + obj_idx;
 	obj->local_cam_pos = mat_mul_vec4(&obj->m_inv, vec3_to_vec4(cam->pos, 1.0f));
+}
+
+void	move_light_to_local(int light_idx, int obj_idx)
+{
+	t_gvar		*gvar;
+	t_light		*light;
+	t_object	*obj;
+
+	gvar = g();
+	light = gvar->lights + light_idx;
+	obj = gvar->objects + obj_idx;
 	obj->local_light_pos[light_idx] = mat_mul_vec4(&obj->m_inv, light->position);
 }

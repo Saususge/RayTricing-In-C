@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 14:35:14 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 20:22:18 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	init_mlx_var(void)
 		&img->line_length, &img->endian);
 }
 
-void	move_cam_light_to_local(int light_idx, int obj_idx);
+void	move_light_to_local(int light_idx, int obj_idx);
+void	move_cam_to_local(int obj_idx);
 
 int	main(int argc, char **argv)
 {
@@ -63,8 +64,11 @@ int	main(int argc, char **argv)
 	parse_scene_file(argv[1]);
 	set_viewport();
 	for (int i = 0; i < g()->object_count; ++i)
+	{
+		move_cam_to_local(i);
 		for (int j = 0; j < g()->light_count; ++j)
-			move_cam_light_to_local(j, i);
+			move_light_to_local(j, i);
+	}
 	init_mlx_var();
 	render_and_put();
 	mlx_loop(g()->mlx);
