@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 18:01:52 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 18:27:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_intersect
 {
 	float		t;
 	t_vec4		p_local;
-	t_vec4		p_world;
 	t_object	*obj;
 }	t_intersect;
 
@@ -113,7 +112,7 @@ typedef struct s_object_ops
 			t_vec4			hit_point_local
 			);
 	t_vec3
-		(*get_color)(const t_object *obj, t_vec4 hit_point_world);
+		(*get_color)(const t_intersect *record);
 }	t_object_ops;
 
 typedef struct s_data

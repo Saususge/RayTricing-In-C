@@ -44,7 +44,7 @@ t_vec3	get_color(const t_intersect *record)
 	float	attenuation;
 	t_ray	shadow_ray_world;
 
-	ambient = vec3_hadamard(vec3_mul(g()->amb_light.intensity, K_AMBIENT), record->obj->color);
+	ambient = vec3_hadamard(vec3_mul(g()->amb_light.intensity, K_AMBIENT), record->obj->ops->get_color(record));
 	diffuse = (t_vec3){0, 0, 0};
 	specular = (t_vec3){0, 0, 0};
 	i = 0;
@@ -63,7 +63,7 @@ t_vec3	get_color(const t_intersect *record)
 			attenuation = 1.0f / (1.0f + 0.05 * dist_sq_world);
 			float	diffusion_dot = fmaxf(vec4_dot(normal_local, light_v_local), 0.0f);
 			t_vec3	diffusion_light_intensity = vec3_mul(g()->lights[i].intensity, K_DIFFUSE * diffusion_dot * attenuation);
-			diffuse = vec3_add(diffuse, vec3_hadamard(diffusion_light_intensity, record->obj->color));
+			diffuse = vec3_add(diffuse, vec3_hadamard(diffusion_light_intensity, record->obj->ops->get_color(record)));
 			t_vec4	view_local = vec4_sub(vec3_to_vec4(g()->cam.pos, 1.0f), hit_point_world);
 			t_vec4	reflect_local = vec4_sub(vec4_neg(light_v_local), vec4_mul(normal_local, 2.0f * vec4_dot(vec4_neg(light_v_local), normal_local)));
 			reflect_local.v[3] = 0.0f;	
