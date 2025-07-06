@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:33:11 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 23:20:21 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 23:24:04 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_vec3		plane_get_color(const t_intersect *record)
 	float	u;
 	float	v;
 
-	if (record->obj->checkerboard)
+	if (!record->obj->checkerboard)
 		return (record->obj->color);
 	u = record->p_local.v[0];
 	v = record->p_local.v[1];
