@@ -17,16 +17,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec4	sphere_get_normal(const t_object *this, t_vec4 hit_point)
+t_vec4	sphere_get_normal(const t_object *this, t_vec4 p_local)
 {
 	(void)this;
-	hit_point.v[3] = 0.0f;
-	return (hit_point);
+	p_local.v[3] = 0.0f;
+	return (p_local);
 }
 
 static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
-	.shadow_intersect = shpere_shadow_intersect,
 	.get_normal = sphere_get_normal,
 	.get_color = sphere_get_color,
 };
@@ -40,18 +39,18 @@ t_object	create_sphere(t_point center, float radius, t_vec3 color)
 	sph.ops = &g_sphere_ops;
 	sph.color = color;
 	sph.checkerboard = 0;
-	sph.t = (t_mat){{1, 0, 0, center.x},
+	sph.t = (t_mat){{{1, 0, 0, center.x},
 	{0, 1, 0, center.y},
 	{0, 0, 1, center.z},
-	{0, 0, 0, 1}};
-	sph.r = (t_mat){{1, 0, 0, 0},
+	{0, 0, 0, 1}}};
+	sph.r = (t_mat){{{1, 0, 0, 0},
 	{0, 1, 0, 0},
 	{0, 0, 1, 0},
-	{0, 0, 0, 1}};
-	sph.s = (t_mat){{radius, 0, 0, 0},
+	{0, 0, 0, 1}}};
+	sph.s = (t_mat){{{radius, 0, 0, 0},
 	{0, radius, 0, 0},
 	{0, 0, radius, 0},
-	{0, 0, 0, 1}};
+	{0, 0, 0, 1}}};
 	mat_mul_mat(&sph.r, &sph.s, &temp);
 	mat_mul_mat(&sph.t, &temp, &sph.m);
 	mat_inverse(&sph.m, &sph.m_inv);
@@ -64,6 +63,6 @@ void	calculate_sphere_equation(t_quad_eq *eq, const t_ray *ray)
 {
 	eq->a = vec4_dot(ray->d, ray->d);
 	eq->b = vec4_dot(ray->o, ray->d);
-	eq->c = vec4_dot(ray->o, ray->o) - 1;
+	eq->c = vec4_dot(ray->o, ray->o) - ray->o.v[3] * ray->o.v[3] - 1;
 	eq->disc = (eq->b * eq->b) - (eq->a * eq->c);
 }

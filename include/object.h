@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 16:21:48 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 18:01:52 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_ray
 // T-> translation
 // R -> rotation
 // S -> scaling
-// M -> TRS
-// M_inv -> M^-1
+// M -> TRS: local to world
+// M_inv -> M^-1: world to local
 typedef struct s_object
 {
 	t_type			type;
@@ -78,11 +78,10 @@ typedef struct s_object
 
 typedef struct s_intersect
 {
-	float		t_local;
-	t_vec4		hit_point_local;
-	// float		t_world;
-	// t_vec4		hit_point_world;
-	t_object	*object;
+	float		t;
+	t_vec4		p_local;
+	t_vec4		p_world;
+	t_object	*obj;
 }	t_intersect;
 
 typedef struct s_hit
@@ -104,7 +103,7 @@ typedef struct s_t_bound
 typedef struct s_object_ops
 {
 	int	
-		(*intersect)(const t_object *obj, const t_ray *ray_wolrd,
+		(*intersect)(const t_object *obj, const t_ray *ray_world,
 			t_intersect *intersect_record, t_interval t_world_bound);
 	int
 		(*shadow_intersect)(const t_object *this, t_vec4 point_world);

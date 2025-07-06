@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:41:49 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/04 17:39:05 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 14:24:20 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		parse_cylinder(void);
 int		parse_cone(void);
 int		parse_float(const char *float_str, float *out);
 int		parse_vec3(char *vec_str, t_vec3 *out);
+int		parse_vec4(char *vec_str, t_vec4 *out, float w);
 int		parse(int fd);
 void	parse_scene_file(const char *filename);
 #endif

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 14:22:31 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ typedef struct s_cap_uv_data
 }	t_cap_uv_data;
 
 t_object	create_cylinder(struct s_cyl_data data);
-void		calculate_cylinder_equation(t_quad_eq *eq, \
-	const t_cylinder *cyl, const t_ray *ray);
-int			check_in_circle(const t_cylinder *cyl, \
-	const t_ray *ray, t_point cap_center, float t);
-int			intersect_cap(const t_cylinder *cyl, \
-	const t_ray *ray, float *t, t_interval bound);
-int			check_height(const t_cylinder *cyl, t_point hit_point);
-int			intersect_lateral(const t_cylinder *cyl, \
-	const t_ray *ray, float *t, t_interval bound);
+// void		calculate_cylinder_equation(t_quad_eq *eq, \
+// 	const t_cylinder *cyl, const t_ray *ray);
+// int			check_in_circle(const t_cylinder *cyl, \
+// 	const t_ray *ray, t_point cap_center, float t);
+// int			intersect_cap(const t_cylinder *cyl, \
+// 	const t_ray *ray, float *t, t_interval bound);
+// int			check_height(const t_cylinder *cyl, t_point hit_point);
+// int			intersect_lateral(const t_cylinder *cyl, \
+// 	const t_ray *ray, float *t, t_interval bound);
 int			cylinder_intersect(
 				const t_object *this,
 				const t_ray *ray, t_hit *hit, t_interval bound);
@@ -60,6 +60,6 @@ t_vec3		cylinder_get_color(const t_object *obj, t_point hit_point);
 t_vec3		get_cylinder_u_axis(t_vec3 axis);
 void		calculate_cylinder_uv_dirs(t_vec3 axis,
 				t_vec3 *u_dir, t_vec3 *v_dir);
-void		cylinder_get_uv(t_point p,
-				const t_cylinder *cy, float *u, float *v);
+// void		cylinder_get_uv(t_point p,
+// 				const t_cylinder *cy, float *u, float *v);
 #endif

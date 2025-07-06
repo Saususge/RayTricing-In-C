@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/04 18:22:18 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 14:35:14 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ static void	init_mlx_var(void)
 	*mlx = mlx_init();
 	*mlx_win = mlx_new_window(*mlx, viewport->width, viewport->height, \
 		"miniRT");
-	mlx_key_hook(*mlx_win, key_hook, *mlx);
-	mlx_mouse_hook(*mlx_win, mouse_hook, *mlx);
+	// mlx_key_hook(*mlx_win, key_hook, *mlx);
+	// mlx_mouse_hook(*mlx_win, mouse_hook, *mlx);
 	mlx_hook(*mlx_win, 33, 0, mlx_loop_end, *mlx);
 	img->img = mlx_new_image(*mlx, viewport->width, viewport->height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
 		&img->line_length, &img->endian);
 }
+
+void	move_cam_light_to_local(int light_idx, int obj_idx);
 
 int	main(int argc, char **argv)
 {
@@ -60,6 +62,9 @@ int	main(int argc, char **argv)
 	}
 	parse_scene_file(argv[1]);
 	set_viewport();
+	for (int i = 0; i < g()->object_count; ++i)
+		for (int j = 0; j < g()->light_count; ++j)
+			move_cam_light_to_local(j, i);
 	init_mlx_var();
 	render_and_put();
 	mlx_loop(g()->mlx);

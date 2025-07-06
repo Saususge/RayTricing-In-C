@@ -20,47 +20,26 @@ else
 endif
 
 SRC := \
-	cone_checkerboard.c\
 	texture.c\
-	cone_0.c\
-	cone_1.c\
-	cone_2.c\
-	cone_utils.c\
-	cylinder.c\
-	cylinder_ops_0.c\
-	cylinder_ops_helper.c\
-	cylinder_rotate.c\
-	cylinder_utils.c\
-	cylinder_checkerboard.c\
 	environment.c\
-	hit_color.c\
-	hit_color_util.c\
 	hit_def.c\
 	hit_util.c\
-	hook_key.c\
-	hook_mouse.c\
 	main.c\
-	matrix.c\
+	matrix_0.c\
+	matrix_1.c\
 	object_util.c\
 	parse_ambient.c\
 	parse.c\
 	parse_camera.c\
-	parse_cone.c\
-	parse_cylinder.c\
 	parse_light.c\
-	parse_plane.c\
 	parse_scene_file.c\
 	parse_sphere.c\
 	parse_util.c\
-	plane.c\
-	plane_ops.c\
-	plane_checkerboard.c\
 	render.c\
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
 	sphere_checkerboard.c\
-	transform_def.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\
@@ -70,6 +49,7 @@ SRC := \
 	vector_product.c\
 	vector_reflect_refract.c\
 	vector_utility.c\
+	vec4.c\
 	viewport.c
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

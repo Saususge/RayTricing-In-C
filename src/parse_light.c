@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_light.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/01 13:35:13 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/06 14:24:29 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	parse_light_fields(t_light *light, float *intensity, t_vec3 *color)
 	pos_str = ft_strtok(NULL, " \t\n");
 	intensity_str = ft_strtok(NULL, " \t\n");
 	rgb_str = ft_strtok(NULL, " \t\n");
-	if (parse_vec3(pos_str, &light->position))
+	if (parse_vec4(pos_str, &light->position, 1.0f))
 		return (1);
 	if (parse_float(intensity_str, intensity) || *intensity < 0.0f \
 	|| *intensity > 1.0f)

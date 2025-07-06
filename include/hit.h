@@ -36,5 +36,5 @@ t_vec4	get_light_dir(const t_light *light, const t_hit *hit);
 int		is_lit(const t_light *light, const t_hit *hit);
 int		hit_ray(const t_ray *ray_world, t_interval bound_world, t_intersect *intersect_record, t_vec3 *color);
 int		hit_shadow_ray(const t_ray *shadow_ray_world, t_interval bound_world);
-int		shoot_ray_from_viewport(int x, int y, t_hit *hit);
+int		shoot_ray_from_viewport(int x, int y, t_object **obj, t_vec3 *color);
 #endif

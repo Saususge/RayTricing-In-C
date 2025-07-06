@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:42:59 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/04 18:26:28 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/06 14:25:47 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 void	render_and_put(void)
 {
 	t_render_data	data;
-	t_hit			hit;
+	t_vec3			color;
+	t_object		*dump;
 	int				x;
 	int				y;
 
@@ -45,12 +46,12 @@ void	render_and_put(void)
 		x = 0;
 		while (x < g()->viewport.width)
 		{
-			hit.color = (t_vec3){0.0f, 0.0f, 0.0f};
-			shoot_ray_from_viewport(x, y, &hit);
+			color = (t_vec3){0.0f, 0.0f, 0.0f};
+			shoot_ray_from_viewport(x, y, &dump, &color);
 			my_mlx_pixel_put(&g()->img, x, y,
-				(int)hit.color.x << 16
-				| (int)hit.color.y << 8
-				| (int)hit.color.z);
+				(int)color.x << 16
+				| (int)color.y << 8
+				| (int)color.z);
 			x++;
 		}
 		y++;
