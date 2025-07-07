@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:44:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 17:34:06 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,62 +16,38 @@
 #include <math.h>
 #include <unistd.h>
 
-int	cone_intersect(
-		const t_object *this, const t_ray *ray, t_hit *hit, t_interval bound)
+int	cone_intersect(const t_object *obj, const t_ray *ray_world, \
+	t_intersect *record, t_interval t_bound)
 {
+	t_ray	local_ray;
 	float	t;
 	int		lateral_hit;
 	int		cap_hit;
 
-	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
+	local_ray.o = mat_mul_vec4(&obj->m_inv, ray_world->o);
+	local_ray.d = mat_mul_vec4(&obj->m_inv, ray_world->d);
+	lateral_hit = cone_lateral_intersect(obj, &local_ray, &t, t_bound);
 	if (lateral_hit)
-		cap_hit = cone_intersect_cap(
-				&this->data.cone, ray, &t, (t_interval){bound.min, t});
+		cap_hit = cone_intersect_cap(obj, &local_ray, &t, \
+			(t_interval){t_bound.min, t});
 	else
-		cap_hit = cone_intersect_cap(&this->data.cone, ray, &t, bound);
+		cap_hit = cone_intersect_cap(obj, &local_ray, &t, t_bound);
 	if (!lateral_hit && !cap_hit)
 		return (0);
-	populate_hit_record(hit, t, ray, this);
+	record->t = t;
+	record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t));
+	record->n_local = cone_get_normal(record->p_local);
+	record->obj = (t_object *)obj;
 	return (1);
 }
 
-int	cone_shadow_intersect(
-		const t_object *this, const t_ray *ray, t_interval bound)
+t_vec4	cone_get_normal(t_vec4 p_local)
 {
-	float			t;
-	int				lateral_hit;
-	int				cap_hit;
+	t_vec4	n;
 
-	lateral_hit = cone_lateral_intersect(&this->data.cone, ray, &t, bound);
-	if (lateral_hit)
-		cap_hit = cone_intersect_cap(
-				&this->data.cone, ray, &t, (t_interval){bound.min, t});
-	else
-		cap_hit = cone_intersect_cap(&this->data.cone, ray, &t, bound);
-	if (lateral_hit || cap_hit)
-		return (1);
-	return (0);
-}
-
-t_vec3	cone_get_normal(const t_object *this, const t_point *hit_point)
-{
-	t_cone	cone;
-	t_vec3	center_to_hit;
-	float	projection;
-	t_vec3	axis_point;
-	t_vec3	normal;
-
-	cone = this->data.cone;
-	center_to_hit = vec3_sub(*hit_point, cone.center);
-	projection = vec3_dot(center_to_hit, cone.axis);
-	if (fabs(projection - cone.height) < EPSILON)
-		return (cone.axis);
-	axis_point = vec3_add(cone.center, vec3_mul(cone.axis, projection));
-	normal = vec3_sub(*hit_point, axis_point);
-	normal = vec3_sub(
-			normal,
-			vec3_mul(
-				cone.axis,
-				cone.radius / cone.height * vec3_length(normal)));
-	return (vec3_normalize(normal));
+	if (fabs(p_local.v[2] - 1.0f) < EPSILON)
+		return ((t_vec4){{0, 0, 1, 0}});
+	n = (t_vec4){{p_local.v[0], p_local.v[1], -p_local.v[2], 0}};
+	n = vec4_mul(n, 1.0f / (sqrtf(2)) * p_local.v[2]);
+	return (n);
 }

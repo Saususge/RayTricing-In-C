@@ -17,9 +17,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec4	sphere_get_normal(const t_object *this, t_vec4 p_local)
+t_vec4	sphere_get_normal(t_vec4 p_local)
 {
-	(void)this;
 	p_local.v[3] = 0.0f;
 	return (p_local);
 }

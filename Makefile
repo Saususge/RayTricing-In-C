@@ -34,6 +34,7 @@ SRC := \
 	parse_ambient.c\
 	parse.c\
 	parse_camera.c\
+	parse_cone.c\
 	parse_light.c\
 	parse_scene_file.c\
 	parse_sphere.c\
@@ -43,6 +44,9 @@ SRC := \
 	plane_checkerboard.c\
 	plane_ops.c\
 	plane.c\
+	cone_0.c\
+	cone_1.c\
+	cone_checkerboard.c\
 	render.c\
 	rotate.c\
 	sphere_0.c\
