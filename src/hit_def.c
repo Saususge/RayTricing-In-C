@@ -30,35 +30,35 @@ t_vec3	get_color(const t_intersect *record)
 	t_vec3	diffuse;
 	t_vec3	specular;
 	int		i;
-	t_vec4	hit_point_world;
+	t_vec4	p_world;
 	t_vec4	light_v_world;
-	float	dist_sq_world;
+	float	dist_world;
 	float	attenuation;
 	t_ray	shadow_ray_world;
+	t_vec3	color;
 
-	ambient = vec3_hadamard(vec3_mul(g()->amb_light.intensity, K_AMBIENT), record->obj->ops->get_color(record));
+	color = record->obj->ops->get_color(record);
+	ambient = vec3_hadamard(vec3_mul(g()->amb_light.intensity, K_AMBIENT), color);
 	diffuse = (t_vec3){0, 0, 0};
 	specular = (t_vec3){0, 0, 0};
 	i = 0;
-	hit_point_world = mat_mul_vec4(&record->obj->m, record->p_local);
+	p_world = mat_mul_vec4(&record->obj->m, record->p_local);
 	while (i < g()->light_count)
 	{
-		light_v_world = vec4_sub(g()->lights[i].position, hit_point_world);
-		dist_sq_world = vec4_dot(light_v_world, light_v_world);
-		light_v_world = vec4_mul(light_v_world, 1.0f / sqrtf(dist_sq_world));
-		shadow_ray_world = (t_ray){.o = hit_point_world, .d = light_v_world};
-		if (!hit_shadow_ray(&shadow_ray_world, (t_interval){EPSILON, sqrtf(dist_sq_world) - EPSILON}))
+		light_v_world = vec4_sub(g()->lights[i].position, p_world);
+		dist_world = sqrtf(vec4_dot(light_v_world, light_v_world));
+		light_v_world = vec4_mul(light_v_world, 1.0f / dist_world);
+		shadow_ray_world = (t_ray){.o = p_world, .d = light_v_world};
+		if (!hit_shadow_ray(&shadow_ray_world, (t_interval){EPSILON, dist_world - EPSILON}))
 		{
-			t_vec4	light_v_local = vec4_sub(record->obj->local_light_pos[i], record->p_local);
-			light_v_local = vec4_mul(light_v_local, 1.0f / sqrtf(vec4_dot(light_v_local, light_v_local)));
-			attenuation = 1.0f / (1.0f + 0.05 * dist_sq_world);
-			float	diffusion_dot = fmaxf(vec4_dot(record->n_local, light_v_local), 0.0f);
+			attenuation = 1.0f / (1.0f + 0.05 * dist_world * dist_world);
+			float	diffusion_dot = fmaxf(vec4_dot(record->n_world, light_v_world), 0.0f);
 			t_vec3	diffusion_light_intensity = vec3_mul(g()->lights[i].intensity, K_DIFFUSE * diffusion_dot * attenuation);
-			diffuse = vec3_add(diffuse, vec3_hadamard(diffusion_light_intensity, record->obj->ops->get_color(record)));
-			t_vec4	view_local = vec4_sub(vec3_to_vec4(g()->cam.pos, 1.0f), hit_point_world);
-			t_vec4	reflect_local = vec4_sub(vec4_neg(light_v_local), vec4_mul(record->n_local, 2.0f * vec4_dot(vec4_neg(light_v_local), record->n_local)));
-			reflect_local.v[3] = 0.0f;	
-			float	specular_dot = fmaxf(vec4_dot(view_local, reflect_local) / (sqrtf(vec4_dot(view_local, view_local)) * sqrtf(vec4_dot(reflect_local, reflect_local))), 0.0f);
+			diffuse = vec3_add(diffuse, vec3_hadamard(diffusion_light_intensity, color));
+			t_vec4	view_world = vec4_sub(vec3_to_vec4(g()->cam.pos, 1.0f), p_world);
+			t_vec4	reflect_world = vec4_sub(vec4_neg(light_v_world), vec4_mul(record->n_world, 2.0f * vec4_dot(vec4_neg(light_v_world), record->n_world)));
+			reflect_world.v[3] = 0.0f;	
+			float	specular_dot = fmaxf(vec4_dot(view_world, reflect_world) / (sqrtf(vec4_dot(view_world, view_world) * vec4_dot(reflect_world, reflect_world))), 0.0f);
 			float	specular_factor = powf(specular_dot, SHININESS) * K_SPECULAR * attenuation * g()->specular;
 			specular = vec3_add(specular, vec3_mul(g()->lights[i].intensity, specular_factor * 255.0f));
 		}

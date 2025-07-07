@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:00:00 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 20:04:34 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/07 22:29:40 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	cone_lateral_intersect(const t_ray *ray, float *t, t_interval t_bound)
 	eq.c = ray->o.v[0] * ray->o.v[0] + ray->o.v[1] \
 	* ray->o.v[1] - ray->o.v[2] * ray->o.v[2];
 	eq.disc = eq.b * eq.b - eq.a * eq.c;
-	if (eq.disc < 0 || fabs(eq.a) < EPSILON)
+	if (eq.disc < 0)
 		return (0);
 	sqrt_disc = sqrtf(eq.disc);
 	t1 = (-eq.b - sqrt_disc) / eq.a;

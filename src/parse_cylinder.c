@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 03:18:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 15:58:02 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 20:33:12 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	parse_cylinder(void)
 	data.height_str = ft_strtok(NULL, " \t\n");
 	data.color_str = ft_strtok(NULL, " \t\n");
 	if (parse_vec3(data.center_str, &data.center)
-		|| parse_vec3(data.orient_str, &data.orient) || !(fabs(vec3_length(data.orient) - 1.0f) < EPSILON)
+		|| parse_vec3(data.orient_str, &data.orient)
+		|| fabs(vec3_length(data.orient) - 1.0f) > EPSILON
 		|| parse_float(data.diam_str, &data.diameter)
 		|| data.diameter <= 0.0f
 		|| parse_float(data.height_str, &data.height)

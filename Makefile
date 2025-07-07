@@ -47,6 +47,7 @@ SRC := \
 	cone_0.c\
 	cone_1.c\
 	cone_checkerboard.c\
+	cone_utils.c\
 	render.c\
 	rotate.c\
 	sphere_0.c\

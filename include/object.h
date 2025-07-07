@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 14:27:14 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 22:37:06 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,14 @@ typedef struct s_object
 	t_mat			s;
 	t_mat			m;
 	t_mat			m_inv;
-	t_vec4			local_light_pos[16];	// temp 16 modify it later.
-	t_vec4			local_cam_pos;
+	t_mat			n;
 }	t_object;
 
 typedef struct s_intersect
 {
 	float		t;
 	t_vec4		p_local;
-	t_vec4		n_local;
+	t_vec4		n_world;
 	t_object	*obj;
 }	t_intersect;
 
@@ -128,9 +127,6 @@ typedef struct s_gvar
 	t_object		*objects;
 	int				object_count;
 	int				object_capacity;
-	// float			k_a;
-	// float			k_d;
-	// float			k_s;
 	int				specular;
 	int				camera_choosed;
 	int				light_choosed;

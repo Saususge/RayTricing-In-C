@@ -47,9 +47,10 @@ int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *r
 	}
 	else
 		return (0);
-	record->n_local = sphere_get_normal(record->p_local);
-	if (vec4_dot(record->n_local, local_ray.d) > 0.0f)
-		record->n_local = vec4_neg(record->n_local);
+	record->n_world = mat_mul_vec4(&obj->m, sphere_get_normal(record->p_local));
+	record->n_world = vec4_mul(record->n_world, 1.0f / sqrt(vec4_dot(record->n_world, record->n_world)));
+	if (vec4_dot(record->n_world, ray_world->d) > 0.0f)
+		record->n_world = vec4_neg(record->n_world);
 	record->obj = (t_object *)obj;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:38:29 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/06 20:46:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 22:45:58 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,25 @@ int	mat_inverse(const t_mat *m, t_mat *n)
 		++row;
 	}
 	return (1);
+}
+
+// N = M ^ T
+void	mat_transpose(const t_mat *m, t_mat *n)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			n->m[i][j] = m->m[j][i];
+			++j;
+		}
+		++i;
+	}
 }
 
 #include <math.h>

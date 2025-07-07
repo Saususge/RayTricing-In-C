@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 15:51:17 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 21:07:47 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ int	cylinder_intersect(const t_object *obj, const t_ray *ray_world, t_intersect 
 		return (0);
 	record->t = t;
 	record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t));
-	record->n_local = cylinder_get_normal(record->p_local);
-	if (vec4_dot(record->n_local, local_ray.d) > 0.0f)
-		record->n_local = vec4_neg(record->n_local);
+	record->n_world = mat_mul_vec4(&obj->m, cylinder_get_normal(record->p_local));
+	record->n_world = vec4_mul(record->n_world, 1.0f / sqrt(vec4_dot(record->n_world, record->n_world)));
+	if (vec4_dot(record->n_world, ray_world->d) > 0.0f)
+		record->n_world = vec4_neg(record->n_world);
 	record->obj = (t_object *)obj;
 	return (1);
 }

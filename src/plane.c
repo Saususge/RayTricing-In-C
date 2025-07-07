@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 16:22:33 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 23:18:16 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,26 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 	{0, 0, 0, 1}}};
 	axis = vec3_cross((t_vec3){0, 0, 1}, normal);
 	if (vec3_length(axis) < EPSILON)
-		axis = (t_vec3){0, 0, 1};
-	axis = vec3_normalize(axis);
-	theta = acosf(normal.z);
-	rodrigues_to_mat4(axis, theta, &pl.r);
+	{
+		if (normal.z > 0.0f)
+			pl.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, 1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, 1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+		else
+			pl.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, -1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, -1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+	}
+	else
+	{
+		axis = vec3_normalize(axis);
+		theta = acosf(normal.z);
+		rodrigues_to_mat4(axis, theta, &pl.r);
+	}
 	pl.s = (t_mat){{{1, 0, 0, 0},
 	{0, 1, 0, 0},
 	{0, 0, 1, 0},
@@ -69,9 +85,10 @@ int	plane_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *re
 		return (0);
 	record->t = t;
 	record->p_local = vec4_add(ray_local.o, vec4_mul(ray_local.d, t));
-	record->n_local = plane_get_normal(obj, record->p_local);
-	if (vec4_dot(record->n_local, ray_local.d) > 0.0f)
-		record->n_local = vec4_neg(record->n_local);
+	record->n_world = mat_mul_vec4(&obj->m, plane_get_normal(obj, record->p_local));
+	record->n_world = vec4_mul(record->n_world, 1.0f / sqrt(vec4_dot(record->n_world, record->n_world)));
+	if (vec4_dot(record->n_world, ray_world->d) > 0.0f)
+		record->n_world = vec4_neg(record->n_world);
 	record->obj = (t_object *)obj;
 	return (1);
 }

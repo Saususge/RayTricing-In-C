@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 17:14:20 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:15:57 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,26 @@ t_object	create_cone(struct s_cone_data data)
 	{0.0f, 0.0f, 0.0f, 1.0f}}};
 	rotation_axis = vec3_cross((t_vec3){0, 0, 1}, data.axis);
 	if (vec3_length(rotation_axis) < EPSILON)
-		rotation_axis = (t_vec3){{0, 0, 1}};
-	angle = acosf(data.axis.z);
-	rodrigues_to_mat4(vec3_normalize(rotation_axis), angle, &cn.r);
+	{
+		if (data.axis.z > 0.0f)
+			cn.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, 1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, 1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+		else
+			cn.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, -1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, -1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+	}
+	else
+	{
+		rotation_axis = vec3_normalize(rotation_axis);
+		angle = acosf(data.axis.z);
+		rodrigues_to_mat4(rotation_axis, angle, &cn.r);
+	}
 	cn.s = (t_mat){{
 	{data.radius, 0.0f, 0.0f, 0.0f},
 	{0.0f, data.radius, 0.0f, 0.0f},
@@ -50,5 +67,6 @@ t_object	create_cone(struct s_cone_data data)
 	mat_mul_mat(&cn.r, &cn.s, &temp);
 	mat_mul_mat(&cn.t, &temp, &cn.m);
 	mat_inverse(&cn.m, &cn.m_inv);
+	mat_transpose(&cn.m_inv, &cn.n);
 	return (cn);
 }

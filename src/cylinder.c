@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 16:22:10 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 21:21:57 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,26 @@ t_object	create_cylinder(struct s_cyl_data data)
 	{0, 0, 0, 1}}};
 	axis = vec3_cross((t_vec3){0, 0, 1}, data.axis);
 	if (vec3_length(axis) < EPSILON)
-		axis = (t_vec3){0, 0, 1};
-	axis = vec3_normalize(axis);
-	theta = acosf(data.axis.z);
-	rodrigues_to_mat4(axis, theta, &cyl.r);
+	{
+		if (data.axis.z > 0.0f)
+			cyl.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, 1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, 1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+		else
+			cyl.r = (t_mat){{
+				{1.0f, 0.0f, 0.0f, 0.0f},
+				{0.0f, -1.0f, 0.0f, 0.0f},
+				{0.0f, 0.0f, -1.0f, 0.0f},
+				{0.0f, 0.0f, 0.0f, 1.0f}}};
+	}
+	else
+	{
+		axis = vec3_normalize(axis);
+		theta = acosf(data.axis.z);
+		rodrigues_to_mat4(axis, theta, &cyl.r);
+	}
 	cyl.s = (t_mat){{{data.radius, 0, 0, 0},
 	{0, data.radius, 0, 0},
 	{0, 0, data.height, 0},
