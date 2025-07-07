@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:00:00 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 17:32:23 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/07 19:37:01 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ t_vec3	cone_get_color(const t_intersect *record)
 
 	if (!record->obj->checkerboard)
 		return (record->obj->color);
-	if (fabs(record->p_local.v[2] - 0.5f) < EPSILON || fabs(record->p_local.v[2] + 0.5f) < EPSILON)
+	if (fabs(record->p_local.v[2] - 1.0f) < EPSILON)
 	{
 		u = atan2f(record->p_local.v[1], record->p_local.v[0]) / (float)M_PI;
-		v = sqrtf(record->p_local.v[0] * record->p_local.v[0] + record->p_local.v[1] * record->p_local.v[1]);
+		v = sqrtf(record->p_local.v[0] * record->p_local.v[0] + \
+			record->p_local.v[1] * record->p_local.v[1]);
 	}
 	else
 	{
-		u = atan2f(record->p_local.v[1], record->p_local.v[0]) / (2.0f * (float)M_PI);
-        v = (record->p_local.v[2] + 0.5f);
+		u = atan2f(record->p_local.v[1], \
+		record->p_local.v[0]) / (2.0f * (float)M_PI);
+		v = record->p_local.v[2];
 	}
 	return (checkerboard_color_at(u, v));
 }
