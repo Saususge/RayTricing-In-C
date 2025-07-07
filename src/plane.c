@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 23:21:53 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:28:10 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 static t_object_ops	g_plane_ops = {
 	.intersect = plane_intersect,
-	.get_normal = plane_get_normal,
 	.get_color = plane_get_color,
 };
 

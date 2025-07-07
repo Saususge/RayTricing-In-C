@@ -26,7 +26,6 @@ t_vec4	sphere_get_normal(const t_object *this, t_vec4 p_local)
 
 static t_object_ops	g_sphere_ops = {
 	.intersect = sphere_intersect,
-	.get_normal = sphere_get_normal,
 	.get_color = sphere_get_color,
 };
 

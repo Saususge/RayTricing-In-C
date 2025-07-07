@@ -17,7 +17,7 @@
 
 float convert_t_local_to_world(const t_object *obj, t_vec4 p_local, const t_ray *ray_world);
 
-int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_world_bound)
+int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_bound)
 {
 	t_quad_eq	eq;
 	t_ray		local_ray;
@@ -35,8 +35,8 @@ int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *r
 	sqrt_disc = sqrtf(eq.disc);
 	t1 = (-eq.b - sqrt_disc) / eq.a;
 	t2 = (-eq.b + sqrt_disc) / eq.a;
-	t1_valid = (t1 >= t_world_bound.min && t1 <= t_world_bound.max);
-	t2_valid = (t2 >= t_world_bound.min && t2 <= t_world_bound.max);
+	t1_valid = (t1 >= t_bound.min && t1 <= t_bound.max);
+	t2_valid = (t2 >= t_bound.min && t2 <= t_bound.max);
 	if (t1_valid && (!t2_valid || t1 < t2))
 	{
 		record->t = t1;

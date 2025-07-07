@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/05 14:05:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:32:24 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,19 @@
 #include "rotate.h"
 #include <unistd.h>
 
-int			cylinder_intersect(
-				const t_object *this,
-				const t_ray *ray,
-				t_hit *hit,
-				t_interval bound);
-int			cylinder_shadow_intersect(
-				const t_object *this,
-				const t_ray *ray,
-				t_interval bound);
-t_vec3		cylinder_get_normal(
-				const t_object *this,
-				const t_point *hit_point);
-void		cylinder_translate(t_object *this, t_vec3 offset);
-void		cylinder_rotate(t_object *this, t_vec3 axis, float angle);
+int		cylinder_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_world_bound);
+t_vec4		cylinder_get_normal(
+				const t_object *cyl,
+				t_vec4 p_local);
 
 static t_object_ops	g_cylinder_ops = {
 	.intersect = cylinder_intersect,
-	.shadow_intersect = cylinder_shadow_intersect,
-	.get_normal = cylinder_get_normal,
 	.get_color = cylinder_get_color,
 };
 
+// Assume that the cylinder is centered at the origin in local space, and
+// the axis is aligned with the z-axis. The height is 1 and the radius is 1.
+// The `data` struct contains 
 t_object	create_cylinder(struct s_cyl_data data)
 {
 	return ((t_object){

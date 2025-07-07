@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 23:13:40 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:27:14 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,6 @@ typedef struct s_object_ops
 	int	
 		(*intersect)(const t_object *obj, const t_ray *ray_world,
 			t_intersect *intersect_record, t_interval t_world_bound);
-	t_vec4
-		(*get_normal)(
-			const t_object	*this,
-			t_vec4			p_local
-			);
 	t_vec3
 		(*get_color)(const t_intersect *record);
 }	t_object_ops;
