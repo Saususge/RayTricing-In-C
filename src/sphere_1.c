@@ -15,8 +15,6 @@
 #include "object.h"
 #include <math.h>
 
-float convert_t_local_to_world(const t_object *obj, t_vec4 p_local, const t_ray *ray_world);
-
 int	sphere_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_bound)
 {
 	t_quad_eq	eq;

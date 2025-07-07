@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/06 22:18:36 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 15:26:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,8 @@ typedef struct s_cap_uv_data
 }	t_cap_uv_data;
 
 t_object	create_cylinder(struct s_cyl_data data);
-int			cylinder_intersect(
-				const t_object *this,
-				const t_ray *ray, t_hit *hit, t_interval bound);
-int			cylinder_shadow_intersect(
-				const t_object *this, const t_ray *ray, t_interval bound);
-t_vec3		cylinder_get_normal(const t_object *this, const t_point *hit_point);
-void		cylinder_translate(t_object *this, t_vec3 offset);
-void		cylinder_rotate(t_object *this, t_vec3 axis, float angle);
-void		cylinder_scale(t_object *this, float scale);
-t_vec3		cylinder_get_color(const t_object *obj, t_point hit_point);
+int			cylinder_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_bound);
+t_vec3		cylinder_get_color(const t_intersect *record);
 
 // cylinder utility functions
 t_vec3		get_cylinder_u_axis(t_vec3 axis);

@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 14:32:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 16:22:10 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "vector.h"
 #include "rotate.h"
 #include <unistd.h>
-
-int		cylinder_intersect(const t_object *obj, const t_ray *ray_world, t_intersect *record, t_interval t_world_bound);
-t_vec4		cylinder_get_normal(
-				const t_object *cyl,
-				t_vec4 p_local);
 
 static t_object_ops	g_cylinder_ops = {
 	.intersect = cylinder_intersect,
@@ -30,10 +25,31 @@ static t_object_ops	g_cylinder_ops = {
 // The `data` struct contains 
 t_object	create_cylinder(struct s_cyl_data data)
 {
-	return ((t_object){
-		.type = CYLINDER,
-		.ops = &g_cylinder_ops,
-		.color = data.color,
-		.checkerboard = 0,
-	});
+	t_object	cyl;
+	t_mat		temp;
+	t_vec3		axis;
+	float		theta;
+
+	cyl.type = CYLINDER;
+	cyl.ops = &g_cylinder_ops;
+	cyl.color = data.color;
+	cyl.checkerboard = 0;
+	cyl.t = (t_mat){{{1, 0, 0, data.center.x},
+	{0, 1, 0, data.center.y},
+	{0, 0, 1, data.center.z},
+	{0, 0, 0, 1}}};
+	axis = vec3_cross((t_vec3){0, 0, 1}, data.axis);
+	if (vec3_length(axis) < EPSILON)
+		axis = (t_vec3){0, 0, 1};
+	axis = vec3_normalize(axis);
+	theta = acosf(data.axis.z);
+	rodrigues_to_mat4(axis, theta, &cyl.r);
+	cyl.s = (t_mat){{{data.radius, 0, 0, 0},
+	{0, data.radius, 0, 0},
+	{0, 0, data.height, 0},
+	{0, 0, 0, 1}}};
+	mat_mul_mat(&cyl.r, &cyl.s, &temp);
+	mat_mul_mat(&cyl.t, &temp, &cyl.m);
+	mat_inverse(&cyl.m, &cyl.m_inv);
+	return (cyl);
 }

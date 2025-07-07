@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 14:28:10 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/07 16:22:33 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 	if (vec3_length(axis) < EPSILON)
 		axis = (t_vec3){0, 0, 1};
 	axis = vec3_normalize(axis);
-	theta = acosf(axis.z);
+	theta = acosf(normal.z);
 	rodrigues_to_mat4(axis, theta, &pl.r);
 	pl.s = (t_mat){{{1, 0, 0, 0},
 	{0, 1, 0, 0},

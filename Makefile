@@ -27,6 +27,9 @@ SRC := \
 	main.c\
 	matrix_0.c\
 	matrix_1.c\
+	cylinder_checkerboard.c\
+	cylinder_ops.c\
+	cylinder.c\
 	object_util.c\
 	parse_ambient.c\
 	parse.c\
@@ -36,6 +39,7 @@ SRC := \
 	parse_sphere.c\
 	parse_plane.c\
 	parse_util.c\
+	parse_cylinder.c\
 	plane_checkerboard.c\
 	plane_ops.c\
 	plane.c\
