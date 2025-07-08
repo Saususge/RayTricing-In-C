@@ -22,13 +22,17 @@ endif
 SRC := \
 	texture.c\
 	environment.c\
-	hit_def.c\
+	hit_def_0.c\
+	hit_def_1.c\
+	hit_def_2.c\
 	hit_util.c\
 	main.c\
 	matrix_0.c\
 	matrix_1.c\
+	matrix_2.c\
 	cylinder_checkerboard.c\
 	cylinder_ops.c\
+	cylinder_utils.c\
 	cylinder.c\
 	object_util.c\
 	parse_ambient.c\
@@ -42,8 +46,8 @@ SRC := \
 	parse_util.c\
 	parse_cylinder.c\
 	plane_checkerboard.c\
-	plane_ops.c\
 	plane.c\
+	plane_helper.c\
 	cone_0.c\
 	cone_1.c\
 	cone_checkerboard.c\
@@ -62,6 +66,7 @@ SRC := \
 	vector_product.c\
 	vector_reflect_refract.c\
 	vector_utility.c\
+	vec4_calc.c\
 	vec4.c\
 	viewport.c
 

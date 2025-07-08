@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:38:29 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/05 15:37:40 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 15:36:35 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_vec4	vec3_to_vec4(t_vec3 v, float w)
 t_vec4	mat_mul_vec4(const t_mat *m, t_vec4 v)
 {
 	t_vec4	u;
-	int	row;
+	int		row;
 
 	row = 0;
 	while (row < 4)

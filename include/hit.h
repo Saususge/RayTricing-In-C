@@ -14,6 +14,12 @@
 # define HIT_H
 # include "object.h"
 
+# define K_AMBIENT 0.2f
+# define K_DIFFUSE 1.0f
+# define K_SPECULAR 1.0f
+# define SHININESS 64.0f
+
+
 typedef struct s_light_v
 {
 	t_vec4	l;
@@ -37,4 +43,16 @@ int		is_lit(const t_light *light, const t_hit *hit);
 int		hit_ray(const t_ray *ray_world, t_interval bound_world, t_intersect *intersect_record, t_vec3 *color);
 int		hit_shadow_ray(const t_ray *shadow_ray_world, t_interval bound_world);
 int		shoot_ray_from_viewport(int x, int y, t_object **obj, t_vec3 *color);
+t_vec3	calculate_ambient_light(const t_intersect *record);
+float	calculate_light_distance(t_vec4 light_pos, t_vec4 point);
+t_vec4	calculate_light_direction(t_vec4 light_pos, t_vec4 point);
+t_vec3	calculate_diffuse_light(const t_intersect *record, t_vec4 light_dir, 
+							float attenuation, t_vec3 light_intensity);
+t_vec3	calculate_specular_light(const t_intersect *record, t_vec4 light_dir, 
+							float attenuation, t_vec3 light_intensity);
+int		is_in_shadow(const t_intersect *record, int light_idx);
+float	calculate_attenuation(const t_intersect *record, int light_idx);
+t_vec3	process_single_light(const t_intersect *record, int light_idx);
+t_vec3	get_color(const t_intersect *record);
+t_vec3	clamp_color(t_vec3 color);
 #endif

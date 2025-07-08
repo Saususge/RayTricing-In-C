@@ -20,7 +20,8 @@
 // 	return (vec4_mul(v, 1.0f / sqrtf(vec4_dot(v, v))));
 // }
 
-// int	hit_ray_without_color(const t_ray *ray_world, t_interval bound_world, t_object **obj)
+// int	hit_ray_without_color(const t_ray *ray_world, 
+//t_interval bound_world, t_object **obj)
 // {
 // 	int			hit_anything;
 // 	int			i;
@@ -34,7 +35,8 @@
 // 				&current_intersect, bound_world))
 // 		{
 // 			hit_anything = 1;
-// 			bound_world.max = convert_t_local_to_world(current_intersect.object, current_intersect.t_local);
+// 			bound_world.max = convert_t_local_
+//to_world(current_intersect.object, current_intersect.t_local);
 // 			*obj = current_intersect.object;
 // 		}
 // 		++i;
