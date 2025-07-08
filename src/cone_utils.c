@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:00:00 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:31 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	cone_intersect_cap(const t_ray *ray, float *t, t_interval t_bound)
 	float	t_cap;
 	t_vec4	p_cap;
 
-	if (fabs(ray->d.v[2]) < EPSILON)
+	if (fabsf(ray->d.v[2]) < EPSILON)
 		return (0);
 	t_cap = (1.0f - ray->o.v[2]) / ray->d.v[2];
 	if (t_cap < t_bound.min || t_cap > t_bound.max)

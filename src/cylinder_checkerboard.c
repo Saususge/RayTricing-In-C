@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_checkerboard.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 18:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:31 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_vec3	cylinder_get_color(const t_intersect *record)
 
 	if (!record->obj->checkerboard)
 		return (record->obj->color);
-	if (fabs(record->p_local.v[2] - 0.5f) < EPSILON || \
-	fabs(record->p_local.v[2] + 0.5f) < EPSILON)
+	if (fabsf(record->p_local.v[2] - 0.5f) < EPSILON || \
+	fabsf(record->p_local.v[2] + 0.5f) < EPSILON)
 	{
 		u = atan2f(record->p_local.v[1], record->p_local.v[0]) / (float)M_PI;
 		v = sqrtf(record->p_local.v[0] * record->p_local.v[0] + \

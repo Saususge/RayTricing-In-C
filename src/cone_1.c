@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:44:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 13:55:13 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_vec4	cone_get_normal(t_vec4 p_local)
 	t_vec4	n;
 	float	norm;
 
-	if (fabs(p_local.v[2] - 1.0f) < EPSILON)
+	if (fabsf(p_local.v[2] - 1.0f) < EPSILON)
 		return ((t_vec4){{0, 0, 1, 0}});
 	n = (t_vec4){{p_local.v[0], p_local.v[1], -p_local.v[2], 0}};
 	norm = sqrtf(n.v[0] * n.v[0] + n.v[1] * n.v[1] + n.v[2] * n.v[2]);

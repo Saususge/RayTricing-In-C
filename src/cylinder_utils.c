@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:46:00 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:28 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_cylinder_height(const t_ray *ray, float t)
 	t_vec4	point;
 
 	point = vec4_add(ray->o, vec4_mul(ray->d, t));
-	return (fabs(point.v[2]) <= 0.5f);
+	return (fabsf(point.v[2]) <= 0.5f);
 }
 
 int	intersect_lateral(const t_ray *local_ray, t_interval bound, float *t)
@@ -81,7 +81,7 @@ int	intersect_cap(const t_ray *local_ray, t_interval bound, float *t)
 	int		valid1;
 	int		valid2;
 
-	if (fabs(local_ray->d.v[2]) < EPSILON)
+	if (fabsf(local_ray->d.v[2]) < EPSILON)
 		return (0);
 	t1 = (-0.5 - local_ray->o.v[2]) / local_ray->d.v[2];
 	t2 = (0.5 - local_ray->o.v[2]) / local_ray->d.v[2];

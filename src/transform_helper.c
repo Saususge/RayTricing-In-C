@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:49:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:51:13 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 17:19:23 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	apply_translation_to_object(t_object *obj, t_vec3 offset)
 
 void	apply_scale_to_object(t_object *obj, float scale_factor)
 {
+	if (scale_factor < 1.0f && obj->s.m[0][0] <= 0.08f)
+		return ;
 	obj->s.m[0][0] *= scale_factor;
 	obj->s.m[1][1] *= scale_factor;
 	obj->s.m[2][2] *= scale_factor;

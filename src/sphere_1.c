@@ -47,9 +47,9 @@ static void	fill_record(t_intersect *record, const t_object *obj,
 {
 	record->t = t;
 	record->p_local = vec4_add(local_ray->o, vec4_mul(local_ray->d, t));
-	record->n_world = mat_mul_vec4(&obj->n, sphere_get_normal(record->p_local));
+	record->n_world = mat_mul_vec4(&obj->m, sphere_get_normal(record->p_local));
 	record->n_world = vec4_mul(record->n_world, \
-		1.0f / sqrt(vec4_dot(record->n_world, record->n_world)));
+		1.0f / sqrtf(vec4_dot(record->n_world, record->n_world)));
 	record->obj = (t_object *)obj;
 }
 

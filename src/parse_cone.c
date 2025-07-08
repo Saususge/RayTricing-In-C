@@ -41,7 +41,7 @@ int	parse_cone(void)
 	data.color_str = ft_strtok(NULL, " \t\n");
 	if (parse_vec3(data.center_str, &data.center)
 		|| parse_vec3(data.orient_str, &data.orient)
-		|| fabs(vec3_length(data.orient) - 1.0f) > EPSILON
+		|| fabsf(vec3_length(data.orient) - 1.0f) > EPSILON
 		|| parse_float(data.diam_str, &data.diameter)
 		|| data.diameter <= 0.0f
 		|| parse_float(data.height_str, &data.height)

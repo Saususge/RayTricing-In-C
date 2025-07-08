@@ -6,13 +6,13 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:25:20 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 21:39:42 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 17:17:11 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_H
 # define VECTOR_H
-# define EPSILON 0.0001f
+# define EPSILON 5e-4
 # include <math.h>
 
 typedef struct s_point
