@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/08 16:12:39 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 17:48:59 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	is_transform_keycode(int keycode)
 		|| keycode == 'd' || keycode == 'q' || keycode == 'e'
 		|| keycode == 'p' || keycode == ';' || keycode == 'l'
 		|| keycode == '\'' || keycode == 'o' || keycode == '['
-		|| keycode == '=' || keycode == '-' || keycode == 't');
+		|| keycode == '=' || keycode == '-' || keycode == 't'
+		|| keycode == '0');
 }
 
 static void	transform_translate(int keycode)
@@ -73,6 +74,11 @@ static void	transform_rotate(int keycode)
 
 static void	transform(int keycode)
 {
+	if (keycode == '0')
+	{
+		g()->specular = !g()->specular;
+		return ;
+	}
 	if (!(g()->camera_choosed || g()->light_choosed || g()->choosen_object))
 	{
 		ft_putstr_fd("No object selected for transformation\n", STDERR_FILENO);
@@ -89,15 +95,7 @@ static void	transform(int keycode)
 	else if (keycode == '-')
 		scale(0.9f);
 	else if (keycode == 't')
-	{
 		g()->choosen_object->checkerboard = !g()->choosen_object->checkerboard;
-		if (g()->choosen_object->checkerboard)
-			ft_putstr_fd("Checkerboard enabled for selected object\n",
-				STDOUT_FILENO);
-		else
-			ft_putstr_fd("Checkerboard disabled for selected object\n",
-				STDOUT_FILENO);
-	}
 }
 
 int	key_hook(int keycode, void *mlx)
