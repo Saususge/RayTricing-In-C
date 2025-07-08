@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:52:35 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:52:35 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	init_rotation_matrix(t_mat *r, t_vec3 axis)
 	}
 }
 
-static void	compute_final_matrices(t_object *cn)
+static void	co_compute_final_matrices(t_object *cn)
 {
 	t_mat	temp;
 
@@ -90,6 +90,6 @@ t_object	create_cone(struct s_cone_data data)
 	init_cone_basic(&cn, data);
 	init_transform_matrices(&cn, data.center, data.radius, data.height);
 	init_rotation_matrix(&cn.r, data.axis);
-	compute_final_matrices(&cn);
+	co_compute_final_matrices(&cn);
 	return (cn);
 }

@@ -26,6 +26,8 @@ SRC := \
 	hit_def_1.c\
 	hit_def_2.c\
 	hit_util.c\
+	hook_key.c\
+	hook_mouse.c\
 	main.c\
 	matrix_0.c\
 	matrix_1.c\
@@ -57,6 +59,7 @@ SRC := \
 	sphere_0.c\
 	sphere_1.c\
 	sphere_checkerboard.c\
+	transform_def.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\
@@ -68,7 +71,8 @@ SRC := \
 	vector_utility.c\
 	vec4_calc.c\
 	vec4.c\
-	viewport.c
+	viewport.c\
+	transform_helper.c\
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 

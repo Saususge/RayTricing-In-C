@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:31:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/03 20:30:54 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 15:50:59 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ typedef struct s_rot_res
 
 t_vec3	rotate_vector(t_vec3 target, t_vec3 angle);
 t_vec3	rotate_vector_rodrigues(t_vec3 target, t_vec3 axis, float angle);
+
+// Transform helper functions
+void	compute_final_matrices(t_object *obj);
+void	apply_translation_to_object(t_object *obj, t_vec3 offset);
+void	apply_scale_to_object(t_object *obj, float scale_factor);
+void	apply_rotation_to_object(t_object *obj, t_vec3 axis, float angle);
+
 #endif

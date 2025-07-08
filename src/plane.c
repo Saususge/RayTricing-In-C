@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:27:38 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:52:16 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	init_scale_matrix(t_object *pl)
 	{0, 0, 0, 1}}};
 }
 
-static void	compute_final_matrices(t_object *pl)
+static void	pl_compute_final_matrices(t_object *pl)
 {
 	t_mat	temp;
 
@@ -49,7 +49,7 @@ t_object	create_plane(t_point point, t_vec3 normal, t_vec3 color)
 	init_transform_matrix(&pl, point);
 	init_rotation_matrix(&pl, normal);
 	init_scale_matrix(&pl);
-	compute_final_matrices(&pl);
+	pl_compute_final_matrices(&pl);
 	return (pl);
 }
 

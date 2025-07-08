@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:36:32 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:41:53 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	init_mlx_var(void)
 	*mlx = mlx_init();
 	*mlx_win = mlx_new_window(*mlx, viewport->width, viewport->height, \
 		"miniRT");
-	// mlx_key_hook(*mlx_win, key_hook, *mlx);
-	// mlx_mouse_hook(*mlx_win, mouse_hook, *mlx);
+	mlx_key_hook(*mlx_win, key_hook, *mlx);
+	mlx_mouse_hook(*mlx_win, mouse_hook, *mlx);
 	mlx_hook(*mlx_win, 33, 0, mlx_loop_end, *mlx);
 	img->img = mlx_new_image(*mlx, viewport->width, viewport->height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \

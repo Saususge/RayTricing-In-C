@@ -6,7 +6,7 @@
 /*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:29 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:51:57 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	init_rotation_matrix(t_mat *r, t_vec3 axis)
 	}
 }
 
-static void	compute_final_matrices(t_object *cyl)
+static void	cy_compute_final_matrices(t_object *cyl)
 {
 	t_mat	temp;
 
@@ -88,6 +88,6 @@ t_object	create_cylinder(struct s_cyl_data data)
 	init_cylinder_basic(&cyl, data);
 	init_transform_matrices(&cyl, data.center, data.radius, data.height);
 	init_rotation_matrix(&cyl.r, data.axis);
-	compute_final_matrices(&cyl);
+	cy_compute_final_matrices(&cyl);
 	return (cyl);
 }

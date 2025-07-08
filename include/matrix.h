@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:14:36 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/07 22:39:55 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 15:59:31 by chakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	mat_mul_mat(const t_mat *m, const t_mat *n, t_mat *o);
 int		mat_inverse(const t_mat *m, t_mat *n);
 float	mat_determinant(const t_mat *m);
 void	mat_adjugate(const t_mat *m, t_mat *adj);
-void 	rodrigues_to_mat4(t_vec3 axis, float theta, t_mat *R);
+void	rodrigues_to_mat4(t_vec3 axis, float theta, t_mat *R);
 void	mat_transpose(const t_mat *n, t_mat *m);
 #endif
