@@ -52,6 +52,7 @@ t_object	create_sphere(t_point center, float radius, t_vec3 color)
 	mat_mul_mat(&sph.r, &sph.s, &temp);
 	mat_mul_mat(&sph.t, &temp, &sph.m);
 	mat_inverse(&sph.m, &sph.m_inv);
+	mat_transpose(&sph.m_inv, &sph.n);
 	return (sph);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_ops.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:29 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:22:16 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	cylinder_intersect(const t_object *obj, \
 		return (0);
 	record->t = t;
 	record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t));
-	record->n_world = mat_mul_vec4(&obj->m, \
+	record->n_world = mat_mul_vec4(&obj->n, \
 		cylinder_get_normal(record->p_local));
 	record->n_world = vec4_mul(record->n_world, 1.0f / \
 		sqrt(vec4_dot(record->n_world, record->n_world)));

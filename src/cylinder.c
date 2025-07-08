@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:51:57 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:22:06 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static void	cy_compute_final_matrices(t_object *cyl)
 	mat_mul_mat(&cyl->r, &cyl->s, &temp);
 	mat_mul_mat(&cyl->t, &temp, &cyl->m);
 	mat_inverse(&cyl->m, &cyl->m_inv);
+	mat_transpose(&cyl->m_inv, &cyl->n);
 }
 
 t_object	create_cylinder(struct s_cyl_data data)

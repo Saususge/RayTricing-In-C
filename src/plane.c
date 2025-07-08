@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:12:52 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:52:16 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:18:10 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	pl_compute_final_matrices(t_object *pl)
 	mat_mul_mat(&pl->r, &pl->s, &temp);
 	mat_mul_mat(&pl->t, &temp, &pl->m);
 	mat_inverse(&pl->m, &pl->m_inv);
+	mat_transpose(&pl->m_inv, &pl->n);
 }
 
 // Assume that the plane normal is 0,0,1 and the plane is at the origin in
@@ -68,7 +69,7 @@ int	plane_intersect(const t_object *obj, const t_ray *ray_world, \
 		return (0);
 	record->t = t;
 	record->p_local = vec4_add(ray_local.o, vec4_mul(ray_local.d, t));
-	record->n_world = mat_mul_vec4(&obj->m, \
+	record->n_world = mat_mul_vec4(&obj->n, \
 		plane_get_normal(obj, record->p_local));
 	record->n_world = vec4_mul(record->n_world, 1.0f / \
 		sqrt(vec4_dot(record->n_world, record->n_world)));

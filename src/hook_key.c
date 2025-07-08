@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/04 18:40:44 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/08 16:12:39 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	transform_rotate(int keycode)
 
 static void	transform(int keycode)
 {
-	if (!g()->choosen_object)
+	if (!(g()->camera_choosed || g()->light_choosed || g()->choosen_object))
 	{
 		ft_putstr_fd("No object selected for transformation\n", STDERR_FILENO);
 		return ;
