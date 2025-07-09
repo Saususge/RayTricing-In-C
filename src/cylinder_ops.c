@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/09 16:47:30 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	cylinder_intersect(const t_object *obj, \
 	record->p_local = vec4_add(local_ray.o, vec4_mul(local_ray.d, t));
 	record->n_world = mat_mul_vec4(&obj->n, \
 		cylinder_get_normal(record->p_local));
+	record->n_world.v[3] = 0.0f;
 	record->n_world = vec4_mul(record->n_world, 1.0f / \
 		sqrtf(vec4_dot(record->n_world, record->n_world)));
 	if (vec4_dot(record->n_world, ray_world->d) > 0.0f)
