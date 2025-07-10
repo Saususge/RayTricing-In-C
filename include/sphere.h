@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:03:23 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:16:41 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 22:02:32 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ t_vec3		sphere_get_color(const t_intersect *record);
 void		get_uv_sphere(t_vec4 p_local, float *u, float *v);
 t_vec4		get_bumpmap_normal(float u, float v);
 t_vec4		get_bumped_normal_sphere(t_vec4	p_local);
-void		get_uv_sphere(t_vec4 p_local, float *u, float *v);
 t_vec3		sphere_get_color(const t_intersect *record);
 #endif
