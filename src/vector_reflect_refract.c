@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_reflect_refract.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:06:09 by chakim            #+#    #+#             */
-/*   Updated: 2025/05/21 18:11:18 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:21:05 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,4 @@ cos_incident - sqrtf(1 - refraction_ratio * refraction_ratio * \
 		n_term = vec3_mul(v, refraction_ratio);
 		return (vec3_add(n_term, l_term));
 	}
-}	
+}

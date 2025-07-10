@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:36:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 14:14:27 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:23:36 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ typedef struct s_quad_eq_cone
 	float	c;
 	float	disc;
 }	t_quad_eq_c;
+
+struct s_cone_parse_data
+{
+	t_point	center;
+	t_vec3	orient;
+	float	diameter;
+	float	height;
+	t_vec3	color;
+	char	*center_str;
+	char	*orient_str;
+	char	*diam_str;
+	char	*height_str;
+	char	*color_str;
+};
 
 t_object	create_cone(struct s_cone_data data);
 

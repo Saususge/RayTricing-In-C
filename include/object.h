@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/07 22:37:06 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 20:22:01 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
+
+typedef struct render_data
+{
+	void	*mlx;
+	void	*mlx_win;
+	t_data	*img;
+}	t_render_data;
 
 typedef enum e_type
 {
@@ -73,6 +80,7 @@ typedef struct s_object
 	t_mat			m;
 	t_mat			m_inv;
 	t_mat			n;
+	int				bump;
 }	t_object;
 
 typedef struct s_intersect
@@ -117,6 +125,14 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct s_tex
+{
+	unsigned char	*tex;
+	int				width;
+	int				height;
+	int				orig_channel;
+}	t_tex;
+
 typedef struct s_gvar
 {
 	t_ambient_light	amb_light;
@@ -127,13 +143,13 @@ typedef struct s_gvar
 	t_object		*objects;
 	int				object_count;
 	int				object_capacity;
-	int				specular;
 	int				camera_choosed;
 	int				light_choosed;
 	int				light_index;
 	t_viewport		viewport;
 	t_object		*choosen_object;
 	t_data			img;
+	t_tex			tex;
 	void			*mlx;
 	void			*mlx_win;
 }	t_gvar;

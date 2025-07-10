@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 03:18:51 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 16:36:38 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 20:20:22 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 #include "object.h"
 #include "libft.h"
 #include <stdlib.h>
-
-struct s_cyl_parse_data
-{
-	t_point	center;
-	t_vec3	orient;
-	float	diameter;
-	float	height;
-	t_vec3	color;
-	char	*center_str;
-	char	*orient_str;
-	char	*diam_str;
-	char	*height_str;
-	char	*color_str;
-};
 
 int	parse_cylinder(void)
 {

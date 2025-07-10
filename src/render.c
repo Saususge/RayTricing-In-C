@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:42:59 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/08 15:29:23 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:21:49 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "object.h"
 #include "hit.h"
 #include "mlx.h"
-
-typedef struct render_data
-{
-	void	*mlx;
-	void	*mlx_win;
-	t_data	*img;
-}	t_render_data;
 
 static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

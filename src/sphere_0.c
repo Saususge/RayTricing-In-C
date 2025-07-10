@@ -37,6 +37,7 @@ t_object	create_sphere(t_point center, float radius, t_vec3 color)
 	sph.ops = &g_sphere_ops;
 	sph.color = color;
 	sph.checkerboard = 0;
+	sph.bump = 0;
 	sph.t = (t_mat){{{1, 0, 0, center.x},
 	{0, 1, 0, center.y},
 	{0, 0, 1, center.z},

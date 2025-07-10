@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_checkerboard.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:33:11 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:27:59 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:21:23 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,13 @@ t_vec3	plane_get_color(const t_intersect *record)
 	u = record->p_local.v[0];
 	v = record->p_local.v[1];
 	return (plane_checkerboard_color_at(u, v));
+}
+
+void	get_tbn_plane(t_mat *tbn)
+{
+	*tbn = (t_mat){{
+	{1.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 1.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 1.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f}}};
 }

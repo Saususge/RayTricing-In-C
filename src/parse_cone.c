@@ -16,19 +16,6 @@
 #include "libft.h"
 #include <stdlib.h>
 
-struct s_cone_parse_data {
-	t_point	center;
-	t_vec3	orient;
-	float	diameter;
-	float	height;
-	t_vec3	color;
-	char	*center_str;
-	char	*orient_str;
-	char	*diam_str;
-	char	*height_str;
-	char	*color_str;
-};
-
 int	parse_cone(void)
 {
 	struct s_cone_parse_data	data;

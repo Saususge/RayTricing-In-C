@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:58:44 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:20:27 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ struct s_cyl_data
 	float	radius;
 	float	height;
 	t_vec3	color;
+};
+
+struct s_cyl_parse_data
+{
+	t_point	center;
+	t_vec3	orient;
+	float	diameter;
+	float	height;
+	t_vec3	color;
+	char	*center_str;
+	char	*orient_str;
+	char	*diam_str;
+	char	*height_str;
+	char	*color_str;
 };
 
 typedef struct s_cap_uv_data

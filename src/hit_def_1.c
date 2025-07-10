@@ -32,7 +32,7 @@ t_vec3	calculate_specular_light(const t_intersect *record, t_vec4 light_dir, \
 		(sqrtf(vec4_dot(view_world, view_world) * \
 		vec4_dot(reflect_world, reflect_world))), 0.0f);
 	specular_factor = powf(specular_dot, SHININESS) * \
-	K_SPECULAR * attenuation * g()->specular;
+	K_SPECULAR * attenuation;
 	return (vec3_mul(light_intensity, specular_factor * 255.0f));
 }
 

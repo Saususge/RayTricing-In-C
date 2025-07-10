@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/08 17:48:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 19:10:54 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,6 @@ static void	transform_rotate(int keycode)
 
 static void	transform(int keycode)
 {
-	if (keycode == '0')
-	{
-		g()->specular = !g()->specular;
-		return ;
-	}
 	if (!(g()->camera_choosed || g()->light_choosed || g()->choosen_object))
 	{
 		ft_putstr_fd("No object selected for transformation\n", STDERR_FILENO);
@@ -96,6 +91,8 @@ static void	transform(int keycode)
 		scale(0.9f);
 	else if (keycode == 't')
 		g()->choosen_object->checkerboard = !g()->choosen_object->checkerboard;
+	else if (keycode == '0')
+		g()->choosen_object->bump = !g()->choosen_object->bump;
 }
 
 int	key_hook(int keycode, void *mlx)

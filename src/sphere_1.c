@@ -45,9 +45,15 @@ static int	calculate_intersection_t(const t_ray *local_ray, \
 static void	fill_record(t_intersect *record, const t_object *obj,
 	const t_ray *local_ray, float t)
 {
+	t_vec4	n_local;
+
 	record->t = t;
 	record->p_local = vec4_add(local_ray->o, vec4_mul(local_ray->d, t));
-	record->n_world = mat_mul_vec4(&obj->n, sphere_get_normal(record->p_local));
+	if (obj->bump)
+		n_local = get_bumped_normal_sphere(record->p_local);
+	else
+		n_local = sphere_get_normal(record->p_local);
+	record->n_world = mat_mul_vec4(&obj->n, n_local);
 	record->n_world.v[3] = 0.0f;
 	record->n_world = vec4_mul(record->n_world, \
 		1.0f / sqrtf(vec4_dot(record->n_world, record->n_world)));

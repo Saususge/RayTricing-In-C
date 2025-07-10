@@ -10,7 +10,7 @@ LIBFT := $(LIB_DIR)/libft.a
 MINIRT := minirt
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+CFLAGS := -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -Istb
 LDFLAGS := -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 ifdef DEBUG
@@ -20,6 +20,7 @@ else
 endif
 
 SRC := \
+	bump_map.c\
 	texture.c\
 	environment.c\
 	hit_def_0.c\
@@ -58,7 +59,7 @@ SRC := \
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
-	sphere_checkerboard.c\
+	sphere_texture.c\
 	transform_def.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\

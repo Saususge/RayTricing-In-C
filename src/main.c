@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:56:19 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:41:53 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:05:15 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 #include "hit.h"
 #include "parse.h"
 #include "event.h"
+#include "stb_image.h"
+
+#define BUMP_TEXTURE_FILE "bump.jpg"
 
 void	render_and_put(void);
 
@@ -51,6 +54,8 @@ static void	init_mlx_var(void)
 		&img->line_length, &img->endian);
 }
 
+void	load_bump_map(void);
+
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -58,6 +63,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Usage: ./miniRT <scene_file>\n", STDERR_FILENO);
 		return (1);
 	}
+	load_bump_map();
 	parse_scene_file(argv[1]);
 	set_viewport();
 	init_mlx_var();
@@ -69,5 +75,6 @@ int	main(int argc, char **argv)
 	free(g()->mlx);
 	free(g()->lights);
 	free(g()->objects);
+	stbi_image_free(g()->tex.tex);
 	return (0);
 }
