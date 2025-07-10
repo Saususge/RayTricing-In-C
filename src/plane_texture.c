@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:33:11 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:45:56 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 22:19:46 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_vec3	plane_checkerboard_color_at(float u, float v)
 {
 	int	checker;
 
-	checker = (int)(floorf(u * 0.23) + floorf(v * 0.23));
+	checker = (int)(floorf(u * 2) + floorf(v * 2));
 	if (checker % 2 == 0)
 		return ((t_vec3){0, 0, 0});
 	return ((t_vec3){255, 255, 255});
@@ -58,6 +58,7 @@ t_vec3	plane_get_color(const t_intersect *record)
 
 	if (!record->obj->checkerboard)
 		return (record->obj->color);
-	get_uv_plane(record->p_local, &u, &v);
+	u = record->p_local.v[0];
+	v = record->p_local.v[1];
 	return (plane_checkerboard_color_at(u, v));
 }
