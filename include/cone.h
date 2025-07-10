@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:36:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:23:36 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 21:31:10 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ int			cone_lateral_intersect(const t_ray *ray, \
 int			cone_intersect_cap(const t_ray *ray, float *t, t_interval t_bound);
 t_vec4		cone_get_normal(t_vec4 p_local);
 t_vec3		cone_get_color(const t_intersect *record);
-
+t_vec4		get_bumped_normal_cone(t_vec4 p_local);
 #endif

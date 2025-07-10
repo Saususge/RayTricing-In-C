@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 18:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 21:17:59 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 21:55:16 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	get_uv_cylinder(t_vec4 p_local, float *u, float *v)
 	float	theta;
 
 	theta = atan2f(p_local.v[1], p_local.v[0]);
-	*u = theta / (2.0f * (float)M_PI) + 0.5f;
+	*u = 0.5f + theta / (2.0f * (float)M_PI);
 	if (fabsf(p_local.v[2] - 0.5f) < EPSILON || \
 fabsf(p_local.v[2] + 0.5f) < EPSILON)
 		*v = sqrtf(p_local.v[0] * p_local.v[0] + p_local.v[1] * p_local.v[1]);
 	else
-		*v = 0.5f + p_local.v[2];
+		*v = p_local.v[2] + 0.5f;
 }
 
 t_vec3	cylinder_get_color(const t_intersect *record)

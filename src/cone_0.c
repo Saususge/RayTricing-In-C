@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:56:03 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:52:35 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 21:33:35 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	init_cone_basic(t_object *cn, struct s_cone_data data)
 	cn->ops = &g_cone_ops;
 	cn->color = data.color;
 	cn->checkerboard = 0;
+	cn->bump = 0;
 }
 
 static void	init_transform_matrices(t_object *cn, \
