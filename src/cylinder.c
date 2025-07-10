@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 16:22:06 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 21:10:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_cylinder_basic(t_object *cyl, struct s_cyl_data data)
 	cyl->ops = &g_cylinder_ops;
 	cyl->color = data.color;
 	cyl->checkerboard = 0;
+	cyl->bump = 0;
 }
 
 static void	init_transform_matrices(t_object *cyl, \

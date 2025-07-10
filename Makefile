@@ -33,7 +33,7 @@ SRC := \
 	matrix_0.c\
 	matrix_1.c\
 	matrix_2.c\
-	cylinder_checkerboard.c\
+	cylinder_texture.c\
 	cylinder_ops.c\
 	cylinder_utils.c\
 	cylinder.c\
@@ -48,7 +48,7 @@ SRC := \
 	parse_plane.c\
 	parse_util.c\
 	parse_cylinder.c\
-	plane_checkerboard.c\
+	plane_texture.c\
 	plane.c\
 	plane_helper.c\
 	cone_0.c\

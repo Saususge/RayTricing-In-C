@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:20:27 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 21:03:17 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,5 @@ int			intersect_lateral(const t_ray *local_ray, \
 	t_interval bound, float *t);
 int			intersect_cap(const t_ray *local_ray, t_interval bound, float *t);
 t_vec3		get_cylinder_u_axis(t_vec3 axis);
-void		calculate_cylinder_uv_dirs(t_vec3 axis,
-				t_vec3 *u_dir, t_vec3 *v_dir);
-// void		cylinder_get_uv(t_point p,
-// 				const t_cylinder *cy, float *u, float *v);
+t_vec4		get_bumped_normal_cylinder(t_vec4 p_local);
 #endif

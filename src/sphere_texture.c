@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:07:12 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:20:48 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 20:43:31 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	get_t_sphere(float theta, float phi, t_vec3 *t)
 {
 	*t = (t_vec3){
 		-2.0f * (float)M_PI * sinf(theta) * cosf(phi),
-		0.0f,
-		2.0f * (float)M_PI * cosf(theta) * cosf(phi)};
+		2.0f * (float)M_PI * cosf(theta) * cosf(phi),
+		0.0f};
 	*t = vec3_normalize(*t);
 }
 
@@ -55,8 +55,8 @@ void	get_uv_sphere(t_vec4 p_local, float *u, float *v)
 	float	theta;
 	float	phi;
 
-	theta = atan2f(p_local.v[2], p_local.v[0]);
-	phi = asinf(p_local.v[1]);
+	theta = atan2f(p_local.v[1], p_local.v[0]);
+	phi = asinf(p_local.v[2]);
 	*u = 0.5f + theta / (2.0f * (float)M_PI);
 	*v = 0.5f + phi / (float)M_PI;
 }
