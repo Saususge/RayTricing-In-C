@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:05:15 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 20:22:01 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/10 20:28:00 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 
 typedef struct s_object		t_object;
 typedef struct s_object_ops	t_object_ops;
-
-typedef struct render_data
-{
-	void	*mlx;
-	void	*mlx_win;
-	t_data	*img;
-}	t_render_data;
 
 typedef enum e_type
 {
@@ -132,6 +125,13 @@ typedef struct s_tex
 	int				height;
 	int				orig_channel;
 }	t_tex;
+
+typedef struct render_data
+{
+	void	*mlx;
+	void	*mlx_win;
+	t_data	*img;
+}	t_render_data;
 
 typedef struct s_gvar
 {

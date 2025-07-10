@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:30:00 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/08 15:26:04 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/10 20:35:47 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_plane_basic(t_object *pl, t_vec3 color)
 	pl->ops = &g_plane_ops;
 	pl->color = color;
 	pl->checkerboard = 0;
+	pl->bump = 0;
 }
 
 void	init_transform_matrix(t_object *pl, t_point point)
@@ -62,9 +63,7 @@ void	init_rotation_matrix(t_object *pl, t_vec3 normal)
 	}
 }
 
-t_vec4	plane_get_normal(const t_object *obj, t_vec4 p_local)
+t_vec4	plane_get_normal(void)
 {
-	(void)obj;
-	(void)p_local;
 	return ((t_vec4){{0.0f, 0.0f, 1.0f, 0.0f}});
 }
