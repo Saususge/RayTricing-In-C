@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/11 13:32:13 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:47:16 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "hit.h"
 #include "mlx.h"
 #include <unistd.h>
+#include <stdio.h>
 
 void	render_and_put(void);
 
@@ -112,9 +113,9 @@ int	key_hook(int keycode, void *mlx)
 		if (g()->light_choosed)
 			g()->light_index = (g()->light_index + 1) % g()->light_count;
 		g()->light_choosed = 1;
-		ft_printf("Light %d selected\n", g()->light_index + 1);
+		printf("Light %d selected\n", g()->light_index + 1);
 	}
 	else
-		ft_printf("Key %d pressed, no action defined\n", keycode);
+		printf("Key %d pressed, no action defined\n", keycode);
 	return (0);
 }

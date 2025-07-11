@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook_mouse.c                                       :+:      :+:    :+:   */
+/*   hook_mouse_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/08 15:44:34 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/11 13:47:56 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "hit.h"
 #include "mlx.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int	mouse_hook(int button, int x, int y, void *mlx)
 {
@@ -40,7 +41,7 @@ int	mouse_hook(int button, int x, int y, void *mlx)
 				object = "Cylinder";
 			else
 				object = "Cone";
-			ft_printf("Object %u(%s) selected\n",
+			printf("Object %lu(%s) selected\n",
 				g()->choosen_object - g()->objects + 1, object);
 		}
 	}
