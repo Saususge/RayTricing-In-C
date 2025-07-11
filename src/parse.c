@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/07 20:57:15 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:34:36 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static int	dispatch_parse(const char *id)
 		return (parse_plane());
 	if (!ft_strcmp(id, "cy"))
 		return (parse_cylinder());
-	if (!ft_strcmp(id, "co"))
-		return (parse_cone());
 	return (1);
 }
 

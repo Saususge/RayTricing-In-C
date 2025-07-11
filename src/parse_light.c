@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/06 14:24:29 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:42:49 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,17 @@ static int	parse_light_fields(t_light *light, float *intensity, t_vec3 *color)
 
 int	parse_light(void)
 {
-	t_light	light;
-	float	intensity;
-	t_vec3	color;
+	t_light		light;
+	float		intensity;
+	t_vec3		color;
+	static int	init;
 
+	if (init)
+	{
+		ft_putstr_fd("Error: Multiple light definitions found.\n",
+			STDERR_FILENO);
+		return (1);
+	}
 	if (process_light_arr())
 		return (1);
 	if (parse_light_fields(&light, &intensity, &color))
@@ -83,5 +90,6 @@ int	parse_light(void)
 	light.intensity.y = (color.y / 255.0f) * intensity;
 	light.intensity.z = (color.z / 255.0f) * intensity;
 	g()->lights[g()->light_count++] = light;
+	init = 1;
 	return (0);
 }

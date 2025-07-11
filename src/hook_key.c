@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:46:34 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/10 19:10:54 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:32:13 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static int	is_transform_keycode(int keycode)
 		|| keycode == 'd' || keycode == 'q' || keycode == 'e'
 		|| keycode == 'p' || keycode == ';' || keycode == 'l'
 		|| keycode == '\'' || keycode == 'o' || keycode == '['
-		|| keycode == '=' || keycode == '-' || keycode == 't'
-		|| keycode == '0');
+		|| keycode == '=' || keycode == '-');
 }
 
 static void	transform_translate(int keycode)
@@ -89,10 +88,6 @@ static void	transform(int keycode)
 		scale(1.1f);
 	else if (keycode == '-')
 		scale(0.9f);
-	else if (keycode == 't')
-		g()->choosen_object->checkerboard = !g()->choosen_object->checkerboard;
-	else if (keycode == '0')
-		g()->choosen_object->bump = !g()->choosen_object->bump;
 }
 
 int	key_hook(int keycode, void *mlx)

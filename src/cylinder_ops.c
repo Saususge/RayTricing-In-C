@@ -6,7 +6,7 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 02:56:47 by chakim            #+#    #+#             */
-/*   Updated: 2025/07/10 21:18:24 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:36:26 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ static void	fill_normal(t_intersect *record, const t_ray *local_ray,
 	t_vec4	normal;
 
 	record->p_local = vec4_add(local_ray->o, vec4_mul(local_ray->d, t));
-	if (record->obj->bump)
-		normal = get_bumped_normal_cylinder(record->p_local);
-	else
-		normal = cylinder_get_normal(record->p_local);
+	normal = cylinder_get_normal(record->p_local);
 	record->n_world = mat_mul_vec4(&record->obj->n, normal);
 	record->n_world.v[3] = 0.0f;
 	record->n_world = vec4_mul(record->n_world, 1.0f / \

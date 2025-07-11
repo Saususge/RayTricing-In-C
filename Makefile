@@ -20,8 +20,10 @@ else
 endif
 
 SRC := \
-	bump_map.c\
-	texture.c\
+	cylinder.c\
+	cylinder_ops.c\
+	cylinder_texture.c\
+	cylinder_utils.c\
 	environment.c\
 	hit_def_0.c\
 	hit_def_1.c\
@@ -33,34 +35,28 @@ SRC := \
 	matrix_0.c\
 	matrix_1.c\
 	matrix_2.c\
-	cylinder_texture.c\
-	cylinder_ops.c\
-	cylinder_utils.c\
-	cylinder.c\
 	object_util.c\
 	parse_ambient.c\
 	parse.c\
 	parse_camera.c\
-	parse_cone.c\
+	parse_cylinder.c\
 	parse_light.c\
+	parse_plane.c\
 	parse_scene_file.c\
 	parse_sphere.c\
-	parse_plane.c\
 	parse_util.c\
-	parse_cylinder.c\
-	plane_texture.c\
 	plane.c\
 	plane_helper.c\
-	cone_0.c\
-	cone_1.c\
-	cone_texture.c\
-	cone_utils.c\
+	plane_texture.c\
 	render.c\
 	rotate.c\
 	sphere_0.c\
 	sphere_1.c\
 	sphere_texture.c\
 	transform_def.c\
+	transform_helper.c\
+	vec4.c\
+	vec4_calc.c\
 	vector_arithmetic_0.c\
 	vector_arithmetic_1.c\
 	vector_calc.c\
@@ -70,10 +66,7 @@ SRC := \
 	vector_product.c\
 	vector_reflect_refract.c\
 	vector_utility.c\
-	vec4_calc.c\
-	vec4.c\
-	viewport.c\
-	transform_helper.c
+	viewport.c
 
 BONUS_SRC := \
 	bump_map_bonus.c\
