@@ -6,15 +6,14 @@
 /*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 19:23:09 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/10 20:49:41 by wchoe            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:22:01 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#define STB_IMAGE_IMPLEMENTATION
+#include "bump_dummy.h"
 #include "stb_image.h"
 #include "object.h"
-
 #define BUMP_TEXTURE_FILE "bump.jpg"
 
 void	load_bump_map(void)

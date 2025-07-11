@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_ambient.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chakim <chakim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: wchoe <wchoe@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:26 by wchoe             #+#    #+#             */
-/*   Updated: 2025/07/01 13:36:08 by chakim           ###   ########.fr       */
+/*   Updated: 2025/07/11 13:19:50 by wchoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,16 @@ static int	parse_ambient_intensity(t_vec3 *intensity)
 int	parse_ambient(void)
 {
 	t_ambient_light	amb;
+	static int		init;
 
+	if (init)
+	{
+		ft_putstr_fd("Ambient light already defined\n", STDERR_FILENO);
+		return (1);
+	}
 	if (parse_ambient_intensity(&amb.intensity))
 		return (1);
 	g()->amb_light = amb;
+	init = 1;
 	return (0);
 }
