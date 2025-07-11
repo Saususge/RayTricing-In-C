@@ -73,7 +73,63 @@ SRC := \
 	vec4_calc.c\
 	vec4.c\
 	viewport.c\
-	transform_helper.c\
+	transform_helper.c
+
+BONUS_SRC := \
+	bump_map_bonus.c\
+	cone_0_bonus.c\
+	cone_1_bonus.c\
+	cone_texture_bonus.c\
+	cone_utils_bonus.c\
+	cylinder_bonus.c\
+	cylinder_ops_bonus.c\
+	cylinder_texture_bonus.c\
+	cylinder_utils_bonus.c\
+	environment_bonus.c\
+	hit_def_0_bonus.c\
+	hit_def_1_bonus.c\
+	hit_def_2_bonus.c\
+	hit_util_bonus.c\
+	hook_key_bonus.c\
+	hook_mouse_bonus.c\
+	main_bonus.c\
+	matrix_0_bonus.c\
+	matrix_1_bonus.c\
+	matrix_2_bonus.c\
+	object_util_bonus.c\
+	parse_ambient_bonus.c\
+	parse_bonus.c\
+	parse_camera_bonus.c\
+	parse_cone_bonus.c\
+	parse_cylinder_bonus.c\
+	parse_light_bonus.c\
+	parse_plane_bonus.c\
+	parse_scene_file_bonus.c\
+	parse_sphere_bonus.c\
+	parse_util_bonus.c\
+	plane_bonus.c\
+	plane_helper_bonus.c\
+	plane_texture_bonus.c\
+	render_bonus.c\
+	rotate_bonus.c\
+	sphere_0_bonus.c\
+	sphere_1_bonus.c\
+	sphere_texture_bonus.c\
+	texture_bonus.c\
+	transform_def_bonus.c\
+	transform_helper_bonus.c\
+	vec4_bonus.c\
+	vec4_calc_bonus.c\
+	vector_arithmetic_0_bonus.c\
+	vector_arithmetic_1_bonus.c\
+	vector_calc_bonus.c\
+	vector_conversion_bonus.c\
+	vector_init_bonus.c\
+	vector_length_bonus.c\
+	vector_product_bonus.c\
+	vector_reflect_refract_bonus.c\
+	vector_utility_bonus.c\
+	viewport_bonus.c
 
 OBJ := $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
